@@ -2,7 +2,7 @@
 body {
   background: #fff;
   color: #444;
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
 }
 
 a {
@@ -29,9 +29,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-weight: 400;
-  margin: 0 0 40px 0;
+  margin: 0 0 20px 0;
   padding: 0;
 }
 
@@ -114,7 +114,7 @@ h6 {
 
 #header {
   padding: 20px 0;
-  height: 98px;
+  height: 158px;
   transition: all 0.5s;
   z-index: 997;
   background: #ffffff;
@@ -126,7 +126,7 @@ h6 {
   margin: 0;
   padding: 0;
   line-height: 1;
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-weight: 700;
 }
 
@@ -159,14 +159,16 @@ h6 {
 
 #intro .intro-content {
   position: absolute;
-  background: rgba(25,39,54,1);
-  background: -moz-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(25,39,54,1)), color-stop(100%, rgba(73,155,234,0.16)));
-  /* background: -webkit-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%); */
-  background: -o-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
-  background: -ms-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
-  background: linear-gradient(to right, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192736', endColorstr='#499bea', GradientType=1 );
+    
+background: rgba(25,39,54,1);
+background: -moz-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(25,39,54,1)), color-stop(100%, rgba(73,155,234,0.16)));
+background: -webkit-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
+background: -o-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
+background: -ms-linear-gradient(left, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
+background: linear-gradient(to right, rgba(25,39,54,1) 0%, rgba(73,155,234,0.16) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192736', endColorstr='#499bea', GradientType=1 );
+
   bottom: 0;
   top: 0;
   left: 0;
@@ -194,7 +196,7 @@ h6 {
 
 #intro .intro-content h2 {
   color: #ffffff;
-  margin-top: 45px;
+  margin-top: 60px;
   margin-bottom: 30px;
   font-size: 48px;
   font-weight: 700;
@@ -209,7 +211,7 @@ h6 {
 
 #intro .intro-content .btn-get-started,
 #intro .intro-content .btn-projects {
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -275,8 +277,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192736', end
   background-repeat: no-repeat;
   transition-property: opacity;
 }
-
-
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -355,7 +355,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192736', end
   text-decoration: none;
   display: inline-block;
   color: #555;
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-weight: 700;
   font-size: 14px;
   outline: none;
@@ -526,7 +526,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding-bottom: 20px;
   text-align:center;
 }
-/*
+
 .section-header h2::before {
 content: '';
     position: absolute;
@@ -539,7 +539,7 @@ content: '';
     border-radius: 3px;
     padding-bottom: 33px;
 }
-*/
+
 .section-header p {
   padding: 0;
   margin: 0;
@@ -564,8 +564,8 @@ content: '';
 #about .content h2 {
   color: #0c2e8a;
   font-weight: 700;
-  font-size: 26px;
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-size: 36px;
+  font-family: "Raleway", sans-serif;
       /*margin-top: 83px;*/
 }
 
@@ -760,7 +760,7 @@ content: '';
 --------------------------------*/
 
 #testimonials {
-  padding:40px 0 50px;
+  padding:80px 0 50px;
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,fafcff+100 */
 background: #ffffff!important; /* Old browsers */
 background: -moz-linear-gradient(top, #ffffff 0%, #fafcff 100%); /* FF3.6-15 */
@@ -870,7 +870,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 #call-to-action .cta-btn {
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-weight: 700;
   font-size: 16px;
   letter-spacing: 1px;
@@ -1121,20 +1121,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
-.white-bg {
-    background-color: rgba(255,255,255,1);
-    padding: 10px 30px 20px;
-    border-radius: 6px;
-}
-.w3l-footer p, .w3l-footer p a, .w3l-footer ul li a {
-    font-size: 14px;
-    color: #717173;
-}
 
-footer {
-    background-color:#f7f7f7;
-  
-	margin-top:20px;
+#footer {
+  background: #102746;
+  padding: 0 0 30px 0;
+  font-size: 14px;
 }
 
 #footer .copyright {
@@ -1265,7 +1256,7 @@ div#header-sticky-wrapper{
 }
 
 .fixed-top {
-    height: 98px;
+    height: 158px;
 }
 .btn-primary {
     color: #302868;
@@ -1304,72 +1295,50 @@ div#header-sticky-wrapper{
     width: 90%;
 	color:#ffffff;
 }
-/*.navbar-brand {
+.navbar-brand {
     line-height: 148px;
 }
-*/
+
 .collapse.show {
     display: block;
     width: 100%;
    
 	background-color:#fff;
 }
-.btn{
-	font: 12px/16px Georgia!important;
-}
+
 .navbar-collapse{
 	  width: 100%;
-    padding: 1rem 0 1rem;
+    padding: 2rem 0 2rem;
 	background-color:#fff;
 }
 
-input.form-control.mr-sm-2 {
-    height: 24px;
-    border-radius: 0;
-    border: 1px solid #F0AE4C;
-    margin: 0!important;
+#search {
+        position: relative;
+    font-size: 18px;
+    padding-top: 70px;
+    /* margin: -20px auto 0; */
+    width: 997px;
+    height: 82px;
 }
-.form-control:focus{
-	outline:none!important;
-	box-shadow:none!important;
-}
-
-.btn-outline-success:focus{
-	outline:none!important;
-	box-shadow:none!important;
-}
-form.form-inline.search {
-    height: 24px;
-    line-height: 24px;
-}
-button.btn.btn-outline-success.my-2.my-sm-0.ex {
-    margin-right: 10px;
-	margin-left: 10px;
-}
-button.btn.btn-outline-success.my-2.my-sm-0.search:focus{
-	outline:none!important;
-	box-shadow:none!important;
-}
-button.btn.btn-outline-success.my-2.my-sm-0.search {
-    padding: 0;
-    border-radius: 0;
-    height: 24px;
-    margin: 0!important;
-    border: none;
-    display: inline-flex;
-}
-input.form-control.mr-sm-2 {
-    height: 24px;
-    border-radius: 0;
-    border: 1px solid #F0AE4C;
+#search label {
+    position: absolute;
+    right: 17px;
+    top: 70px;
 }
 
+#search #search-input, #search .hint {
+        padding-left: 43px;
+    padding-right: 43px;
+    border-radius: 0;
+    height: 82px;
+    line-height: 82px;
+}
 .border-btm{
 	border-bottom: 5px solid #006dfe;
     border-radius: 3px;
     padding-bottom: 33px;
     border-height: 2rem;
-    width: 100%;
+    width: 83px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
@@ -1401,9 +1370,70 @@ input.form-control.mr-sm-2 {
   margin-bottom:0;
   margin-right:40px;
 }
+body .carousel-control-prev-icon,
+body .carousel-indicators li,
+body .carousel-control-next-icon{
+  background-color:#fff;
+}
 
+span.carousel-control-prev-icon {
+ position: relative;
+/*
+ right: 65px;*/
+}
 
+span.carousel-control-next-icon {
+ position: relative;
 
+}
+
+.silder-content.pull-left p {
+    padding: 0 0 22px;
+    margin: 0;
+    color: #000f48;
+    width: 72%;
+}
+
+.silder-content.pull-left p.bottom-text{
+	 color:#b7b7b7;
+	 font-size:14px;
+}
+
+.carousel-control-next {
+       right: 0!important;
+    height: 70px!important;
+    width: 54px;
+    position: sticky;
+    z-index: 9;
+    bottom: 0;
+    float: right;
+	    margin-top: 35px;
+}
+
+.carousel-control-prev {
+        right: 0!important;
+    height: 70px!important;
+    width: 54px;
+    position: sticky;
+    z-index: 9;
+    bottom: 0;
+    float: right;
+	    margin-top: 35px;
+}
+
+.carousel-control-prev-icon{
+	background-image:url(../img/arrowleft.jpg);
+	height:50px;
+	width:50px;
+	border:none;
+}
+
+.carousel-control-next-icon {
+    background-image:url(../img/arrowright.jpg);
+	height:50px;
+	width:50px;
+	border:none;
+}
 
 .pull-right.viewall{
 	color:#0065fe;
@@ -1449,32 +1479,32 @@ input.form-control.mr-sm-2 {
 }
 
 .count-title {
-        font-size: 38px;
-    font-weight: 800;
+        font-size: 29px;
+    font-weight: 500;
     margin-top: 10px;
     margin-bottom:20px;
     text-align: center;
 	color:#0056fe;
 }
 .count-title::after {
-    font-size: 40px;*/
-    font-weight: normal;*/
+    font-size: 40px;
+    font-weight: normal;
     /* margin-top: 39px; */
     /* margin-bottom: 30px; */
     text-align: center;
     color: #0056fe;
-     /*content: "+";*/
+    content: "+";
     /* float: right; */
     margin: 5px;
 }
 .count-text {
-    font-size: 28px;
+    font-size: 18px;
     font-weight: normal;
     margin-top: 10px;
     margin-bottom: 0;
     text-align: center;
 	color:#8591a9;
-	    width: 100%;
+	    width: 50%;
     margin: 0 auto;
 }
 
@@ -1486,13 +1516,13 @@ input.form-control.mr-sm-2 {
 }
 .silder-content.oppor{
 	
-	background-color:#f6f6f6;
-	padding:15px;
+	background-color:#ffffff;
+	padding:20px;
 }
 .silder-content.oppor p{
-	 font-size:10px;
+	 font-size:12px;
 	 color:#99a3b8;
-	 margin: 10px 0;
+	 margin: 15px 0;
 }
 p.bottom-text.opport{
 	 font-size:12px;
@@ -1504,7 +1534,7 @@ p.bottom-text.opport{
 }
 
 .silder-content.oppor p b{
-	font-size:20px;
+	font-size:14px;
 	font-weight:600;
 	color: #0f2646;
 	
@@ -1693,8 +1723,8 @@ box-shadow: 0px 14px 21px -10px rgba(232,144,46,1);
 
 
 h2.timer.count-title.count-number{
-	text-align:left;
-	    padding: 0;
+	text-align:center;
+	    padding: 10px;
     margin: 0;
 }
 h2.timer.count-title.count-number::before{
@@ -1753,14 +1783,14 @@ h2.timer.count-title.count-number::before{
 }
 
 .top-botm-border{
-   background-color: #d1d1d1;
-    height: 70px;
+    background-color: #d1d1d1;
+    height: 40px;
     width: 2px;
     float: right;
-    z-index: 9;
+    z-index: 99;
     position: absolute;
     right: 0;
-    top: 3rem;
+    top: 6rem;
 }
 .margin-top130{
     margin-top: 110px;
@@ -1935,7 +1965,7 @@ width: 115px !important;
 
 .sidenav {
     height: 100%;
-    background:url(../img/login-lrn.jpg) top center no-repeat;
+    background:url(../img/Sign-in@1x.jpg) top center no-repeat;
 	background-size:cover;
     overflow-x: hidden;
     padding-top: 20px;
@@ -1984,7 +2014,7 @@ width: 115px !important;
 
 
 .login-main-text{
-    margin-top: 48%;
+    margin-top: 20%;
     padding: 60px;
     color: #fff;
 	text-align:center;
@@ -2207,7 +2237,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b35d462e', e
 
 #innovate-banner .innovate-content .btn-get-started,
 #innovate-banner .innovate-content .btn-projects {
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -2336,7 +2366,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3032317', e
 
 #learn-banner .learn-content .btn-get-started,
 #learn-banner .learn-content .btn-projects {
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -2479,7 +2509,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 
 #comming .comming-content .btn-get-started,
 #comming .comming-content .btn-projects {
-  font-family: Georgia,Times,Times New Roman,serif; 
+  font-family: "Raleway", sans-serif;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -2558,111 +2588,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	font-weight:bolder;
 	padding:0;
 	margin:0;
-}
-button.btn.btn-secondary {
-    font: 11px/13px Georgia;
-}
-button#dropdownMenuButton {
-    background-color: transparent;
-    color: black;
-    border: none;
-	font: 11px/13px Georgia;
-}
-.btn-secondary.focus, .btn-secondary:focus {
-    box-shadow: none!important;
-}
-
-.ml-auto, .mx-auto {
-    margin-left:0!important;
-}
-
-.btn-outline-success {
-    color: #ca5a2c;
-    background-color: transparent;
-    background-image: none;
-    border-color: #ca5a2c;
-	    border-radius: 0;
-    height: 24px;
-    line-height: 24px;
-    padding: 0 10px;
-}
-
-.btn-outline-success:hover {
-    color: #fff;
-    background-color: #ca5a2c;
-    border-color: #ca5a2c;
-}
-
-.col-lg-3.content p {
-    font-size: 11px;
-    line-height: 18px!important;
-}
-
-
-.tab-pane {
-  padding:1rem 0;
-}
-
-.nav-link {
- font-weight: bold;
-  background:#fff;
-  padding:20px 30px;
-  border: 0!important;
-}
-.nav-link.active {
-  font-weight: bold;
-  background:#f6f6f6!important;
-  padding:20px 30px;
-  border: 0;
-}
-
-div#myTabContent {
-    background-color:#f6f6f6;
-}
-.col-md-4.w3l-footer.white-bg h2 a {
-    color: black;
-	text-align:center!important;
-}
-.col-md-4.w3l-footer.white-bg p {
-    color: black;
-	text-align:center;
-}
-
-h2.mb-sm-3.mb-2 {
-    text-align: center;
-    margin-top: 20px;
-	font-weight:600;
-}
-
-p.copy-right-grids.mt-lg-1{
-	color:#717173;
-}
-
-/* Right-aligned section inside the top navigation */
-.topnav-right {
-  float: right;
-}
-/*
-form.form-inline {
-    position: absolute;
-    right: 10%;
-    top: 2rem;
-}
-*/
-.fixed-top {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
-    background-color: #fff;
-}
-
-.col-md-7.col-lg-7.pull-right p, h2 {
-    text-align: left;
-}
-
-ul.list-unstyled li {
-    width: 25%;
-    float: left;
 }
