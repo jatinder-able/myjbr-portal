@@ -15,12 +15,12 @@
   </div>
 </div> -->
 
-<footer class="footer" *ngIf="showFooter">
+<footer class="footer" *ngIf="showFooter" style="padding: 1px 0;">
   <div class="ui container">
-    <div class="ui grid stackable">
+    <div class="ui grid stackable" style="margin-top:40px;">
       <div class="four wide column footerMenu mr-auto">
         <ul class="p-0 m-0">
-          <li class="mb-15">
+          <!-- <li class="mb-15">
             <a href="/verticals/profile-registry/">
               {{resourceService.frmelmnts?.lnk?.footerNUIHVerticals}}
             </a>
@@ -34,10 +34,10 @@
             <a href="/partners/">
               {{resourceService.frmelmnts?.lnk?.footerPartners}}
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
-     <!--  <div class="four wide column center aligned playStore">
+      <!--  <div class="four wide column center aligned playStore">
           <label class="d-block mb-10">{{resourceService.frmelmnts?.lnk?.footerNUIHForMobile}}</label>
           <a class="d-block" href="https://play.google.com/store/apps/details?id=in.gov.diksha.app">
             <img class="playStore-img" src="/assets/images/google_playstore.png" alt="{{resourceService.frmelmnts?.lnk?.footerNUIHForMobile}}">
@@ -46,19 +46,24 @@
         
         </div>-->
       <div class="four wide column contantDetails">
-        <label class="d-block mb-10">
+        <!-- <label class="d-block mb-10">
           {{resourceService.frmelmnts?.lnk?.footerContact}} 
         </label>
         <a class="d-block mb-30" href="mailto:support@nuis.org">
           support@nuis.org
-        </a>
-        <label class="d-block">
-          <a href="/term-of-use.html">
+        </a> -->
+        <!-- <label class="d-block">
+          <a href="javascript:">
             {{resourceService.frmelmnts?.lnk?.footerTnC}}
           </a>
-          <span>| &copy; {{date | date:'yyyy'}}, NUIH</span>
-        </label>
+          <span>| &copy; {{date | date:'yyyy'}}, PwC</span>
+        </label> -->
       </div>
+    </div>
+    <div class="ui section divider" style="border: .04em solid #e1e1e1;margin: 7px 0"></div>
+    <div class="twelve wide column contantDetails">
+      <p style="text-align: center;font-size: 10px;">© 2019 PwC. All rights reserved. PwC refers to the US member firm
+        of the PwC network or one of its subsidiaries or affiliates.{{resourceService.frmelmnts?.lnk?.footerTnC}}</p>
     </div>
   </div>
 </footer>
