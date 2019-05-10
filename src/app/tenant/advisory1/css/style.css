@@ -2669,3 +2669,148 @@ ul.list-unstyled li {
     width: 25%;
     float: left;
 }
+/* Slick Carousel Code Starts Here */
+.resource-card {
+  width: 280px;
+  height: 225px;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  cursor: pointer;
+  border: .5px solid #dedede;
+  border-bottom: 0;
+  margin-bottom: 5px !important;
+  margin-top: 20px !important;
+  letter-spacing: 0.2px;
+}
+.resource-header {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 0 !important;
+  padding: 15px !important;
+}
+.resource-image {
+  width: 70px;
+  height: 92px;
+  border: 0.5px solid #cccccc;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-width: 70px;
+  max-width: 70px;
+  background-color: #cccccc;
+  margin-right: 15px !important;
+  margin: 0 !important;
+  border-radius: 4px;
+}
+.resource-image img {
+  display: block;
+  border-style: none;
+  object-fit: cover;
+  width: 70px;
+  height: 92px;
+  max-width: 100%;
+}
+.resource-meta {
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  color: #666666;
+  display: flex;
+  margin-left: 20px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 92px;
+  overflow: hidden;
+  width: calc(100% - 70px);
+}
+.resource-label-section {
+  margin-bottom: auto !important;
+  display: flex !important;
+}
+.resource-label-data {
+  font-size: 0.9em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 0.5px solid rgba(0, 46, 80, 0.5);
+  color: #a20303;
+  font-weight: 500;
+  width: auto;
+  align-self: flex-start;
+  background: transparent;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: baseline;
+  margin: 0 .14285714em;
+  text-transform: none;
+  transition: background .1s ease;
+}
+.mt-3 {
+  margin-top: 3px !important;
+}
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.resource-sub-header{
+  padding: 10px 15px;
+}
+.resource-title {
+  font-size: 1rem;
+  line-height: 1.429em;
+  height: 2.857em;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  font-weight: bold;
+  color: #a20303 !important;
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+.resource-creator {
+  font-size: 1rem;
+  height: 1.5em;
+  margin-top: 0.5em;
+  color: #cccccc;
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;  
+}
+.py-2 {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.flex-ai-center {
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  align-items: center !important;
+}
+.pageSection-heading {
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 1.143rem !important;
+  display: inline;
+  margin-right: 5px !important;
+  border: none;
+  padding: 0 0;
+  font-weight: 400;
+  line-height: 1.33em;
+  color: #212121;
+  margin: 0 !important;
+}
+.pageSection-count {
+  background: #eb8b00 !important;
+  color: #fff;
+  padding: 3px 6px !important;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: baseline;
+  text-transform: none;
+  font-weight: 700;
+  border: 0 solid transparent;
+  transition: background .1s ease;
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  letter-spacing: 0.2px;
+  font-size: 12px;
+}
+/* Slick Carousel Code Ends Here */

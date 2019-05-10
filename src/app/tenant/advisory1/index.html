@@ -33,8 +33,40 @@
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
+  <!-- Slick Slider Starts Here -->
+  <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+  <style>
+    .form-control {
+      font-size: 13px;
+    }
 
+    ::placeholder {
+      color: #e1e1e1;
+      opacity: 1;
+      /* Firefox */
+    }
 
+    ::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: #e1e1e1;
+    }
+
+    ::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #e1e1e1;
+    }
+
+    :-ms-input-placeholder {
+      /* IE 10+ */
+      color: #e1e1e1;
+    }
+
+    :-moz-placeholder {
+      /* Firefox 18- */
+      color: #e1e1e1;
+    }
+  </style>
 
 </head>
 
@@ -49,7 +81,7 @@
         <a class="navbar-brand" href="#"><img src="img/able-logo.png" width="100%" height="100%" alt=""></a>
         <form class="form-inline search" id="searchForm">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="ableSearch"
-            autocomplete="off">
+            autocomplete="off" style="width: 260px;">
           <button class="btn btn-outline-success my-2 my-sm-0 search" type="button"><img src="img/search_ico.gif"
               width="100%" height="100%" alt="" onclick="navigateToExplore()"></button>
 
@@ -90,7 +122,20 @@
     </div>
   </section>
   <!-- #intro -->
-
+  <br>
+  <section class="resource-section">
+    <div class="row">
+      <div style="padding: 0 130px;width: 100%;">
+        <div class="d-flex flex-ai-center">
+          <h4 class="ui header m-0 mr-5 pageSection-heading">Latest <span
+              class="ui primary label pageSection-count">20</span> Contents</h4>
+        </div>
+        <div class="resource-contents">
+          Loading.......
+        </div>
+      </div>
+    </div>
+  </section>
   <!--==========================
     Footer
   ============================-->
@@ -133,6 +178,7 @@
   <!-- JavaScript Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.js"></script>
+  <script type="text/javascript" src="slick/slick.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.0/jquery.easing.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
@@ -719,6 +765,82 @@
       }
     }
     $(function () {
+      $.ajax({
+        url: window.location.origin + '/api/data/v1/page/assemble?orgdetails=orgName,email',
+        type: "POST",
+        data: '{"request":{"source":"web","name":"Resource","filters":{},"limit": 15,"sort_by":{"lastUpdatedOn":"desc"},"mode":"soft"}}',
+        processData: false,
+        contentType: 'application/json',
+        success: function (response) {
+          // $(".pageSection-count").html(response.result.response.sections[0].count);
+          var resourceContents = '';
+          $.each(response.result.response.sections[0].contents, function (index, value) {
+            resourceContents += '<div class="resource-card">';
+            resourceContents += '<input type="hidden" value="' + value.identifier + '">';
+            resourceContents += '<div class="resource-header">';
+            resourceContents += '<div class="resource-image">';
+            if (value.appIcon != undefined) {
+              resourceContents += '<img src="' + value.appIcon + '" alt="' + value.name + '">';
+            }
+            else {
+              resourceContents += '<img src="img/book.png" alt="' + value.name + '">';
+            }
+            resourceContents += '</div>';
+            resourceContents += '<div class="resource-meta">';
+            resourceContents += '<div class="resource-label-section">';
+            resourceContents += '<div class="resource-label-data">' + value.resourceType + '</div>';
+            resourceContents += '</div>';
+            resourceContents += '<div class="subject ellipsis mt-3" title="Overview">Category : ' + value.subject + '</div>';
+            resourceContents += '<div class="class ellipsis mt-3" title="Mission">Sub-Category : ' + value.gradeLevel + '</div>';
+            resourceContents += '<div class="medium ellipsis mt-3" title="English">Language : ' + value.medium + '</div>';
+            resourceContents += '</div>';
+            resourceContents += '</div>';
+            resourceContents += '<div class="resource-sub-header">';
+            resourceContents += '<h4 class="resource-title"> ' + value.name + ' </h4>';
+            resourceContents += '<div class="resource-creator ellipsis"> ' + value.organisation + ' </div>';
+            resourceContents += '</div>';
+            resourceContents += '<div class="py-2"></div>';
+            resourceContents += '</div>';
+          });
+          $(".resource-contents").html(resourceContents);
+          $('.resource-contents').slick({
+            dots: false,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            arrows: true,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  infinite: false,
+                  dots: false
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          });
+        },
+      });
+      $(".resource-contents").on("click", ".resource-card", function () {
+        location.href = '/resources/play/content/' + $(this).find('input').val();
+      })
       $("#searchForm").on("submit", function () {
         return false;
       })
@@ -727,7 +849,7 @@
           e.keyCode == 13 ? location.href = "/explore/1?key=" + $("#ableSearch").val().trim() : '';
         }
       });
-    })
+    });
     // Able Code Changes are Ends Here
   </script>
 </body>
