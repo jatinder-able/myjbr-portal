@@ -94,7 +94,7 @@
 
 
           <div class="dropdown">
-            <a href="/resources" class="btn btn-outline-success my-2 my-sm-0" style="padding-top:3px;">
+            <a href="/learn" class="btn btn-outline-success my-2 my-sm-0" style="padding-top:3px;">
               Login
             </a>
 
@@ -839,7 +839,7 @@
         },
       });
       $(".resource-contents").on("click", ".resource-card", function () {
-        location.href = '/resources/play/content/' + $(this).find('input').val();
+        location.href = '/play/content/' + $(this).find('input').val();
       })
       $("#searchForm").on("submit", function () {
         return false;

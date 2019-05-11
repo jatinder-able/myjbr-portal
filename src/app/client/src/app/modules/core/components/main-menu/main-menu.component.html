@@ -13,7 +13,7 @@
 			 [class.active]="router.isActive('/search/Courses') || router.isActive('/learn')" 
 			 appTelemetryInteract [telemetryInteractEdata]="learnMenuIntractEdata" 
 			 routerLink="/learn">
-			{{resourceService?.frmelmnts?.tab?.courses}}
+			Trainings
 		</a>
 		<a class="item" 
 			 [class.active]="router.isActive('/workspace')" 
@@ -60,7 +60,7 @@
 			*ngIf="!router.isActive('', true)" 
 			routerLink="explore-course"
 			appTelemetryInteract [telemetryInteractEdata]="learnMenuIntractEdata" >
-			{{resourceService?.frmelmnts?.tab?.courses}}
+			Trainings
 		</a>
 		<span class="item divider">|</span>
 		<a class="item font-weight-bold primary-color" 
@@ -105,7 +105,7 @@
 				(click)="showSideBar()" 
 				appTelemetryInteract [telemetryInteractEdata]="learnMenuIntractEdata" 
 				routerLink="/learn">
-				{{resourceService?.frmelmnts?.tab?.courses}}
+				Trainings
 			</a>
 			<a class="item"
 				[class.active]="router.isActive('/search/profile') || router.isActive('/profile')"
@@ -155,7 +155,7 @@
 				(click)="showSideBar()" 
 				*ngIf="!router.isActive('', true)" 
 				>
-				{{resourceService?.frmelmnts?.tab?.courses}}
+				Trainings
 			</a>
 		</ng-container>
 		<!--/Not Logged in user-->
