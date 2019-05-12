@@ -3,6 +3,27 @@
 // *{
 //   transition: all 300ms ease-in-out
 //   }
+@font-face {
+  font-family: 'ITC_Charter_Regular';
+  src: url('fonts/ITC_Charter_Webfonts/CharterITCW05-Regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/ITC_Charter_Webfonts/CharterITCW05-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/ITC_Charter_Webfonts/CharterITCW05-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/ITC_Charter_Webfonts/CharterITCW05-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'Helvetica_Neue_Web_Bold';
+  src: url('fonts/HelveticaNeue/HelveticaNeueLTW02-75Bold.eot'); /* IE9 Compat Modes */
+  src: url('fonts/HelveticaNeue/HelveticaNeueLTW02-75Bold.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/HelveticaNeue/HelveticaNeueLTW02-75Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/HelveticaNeue/HelveticaNeueLTW02-75Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'Helvetica_Neue_Web_Regular';
+  src: url('fonts/HelveticaNeue/HelveticaNeueLTW01-65Medium.eot'); /* IE9 Compat Modes */
+  src: url('fonts/HelveticaNeue/HelveticaNeueLTW01-65Medium.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/HelveticaNeue/HelveticaNeueLTW01-65Medium.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/HelveticaNeue/HelveticaNeueLTW01-65Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
 html,
 body {
   height: 100%;
@@ -20,7 +41,7 @@ body {
 }
 
 *[lang="en"] body {
-  font-family: $font-stack-en;
+  font-family: "Helvetica_Neue_Web_Bold";
 }
 
 *[lang="hi"] body {
@@ -78,10 +99,12 @@ h5,
 .ui.form input[type=text],
 .ui.form input[type=time],
 .ui.form input[type=url],
-.ui.menu,
 .ui.dropdown,
 .ui.category.search>.results .category>.name {
-  font-family: inherit;
+  font-family: "ITC_Charter_Regular";
+}
+.ui.menu {
+  font-family: "Helvetica_Neue_Web_Regular";
 }
 
 .ui.tiny.header .icon {
