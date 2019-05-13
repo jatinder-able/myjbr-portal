@@ -37,7 +37,7 @@
   <link rel="stylesheet" type="text/css" href="slick/slick.css" />
   <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
   <script>
-    if (localStorage.getItem('isLogged') != null) {
+    if (localStorage.getItem('isLogged') == 'true') {
       window.location.href = "/learn";
     }
   </script>
@@ -96,18 +96,62 @@
     </div>
   </section>
   <br>
-  <!-- <section class="explore-contents-section">
-    <div class="row">
-      <div class="col-md-4" style="height:200px;background-color: #ca5a2c;margin:0 50px">
-        <a href="/explore" style="height: 100%;">
-          <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;">New to vantage</h3>
-          <span style="color: #ffffff;padding: 25px 15px;font-size: 16px;">Get started with Vantage, find contacts and
-            help</span>
-          <span class="pull-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-        </a>
+  <section class="explore-contents-section">
+    <div class="row" style="padding: 0 130px;">
+      <div class="col-md-3" onclick="redirectToExplore('Soft Skills');"
+        style="background-color: #d93954;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 20px 10px 0px 10px;">
+        <h4 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;"
+          class="ui header pageSection-heading">Soft Skills</h4>
+        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
+        <!-- <span style="color: #ffffff;padding: 25px 15px;font-size: 16px;">Get started with Vantage, find contacts and
+            help</span> -->
+        <span
+          style="border: 1px solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: 81px;margin-bottom: 10px;"
+          class="pull-right">
+          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1"></i>
+        </span>
+      </div>
+      <div class="col-md-3" onclick="redirectToExplore('Technical Areas');"
+        style="background-color: #6d6e71;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 20px 10px 0px 10px;">
+        <h4 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;"
+          class="ui header pageSection-heading">Technical Areas</h4>
+        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
+        <!-- <span style="color: #ffffff;padding: 25px 15px;font-size: 16px;">Get started with Vantage, find contacts and
+            help</span> -->
+        <span
+          style="border: 1px solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: 81px;margin-bottom: 10px;"
+          class="pull-right">
+          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1"></i>
+        </span>
+      </div>
+      <div class="col-md-3" onclick="redirectToExplore('Technology Areas');"
+        style="background-color: #e0301e;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 20px 10px 0px 10px;">
+        <h4 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;"
+          class="ui header pageSection-heading">Technology Areas</h4>
+        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
+        <!-- <span style="color: #ffffff;padding: 25px 15px;font-size: 16px;">Get started with Vantage, find contacts and
+            help</span> -->
+        <span
+          style="border: 1px solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: 81px;margin-bottom: 10px;"
+          class="pull-right">
+          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1"></i>
+        </span>
+      </div>
+      <div class="col-md-3" onclick="redirectToExplore('G&PS');"
+        style="background-color: #602320;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 20px 10px 0px 10px;">
+        <h4 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;"
+          class="ui header pageSection-heading">G&PS</h4>
+        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
+        <!-- <span style="color: #ffffff;padding: 25px 15px;font-size: 16px;">Get started with Vantage, find contacts and
+            help</span> -->
+        <span
+          style="border: 1px solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: 81px;margin-bottom: 10px;"
+          class="pull-right">
+          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1"></i>
+        </span>
       </div>
     </div>
-  </section> -->
+  </section>
   <!-- #intro -->
   <br>
   <section class="resource-section">
@@ -750,6 +794,9 @@
       if ($("#ableSearch").val().trim() != '') {
         location.href = "/explore/1?key=" + $("#ableSearch").val().trim();
       }
+    }
+    function redirectToExplore(param) {
+      location.href = "/explore/1?key=" + param;
     }
     $(function () {
       $.ajax({
