@@ -123,6 +123,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   logout() {
+    localStorage.removeItem("isLogged");
     window.location.replace('/logoff');
     this.cacheService.removeAll();
   }

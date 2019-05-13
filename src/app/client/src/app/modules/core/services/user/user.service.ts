@@ -108,8 +108,10 @@ export class UserService {
       this._userid = (<HTMLInputElement>document.getElementById('userId')).value;
       this._sessionId = (<HTMLInputElement>document.getElementById('sessionId')).value;
       this._authenticated = true;
+      localStorage.setItem("isLogged",'true');
     } catch (error) {
       this._authenticated = false;
+      localStorage.setItem("isLogged",'false');
       this._anonymousSid = UUID.UUID();
     }
     try {

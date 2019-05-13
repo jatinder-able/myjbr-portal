@@ -153,7 +153,7 @@ h6 {
 
 #intro {
   width: 100%;
-  height: 700px;
+  height: 390px;
   position: relative;
 
  
@@ -272,7 +272,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192736', end
 
 #intro #intro-carousel .item {
   width: 100%;
-  height: 700px;
+  height: 390px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2154,7 +2154,7 @@ li.nav-item.ft{
 
 #innovate-banner {
   width: 100%;
-  height: 700px;
+  height: 390px;
   position: relative;
 
  
@@ -2266,7 +2266,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b35d462e', e
 
 #innovate-banner #innovate-banner-caro .innovate-item {
   width: 100%;
-  height: 700px;
+  height: 390px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2283,7 +2283,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b35d462e', e
 
 #learn-banner {
   width: 100%;
-  height: 700px;
+  height: 390px;
   position: relative;
 
  
@@ -2395,7 +2395,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3032317', e
 
 #learn-banner #learn-banner-caro .learn-item {
   width: 100%;
-  height: 700px;
+  height: 390px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2416,7 +2416,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3032317', e
 
 #comming {
   width: 100%;
-  height: 700px;
+  height: 390px;
   position: relative;
 
  
@@ -2834,4 +2834,33 @@ ul.list-unstyled li {
   src: url('Helvetica_Neue_Web/HelveticaNeueLTW01-65Medium.woff2') format('woff2'), /* Super Modern Browsers */
        url('Helvetica_Neue_Web/HelveticaNeueLTW01-65Medium.woff') format('woff'), /* Pretty Modern Browsers */
        url('Helvetica_Neue_Web/HelveticaNeueLTW01-65Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+.form-control {
+  font-size: 13px;
+}
+
+::placeholder {
+  color: #e1e1e1;
+  opacity: 1;
+  /* Firefox */
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #e1e1e1;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #e1e1e1;
+}
+
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #e1e1e1;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #e1e1e1;
 }

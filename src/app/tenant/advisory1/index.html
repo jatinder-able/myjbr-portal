@@ -36,38 +36,11 @@
   <!-- Slick Slider Starts Here -->
   <link rel="stylesheet" type="text/css" href="slick/slick.css" />
   <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
-  <style>
-    .form-control {
-      font-size: 13px;
+  <script>
+    if (localStorage.getItem('isLogged') != null) {
+      window.location.href = "/learn";
     }
-
-    ::placeholder {
-      color: #e1e1e1;
-      opacity: 1;
-      /* Firefox */
-    }
-
-    ::-webkit-input-placeholder {
-      /* Chrome/Opera/Safari */
-      color: #e1e1e1;
-    }
-
-    ::-moz-placeholder {
-      /* Firefox 19+ */
-      color: #e1e1e1;
-    }
-
-    :-ms-input-placeholder {
-      /* IE 10+ */
-      color: #e1e1e1;
-    }
-
-    :-moz-placeholder {
-      /* Firefox 18- */
-      color: #e1e1e1;
-    }
-  </style>
-
+  </script>
 </head>
 
 <body id="body">
@@ -87,7 +60,8 @@
 
 
           <div class="dropdown" style="margin: 0px 11px;">
-            <a href="/explore/1" class="btn btn-outline-success my-2 my-sm-0 ex" style="padding-top:3px;">
+            <a href="/explore/1" class="btn btn-outline-success my-2 my-sm-0 ex"
+              style="padding-top:3px;color: #fff;background-color: #ca5a2c;border-color: #ca5a2c;">
               Explore
             </a>
           </div>
@@ -121,6 +95,19 @@
 
     </div>
   </section>
+  <br>
+  <!-- <section class="explore-contents-section">
+    <div class="row">
+      <div class="col-md-4" style="height:200px;background-color: #ca5a2c;margin:0 50px">
+        <a href="/explore" style="height: 100%;">
+          <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;">New to vantage</h3>
+          <span style="color: #ffffff;padding: 25px 15px;font-size: 16px;">Get started with Vantage, find contacts and
+            help</span>
+          <span class="pull-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+        </a>
+      </div>
+    </div>
+  </section> -->
   <!-- #intro -->
   <br>
   <section class="resource-section">
@@ -790,7 +777,7 @@
             resourceContents += '<div class="resource-label-section">';
             resourceContents += '<div class="resource-label-data">' + value.resourceType + '</div>';
             resourceContents += '</div>';
-            resourceContents += '<div class="subject ellipsis mt-3" title="Overview">Category : ' + value.subject + '</div>';
+            resourceContents += '<div class="subject ellipsis mt-3" title="Overview">Category : ' + value.board + '</div>';
             resourceContents += '<div class="class ellipsis mt-3" title="Mission">Sub-Category : ' + value.gradeLevel + '</div>';
             resourceContents += '<div class="medium ellipsis mt-3" title="English">Language : ' + value.medium + '</div>';
             resourceContents += '</div>';

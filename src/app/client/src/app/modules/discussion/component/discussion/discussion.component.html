@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12" *ngIf="discussionThread.length === 0 && (batchId || contentId)">
         <button class="ui green button pull-right" (click)="startNewConversionClick()"><i class="fa fa-paper-plane"
-                aria-hidden="true"></i>&nbsp;&nbsp;{{resourceService?.frmelmnts?.lbl?.conversation}}</button>
+                aria-hidden="true" style="background-color: #ca5a2c !important"></i>&nbsp;&nbsp;{{resourceService?.frmelmnts?.lbl?.conversation}}</button>
     </div>
 </div>
 <div class="row MB30" *ngFor="let thread of discussionThread;let i=index">

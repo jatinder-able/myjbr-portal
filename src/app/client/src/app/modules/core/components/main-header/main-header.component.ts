@@ -252,6 +252,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    localStorage.removeItem("isLogged");
     window.location.replace('/logoff');
     this.cacheService.removeAll();
   }
