@@ -41,7 +41,7 @@ body {
 }
 
 *[lang="en"] body {
-  font-family: "Helvetica_Neue_Web_Bold";
+  font-family: Arial,Sans-Serif;
 }
 
 *[lang="hi"] body {
@@ -101,10 +101,10 @@ h5,
 .ui.form input[type=url],
 .ui.dropdown,
 .ui.category.search>.results .category>.name {
-  font-family: "ITC_Charter_Regular";
+  font-family: "ITC_Charter_Regular",Georgia,Serif;
 }
 .ui.menu {
-  font-family: "Helvetica_Neue_Web_Regular";
+  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif;
 }
 
 .ui.tiny.header .icon {

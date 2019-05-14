@@ -26,8 +26,9 @@
       }
 
       &.active {
-        font-weight: bold;
-        color: $primary-color;
+        // font-weight: bold;
+        color: #ffffff;
+        background-color: #eb8b00;
 
         &:hover,
         &:focus {

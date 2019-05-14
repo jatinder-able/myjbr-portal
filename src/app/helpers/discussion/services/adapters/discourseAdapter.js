@@ -331,7 +331,7 @@ class DiscourseAdapter {
         return arr;
       }else{
         var result1 = _.filter(arr, function(o) { return o.reply_to_post_number != null });
-        result[0].replies = result1[0]
+        result[0].replies = [result1[0]];
         return result;
       }
     }else{
