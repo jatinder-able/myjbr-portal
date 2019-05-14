@@ -142,11 +142,11 @@
       <div class="col-md-3" onclick="redirectToExplore('Practice Specific Trainings');"
         style="background-color: #602320;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 13px 10px 0px 10px;">
         <h4 style="color: #ffffff;padding: 0px 11px;padding-bottom: 0;margin-bottom: 15px;"
-          class="ui header pageSection-heading"><b>Advisory, Tax & Assurance</b></h4>
+          class="ui header pageSection-heading"><b>Advisory, Tax & &nbsp;&nbsp;Assurance</b></h4>
         <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
         <span style="display:block;color: #ffffff;padding: 2px 0px 0 12px;font-size: 13px;">Access all available learnings in each Line of Service.</span>
         <span title="Advisory, Tax & Assurance"
-          style="border: 0.1em solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: 20px;"
+          style="border: 0.1em solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: -5px;"
           class="pull-right">
           <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1;font-size:20px;"></i>
         </span>
@@ -876,7 +876,7 @@
         },
       });
       $(".resource-contents").on("click", ".resource-card", function () {
-        location.href = '/play/content/' + $(this).find('input').val();
+        location.href = '/explore-course/course/' + $(this).find('input').val();
       })
       $("#searchForm").on("submit", function () {
         return false;
