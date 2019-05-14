@@ -6,7 +6,7 @@
 </div>
 <div class="row">
     <div class="col-md-12" *ngIf="discussionThread.length === 0 && (batchId || contentId)">
-        <button class="ui green button pull-right" (click)="startNewConversionClick()"><i class="fa fa-paper-plane"
+        <button class="ui orange button pull-right" (click)="startNewConversionClick()"><i class="fa fa-paper-plane"
                 aria-hidden="true" style="background-color: #ca5a2c !important"></i>&nbsp;&nbsp;{{resourceService?.frmelmnts?.lbl?.conversation}}</button>
     </div>
 </div>
@@ -142,7 +142,7 @@
     </div> -->
     <br />
     <div class="pull-left">
-        <label class="ui green button" for="myFile"><i class="fa fa-cloud-upload"
+        <label class="ui orange button" for="myFile"><i class="fa fa-cloud-upload"
                 aria-hidden="true"></i>&nbsp;&nbsp;Choose file</label>
         <input type="file" style="display:none" id="myFile" name="myFile" accept=".pdf" (change)="fileEvent($event)"
             title="Choose a file" autocomplete="off" />
@@ -180,7 +180,7 @@
                         </div> -->
                     <br />
                     <div class="pull-left">
-                        <label class="ui green button" for="myFile1"><i class="fa fa-cloud-upload"
+                        <label class="ui orange button" for="myFile1"><i class="fa fa-cloud-upload"
                                 aria-hidden="true"></i>&nbsp;&nbsp;Choose file</label>
                         <input type="file" style="display:none" id="myFile1" name="myFile1" accept=".pdf"
                             (change)="fileEventforModal($event)" title="Choose a file" autocomplete="off" />
