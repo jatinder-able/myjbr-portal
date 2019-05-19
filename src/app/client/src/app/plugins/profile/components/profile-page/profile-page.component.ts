@@ -24,6 +24,10 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   * Reference of User Profile interface
   */
   userProfile: any;
+  /**
+   * Admin Dashboard access roles
+   */
+  adminDashboard: Array<string>;
 
   @ViewChild('profileModal') profileModal;
   @ViewChild('slickModal') slickModal;
@@ -178,6 +182,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.adminDashboard = this.configService.rolesConfig.headerDropdownRoles.adminDashboard;
     this.getCustodianOrgUser().subscribe(custodianOrgUser => {
       this.isCustodianOrgUser = custodianOrgUser;
     },

@@ -13,9 +13,14 @@
       <div class="fs-1-16">{{resourceService?.frmelmnts?.lbl?.userId}} :</div>
       <div class="fs-1-16 ml-5">{{userProfile.userName}}</div>
     </div>
-    <div class="mb-15 text-ac profile-label-container" *ngIf="roles && roles.length > 0">
-      <span class="ui dodger-blue basic label mr-15 mt-5"
+    <div style="display: flex;">
+      <div class="mb-15 text-ac profile-label-container" *ngIf="roles && roles.length > 0">
+        <span class="ui dodger-blue basic label mr-15 mt-5"
         *ngFor="let role of roles | slice:0:showMoreRolesLimit">{{role}}</span>
+      </div>
+      <div class="profile-label-container" style="text-align: left;">
+        <app-bulk-upload appPermission [permission]='adminDashboard'></app-bulk-upload>
+      </div>
     </div>
     <div *ngIf="roles.length > defaultShowMoreRolesLimit" class="fs-1 color-2 mb-10 font-w-bold cursor-pointer">
       <span tabindex="0" *ngIf="showMoreRoles" (click)="toggle(true)">+ {{roles.length -
