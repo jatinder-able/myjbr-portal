@@ -59,6 +59,13 @@
                     <a 
                         class="item" 
                         *ngIf='permissionService.permissionAvailable' 
+                        appPermission [permission]='adminDashboard' 
+                        routerLink="/contentcreationstatics">
+                        {{resourceService.frmelmnts?.lnk?.report}}
+                    </a>
+                    <a 
+                        class="item" 
+                        *ngIf='permissionService.permissionAvailable' 
                         appPermission [permission]='announcementRole' 
                         routerLink="announcement/outbox/1">
                         {{resourceService.frmelmnts?.lnk?.announcement}}
