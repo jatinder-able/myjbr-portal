@@ -18,6 +18,7 @@ import { CacheStorageAbstract } from 'ng2-cache-service/dist/src/services/storag
 import { CacheSessionStorage } from 'ng2-cache-service/dist/src/services/storage/session-storage/cache-session-storage.service';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import {DiscussionModule} from '../app/modules/discussion/discussion.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent
@@ -26,6 +27,7 @@ import {DiscussionModule} from '../app/modules/discussion/discussion.module';
     CoreModule.forRoot(),
     CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     DiscussionModule,
     SuiModule,

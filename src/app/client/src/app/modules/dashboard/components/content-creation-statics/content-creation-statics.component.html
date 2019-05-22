@@ -1,0 +1,70 @@
+<div class="ui container" [appTelemetryImpression]="telemetryImpression">
+    <form novalidate>
+        <br>
+        <div class="ui grid stackable top aligned my-0">
+            <div class="twelve wide tablet ten wide computer column mobile-p-0">
+                <div class="ui grid">
+                    <div class="six wide mobile three wide tablet three wide computer column my-10">
+                        <div class="field">
+                            <label>From Date</label>
+                            <div class="mt-10" style="cursor: pointer">
+                                <p-calendar [(ngModel)]="fromDate" [showIcon]=true placeholder="Choose From Date"
+                                    [maxDate]="currentDate" [ngModelOptions]="{standalone: true}"
+                                    [readonlyInput]="true">
+                                </p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="six wide mobile three wide tablet three wide computer column my-10">
+                        <div class="field">
+                            <label>To Date</label>
+                            <div class="mt-10" style="cursor: pointer">
+                                <p-calendar [(ngModel)]="toDate" [showIcon]=true placeholder="Choose To Date"
+                                    [maxDate]="currentDate" [ngModelOptions]="{standalone: true}"
+                                    [readonlyInput]="true">
+                                </p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="twelve wide tablet two wide computer right aligned top aligned column filter-button my-13">
+                        <label class="computer-only mb-5">&nbsp;</label>
+                        <button type="button" class="ui orange button"
+                            (click)="getContentCreationStaticsReport();">{{resourceService.frmelmnts?.btn?.submit}}</button>
+                        <button type="button" class="ui orange basic button ml-10"
+                            (click)="resetFields();">{{resourceService.frmelmnts?.btn?.reset}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form><br><br>
+    <div class="ui grid" *ngIf="tableData.length > 0">
+        <div class="twelve wide column">
+            <p-table #dt [value]="tableData" [columns]="cols" [paginator]="true" [rows]="15" [resizableColumns]="true">
+                <ng-template pTemplate="caption">
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
+                            (click)="dt.exportCSV()" style="float:right"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" pResizableColumn>
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns" class="ui-resizable-column">
+                            {{rowData[col.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <!-- <div *ngIf="noResult">
+        <app-no-result [data]="noResultMessage"></app-no-result>
+    </div> -->
+</div>

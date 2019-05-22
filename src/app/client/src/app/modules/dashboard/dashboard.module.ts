@@ -1,7 +1,7 @@
 
 // Angular modules
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // Modules
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -15,12 +15,14 @@ import {
   RendererService, LineChartService, DownloadService, CourseProgressService,
   UsageService
 } from './services';
-import { OrganisationComponent, CourseConsumptionComponent, CourseProgressComponent, UsageReportsComponent } from './components';
+import { OrganisationComponent, CourseConsumptionComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent } from './components';
 // SB core and shared services
 import { SearchService } from '@sunbird/core';
 import { SharedModule } from '@sunbird/shared';
 import { OrderModule } from 'ngx-order-pipe';
-
+// Imported Primeng Modules
+import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
 @NgModule({
   imports: [
     CommonModule,
@@ -31,9 +33,11 @@ import { OrderModule } from 'ngx-order-pipe';
     SharedModule,
     OrderModule,
     TelemetryModule,
-    DiscussionModule
+    DiscussionModule,
+    CalendarModule,
+    TableModule
   ],
-  declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent],
+  declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent],
   exports: [CourseProgressComponent],
   providers: [
     RendererService,
@@ -41,6 +45,6 @@ import { OrderModule } from 'ngx-order-pipe';
     SearchService,
     LineChartService,
     CourseConsumptionService,
-    OrganisationService, DownloadService, CourseProgressService, UsageService]
+    OrganisationService, DownloadService, CourseProgressService, UsageService, DatePipe]
 })
 export class DashboardModule { }
