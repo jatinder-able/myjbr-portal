@@ -14,7 +14,7 @@ let envVariables = {
   PORTAL_AUTH_SERVER_URL: env.sunbird_portal_auth_server_url || 'https://pwcdemoinstance.ddns.net/auth',
   PORTAL_AUTH_SERVER_CLIENT: env.sunbird_portal_auth_server_client || 'portal',
   APPID: process.env.sunbird_environment + '.' + process.env.sunbird_instance + '.portal',
-  DEFAULT_CHANNEL: 'advisory1',
+  DEFAULT_CHANNEL: 'advisory',
   EKSTEP_ENV: env.ekstep_env || 'qa',
   PORTAL_PORT: env.sunbird_port || 3000,
   PORTAL_API_AUTH_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4MDlhODBmNDY3MmE0OGMzYTQ1NzJlOGEwYTQxOGEzNiJ9.hktfOEiPqaY46QTwYLqjNtiVj6hmraL4d7Knl02zxsc",
