@@ -1,4 +1,3 @@
-
 // Angular modules
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -23,6 +22,8 @@ import { OrderModule } from 'ngx-order-pipe';
 // Imported Primeng Modules
 import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
+import { PermissionDirective } from './directives';
 @NgModule({
   imports: [
     CommonModule,
@@ -35,10 +36,11 @@ import { TableModule } from 'primeng/table';
     TelemetryModule,
     DiscussionModule,
     CalendarModule,
-    TableModule
+    TableModule,
+    ChartModule
   ],
-  declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent],
-  exports: [CourseProgressComponent],
+  declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent, PermissionDirective],
+  exports: [CourseProgressComponent, PermissionDirective],
   providers: [
     RendererService,
     DashboardUtilsService,

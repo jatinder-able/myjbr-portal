@@ -51,16 +51,21 @@
                     </a>
                     <a 
                         class="item" 
+                        routerLink="orgDashboard">
+                        {{resourceService.frmelmnts?.lnk?.dashboard}}
+                    </a>
+                    <!-- <a 
+                        class="item" 
                         *ngIf='permissionService.permissionAvailable' 
                         appPermission [permission]='adminDashboard' 
                         routerLink="orgDashboard">
                         {{resourceService.frmelmnts?.lnk?.dashboard}}
-                    </a>
+                    </a> -->
                     <a 
                         class="item" 
                         *ngIf='permissionService.permissionAvailable' 
                         appPermission [permission]='adminDashboard' 
-                        routerLink="/contentcreationstatics">
+                        routerLink="contentcreationstatics">
                         {{resourceService.frmelmnts?.lnk?.staticsReport}}
                     </a>
                     <a 

@@ -1,6 +1,6 @@
 import { IInteractEventEdata, IInteractEventObject, TelemetryInteractDirective } from '@sunbird/telemetry';
 import { IImpressionEventInput } from './../../../telemetry/interfaces/telemetry';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UsageService } from './../../services';
 import * as _ from 'lodash';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,17 +8,26 @@ import { UserService } from '@sunbird/core';
 import { ToasterService, ResourceService, INoResultMessage } from '@sunbird/shared';
 import { UUID } from 'angular2-uuid';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ConfigService } from '@sunbird/shared';
+import { DatePipe } from '@angular/common';
+const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-usage-reports',
   templateUrl: './usage-reports.component.html',
-  styleUrls: ['./usage-reports.component.scss']
+  styleUrls: ['./usage-reports.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UsageReportsComponent implements OnInit {
-
+  /**
+ * Admin Dashboard access roles
+ */
+  enrolledCourseData: any = [];
+  cols: any = [];
+  adminDashboard: Array<string>;
   reportMetaData: any;
   chartData: Array<object> = [];
   table: any;
+  donutChartData: any = [];
   isTableDataLoaded = false;
   currentReport: any;
   slug: string;
@@ -29,14 +38,15 @@ export class UsageReportsComponent implements OnInit {
   telemetryInteractEdata: IInteractEventEdata;
   telemetryInteractDownloadEdata: IInteractEventEdata;
   @ViewChild(TelemetryInteractDirective) telemetryInteractDirective;
-  constructor(private usageService: UsageService, private sanitizer: DomSanitizer,
+  constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
     public userService: UserService, private toasterService: ToasterService,
-    public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router
+    public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
   ) {
     this.activatedRoute = activatedRoute;
   }
 
   ngOnInit() {
+    this.adminDashboard = this.configService.rolesConfig.headerDropdownRoles.adminDashboard;
     const reportsLocation = (<HTMLInputElement>document.getElementById('reportsLocation')).value;
     this.slug = _.get(this.userService, 'userProfile.rootOrg.slug');
     this.usageService.getData(`/${reportsLocation}/${this.slug}/config.json`).subscribe(data => {
@@ -53,6 +63,7 @@ export class UsageReportsComponent implements OnInit {
       this.noResult = true;
     });
     this.setTelemetryImpression();
+    this.getEnrolledCourses();
   }
 
   setTelemetryInteractObject(val) {
@@ -62,7 +73,63 @@ export class UsageReportsComponent implements OnInit {
       ver: '1.0'
     };
   }
-
+  getEnrolledCourses() {
+    this.usageService.getEnrolledCourses().subscribe(response => {
+      this.enrolledCourseData = [];
+      if (_.get(response, 'responseCode') === 'OK') {
+        if (response.result.courses.length > 0) {
+          this.enrolledCourseData = response.result.courses;
+          var self = this;
+          _.map(this.enrolledCourseData, function (obj) {
+            obj.trainingName = obj.batch.name;
+            obj.enrollmentType = obj.batch.enrollmentType;
+            obj.startDate = self.datePipe.transform(obj.batch.startDate, 'dd-MMM-yyyy');
+            obj.endDate = self.datePipe.transform(obj.batch.endDate, 'dd-MMM-yyyy');
+            obj.completedOn = self.datePipe.transform(obj.completedOn, 'dd-MMM-yyyy');
+            obj.statusName = (obj.progress === 0) ? 'Not-Started' : ((obj.progress === obj.leafNodesCount || obj.progress > obj.leafNodesCount) ? 'Completed' : 'In-Progress');
+            obj.downloadUrl = azureUrl + obj.courseName + '-' + self.userService.userid + '-' + obj.courseId + '.pdf';
+          });
+          this.initializeColumns();
+          this.initializeChart();
+        }
+      }
+    }, (err) => {
+      console.log(err);
+      this.noResultMessage = {
+        'messageText': 'messages.stmsg.m0131'
+      };
+    });
+  }
+  initializeChart() {
+    this.donutChartData = {
+      labels: ['COMPLETED - ' + _.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, 'IN-PROGRESS - ' + _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, 'NOT-STARTED - ' + _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length],
+      datasets: [
+        {
+          data: [_.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length],
+          backgroundColor: [
+            "#D93954",
+            "#6D6E71",
+            "#602320"
+          ],
+          hoverBackgroundColor: [
+            "#D93954",
+            "#6D6E71",
+            "#602320"
+          ]
+        }]
+    };
+  }
+  initializeColumns() {
+    this.cols = [
+      { field: 'trainingName', header: 'Training Name' },
+      { field: 'enrollmentType', header: 'Enrollment Type' },
+      { field: 'startDate', header: 'Start Date' },
+      { field: 'endDate', header: 'Target End Date' },
+      { field: 'completedOn', header: 'Completion Date' },
+      { field: 'statusName', header: 'Status' },
+      { field: 'certificate', header: 'Certificate' }
+    ]
+  }
   reportType(reportType) {
     this.telemetryInteractDirective.telemetryInteractObject = this.setTelemetryInteractObject(_.get(this.currentReport, 'id'));
     this.telemetryInteractDirective.telemetryInteractEdata = {

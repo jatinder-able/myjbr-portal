@@ -21,7 +21,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orgDashboard', component: UsageReportsComponent, canActivate: [AuthGuard],
+    path: 'orgDashboard', component: UsageReportsComponent,
     data: {
       roles: 'dashboardRole',
       telemetry: { env: 'dashboard', pageid: 'org-admin-dashboard', type: 'view' },

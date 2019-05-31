@@ -1,29 +1,72 @@
 <div class="ui container" [appTelemetryImpression]="telemetryImpression">
-    <div class="ui stackable grid mt-30" *ngIf="!noResult">
-        <div class="three wide column pt-0">
+    <!-- <div class="ui stackable grid mt-30" *ngIf="!noResult"> -->
+    <div class="ui stackable grid">
+        <!-- <div class="three wide column pt-0">
             <div class="publicmenusection ui secondary vertical menu">
                 <a appTelemetryInteract [telemetryInteractObject]="setTelemetryInteractObject(report.id)"
                     [telemetryInteractEdata]="telemetryInteractEdata" *ngFor="let report of reportMetaData"
                     (click)="renderReport(report)" class="item" [ngClass]="{'active': currentReport.id === report.id}">
                     {{report.label || report.title}}</a>
             </div>
-        </div>
-        <div class="nine wide column workspacesegment">
+        </div> -->
+        <div class="twelve wide column workspacesegment">
             <h2 class="ui small header">
                 {{currentReport?.title || currentReport?.label}}
             </h2>
             <p *ngIf="currentReport?.description" [innerHTML]="transformHTML(currentReport.description)"></p>
             <sui-tabset>
                 <div class="ui top attached tabular menu">
-                    <a (click)="reportType('graph')" class="item"
+                    <a (click)="reportType('trainingstats')" class="item"
+                        suiTabHeader="trainingstats">{{resourceService?.frmelmnts?.lbl?.trainingstats}}</a>
+                    <a (click)="reportType('graph')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="graph">{{resourceService?.frmelmnts?.lbl?.graphs}}</a>
-                    <a (click)="reportType('data')" class="item"
+                    <a (click)="reportType('data')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="tableMenu">{{resourceService?.frmelmnts?.lbl?.tables}}</a>
                     <div class="right menu">
                         <a *ngIf="currentReport?.downloadUrl" class="ui item" appTelemetryInteract
                             [telemetryInteractObject]="setTelemetryInteractObject(currentReport.id)"
                             [telemetryInteractEdata]="telemetryInteractDownloadEdata"
                             (click)="downloadCSV(currentReport.downloadUrl)">{{resourceService?.frmelmnts?.lbl?.downloadCsv}}</a>
+                    </div>
+                </div>
+                <div class="ui bottom attached segment" suiTabContent="trainingstats">
+                    <div class="twelve wide column">
+                        <p-chart type="doughnut" [data]="donutChartData" width="80vw" height="40vh"></p-chart>
+                    </div>
+                    <br>
+                    <div class="twelve wide column">
+                        <p-table #dt [value]="enrolledCourseData" [columns]="cols" [paginator]="true" [rows]="10"
+                            [resizableColumns]="true">
+                            <ng-template pTemplate="caption">
+                                <div class="ui small left icon input" style="float: left">
+                                    <i class="search icon"></i>
+                                    <input type="text" pInputText placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                                <div class="ui-helper-clearfix">
+                                    <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
+                                        (click)="dt.exportCSV()" style="float:right"></button>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns" pResizableColumn>
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td *ngFor="let col of columns" class="ui-resizable-column">
+                                        {{rowData[col.field]}}
+                                        <a href="{{rowData.downloadUrl}}" style="display: inline-flex"
+                                            class="ui mini orange button" target="_blank"
+                                            *ngIf="col.header === 'Certificate' && rowData.statusName == 'Completed'"><i
+                                                class="download icon" style="float: left"></i>&nbsp;Download</a>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="graph">
@@ -46,7 +89,7 @@
             </sui-tabset>
         </div>
     </div>
-    <div *ngIf="noResult">
+    <!-- <div *ngIf="noResult">
         <app-no-result [data]="noResultMessage"></app-no-result>
-    </div>
+    </div> -->
 </div>
