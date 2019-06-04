@@ -43,7 +43,7 @@
                                 <div class="mt-10" style="cursor: pointer">
                                     <p-dropdown [options]="batchList" [(ngModel)]="selectedBatch" optionLabel="name"
                                         [ngModelOptions]="{standalone: true}"
-                                        (onChange)="populateCourseDashboardData(selectedBatch?.identifier)">
+                                        (onChange)="populateCourseDashboardData(selectedBatch)">
                                     </p-dropdown>
                                 </div>
                             </div>

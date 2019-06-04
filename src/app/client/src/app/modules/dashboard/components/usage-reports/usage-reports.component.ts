@@ -242,7 +242,7 @@ export class UsageReportsComponent implements OnInit {
       if (_.get(response, 'responseCode') === 'OK') {
         if (response.result.response.content.length > 0) {
           this.batchList = response.result.response.content;
-          this.populateCourseDashboardData(this.batchList[0].identifier);
+          this.populateCourseDashboardData(this.batchList[0]);
         }
       }
     }, (err) => {
@@ -252,8 +252,8 @@ export class UsageReportsComponent implements OnInit {
       };
     })
   }
-  populateCourseDashboardData(identifier) {
-    this.usageService.populateCourseDashboardData(identifier).subscribe(response => {
+  populateCourseDashboardData(batch) {
+    this.usageService.populateCourseDashboardData(_.get(batch, 'identifier')).subscribe(response => {
       this.courseDashboardData = [];
       if (_.get(response, 'responseCode') === 'OK') {
         if (!_.isEmpty(response.result)) {
