@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UsageService } from './../../services';
 import * as _ from 'lodash';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UserService } from '@sunbird/core';
+import { PermissionService, UserService } from '@sunbird/core';
 import { ToasterService, ResourceService, INoResultMessage } from '@sunbird/shared';
 import { UUID } from 'angular2-uuid';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,9 +21,15 @@ export class UsageReportsComponent implements OnInit {
   /**
  * Admin Dashboard access roles
  */
-  enrolledCourseData: any = [];
-  cols: any = [];
   adminDashboard: Array<string>;
+  enrolledCourseData: any = [];
+  selectedBatch: object;
+  cols: any = [];
+  courseDashboardColumns: any = [];
+  batchList: any = [];
+  courseDashboardData: any = [];
+  barChartData: any;
+  barChartOptions: any;
   reportMetaData: any;
   chartData: Array<object> = [];
   table: any;
@@ -32,6 +38,7 @@ export class UsageReportsComponent implements OnInit {
   currentReport: any;
   slug: string;
   noResult: boolean;
+  courseMentor: boolean = false;
   noResultMessage: INoResultMessage;
   private activatedRoute: ActivatedRoute;
   telemetryImpression: IImpressionEventInput;
@@ -39,7 +46,7 @@ export class UsageReportsComponent implements OnInit {
   telemetryInteractDownloadEdata: IInteractEventEdata;
   @ViewChild(TelemetryInteractDirective) telemetryInteractDirective;
   constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
-    public userService: UserService, private toasterService: ToasterService,
+    public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
   ) {
     this.activatedRoute = activatedRoute;
@@ -64,6 +71,13 @@ export class UsageReportsComponent implements OnInit {
     });
     this.setTelemetryImpression();
     this.getEnrolledCourses();
+    //Check Course Mentor Role
+    if (this.permissionService.checkRolesPermissions(['COURSE_MENTOR'])) {
+      this.courseMentor = true;
+    } else {
+      this.courseMentor = false;
+    }
+    this.getBatches();
   }
 
   setTelemetryInteractObject(val) {
@@ -90,7 +104,7 @@ export class UsageReportsComponent implements OnInit {
             obj.downloadUrl = azureUrl + obj.courseName + '-' + self.userService.userid + '-' + obj.courseId + '.pdf';
           });
           this.initializeColumns();
-          this.initializeChart();
+          this.initializeDonutChart();
         }
       }
     }, (err) => {
@@ -100,7 +114,7 @@ export class UsageReportsComponent implements OnInit {
       };
     });
   }
-  initializeChart() {
+  initializeDonutChart() {
     this.donutChartData = {
       labels: ['COMPLETED - ' + _.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, 'IN-PROGRESS - ' + _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, 'NOT-STARTED - ' + _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length],
       datasets: [
@@ -128,6 +142,15 @@ export class UsageReportsComponent implements OnInit {
       { field: 'completedOn', header: 'Completion Date' },
       { field: 'statusName', header: 'Status' },
       { field: 'certificate', header: 'Certificate' }
+    ]
+  }
+  initializeCourseDashboardColumns() {
+    this.courseDashboardColumns = [
+      { field: 'username', header: 'User Name' },
+      { field: 'orgName', header: 'Organization Name' },
+      { field: 'phone', header: 'Mobile Number' },
+      { field: 'enrolledOn', header: 'Enrolled On' },
+      { field: 'progress', header: 'Status' }
     ]
   }
   reportType(reportType) {
@@ -213,6 +236,95 @@ export class UsageReportsComponent implements OnInit {
     this.isTableDataLoaded = true;
   }
 
+  getBatches() {
+    this.usageService.getBatches().subscribe(response => {
+      this.batchList = [];
+      if (_.get(response, 'responseCode') === 'OK') {
+        if (response.result.response.content.length > 0) {
+          this.batchList = response.result.response.content;
+          this.populateCourseDashboardData(this.batchList[0].identifier);
+        }
+      }
+    }, (err) => {
+      console.log(err);
+      this.noResultMessage = {
+        'messageText': 'messages.stmsg.m0131'
+      };
+    })
+  }
+  populateCourseDashboardData(identifier) {
+    this.usageService.populateCourseDashboardData(identifier).subscribe(response => {
+      this.courseDashboardData = [];
+      if (_.get(response, 'responseCode') === 'OK') {
+        if (!_.isEmpty(response.result)) {
+          this.courseDashboardData = response.result;
+          var self = this;
+          _.map(this.courseDashboardData.data, function (obj) {
+            obj.enrolledOn = self.datePipe.transform(obj.enrolledOn, 'dd-MMM-yyyy');
+            obj.isError = false;
+            if (obj.progress > 100) {
+              obj.progress = 100;
+              obj.isError = true;
+            }
+          });
+          this.initializeCourseDashboardColumns();
+          this.initializeBarChart(this.courseDashboardData.data);
+        }
+      }
+    }, (err) => {
+      console.log(err);
+      this.noResultMessage = {
+        'messageText': 'messages.stmsg.m0131'
+      };
+    })
+  }
+  initializeBarChart(responseData) {
+    this.barChartData = {
+      "labels": [
+        "0 - 25%",
+        "25% - 50%",
+        "50% - 75%",
+        "75% - 100%"
+      ],
+      "datasets": [
+        {
+          "label": "Users Progress",
+          "data": [
+            _.filter(responseData, function (obj) { return obj.progress >= 0 && obj.progress < 25 }).length,
+            _.filter(responseData, function (obj) { return obj.progress >= 25 && obj.progress < 50 }).length,
+            _.filter(responseData, function (obj) { return obj.progress >= 50 && obj.progress < 75 }).length,
+            _.filter(responseData, function (obj) { return obj.progress >= 75 && obj.progress <= 100 }).length
+          ],
+          "fill": false,
+          "backgroundColor": [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 205, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)"
+          ],
+          "borderColor": [
+            "rgb(255, 99, 132)",
+            "rgb(255, 159, 64)",
+            "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)"
+          ],
+          "borderWidth": 1
+        }
+      ]
+    }
+    this.barChartOptions = {
+      "scales": {
+        "yAxes": [
+          {
+            "ticks": {
+              "beginAtZero": true,
+              "max": this.courseDashboardData.data.length,
+            }
+          }
+        ]
+      }
+    }
+  }
   downloadCSV(url) {
     this.usageService.getData(url).subscribe((response) => {
       if (_.get(response, 'responseCode') === 'OK') {
