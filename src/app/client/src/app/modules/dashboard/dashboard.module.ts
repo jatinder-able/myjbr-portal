@@ -23,6 +23,7 @@ import { OrderModule } from 'ngx-order-pipe';
 import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
+import { DropdownModule } from 'primeng/dropdown';
 import { PermissionDirective } from './directives';
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { PermissionDirective } from './directives';
     DiscussionModule,
     CalendarModule,
     TableModule,
-    ChartModule
+    ChartModule,
+    DropdownModule
   ],
   declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent, PermissionDirective],
   exports: [CourseProgressComponent, PermissionDirective],

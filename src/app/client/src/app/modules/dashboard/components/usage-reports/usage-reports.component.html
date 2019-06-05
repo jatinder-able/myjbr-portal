@@ -18,6 +18,10 @@
                 <div class="ui top attached tabular menu">
                     <a (click)="reportType('trainingstats')" class="item"
                         suiTabHeader="trainingstats">{{resourceService?.frmelmnts?.lbl?.trainingstats}}</a>
+                    <a (click)="reportType('trainingdashboard')" class="item" suiTabHeader="trainingdashboard"
+                        *ngIf="courseMentor">{{resourceService?.frmelmnts?.lbl?.trainingdashboard}}</a>
+                    <a (click)="reportType('staticsReport')" class="item" appPermission [permission]='adminDashboard'
+                        suiTabHeader="staticsReport">{{resourceService?.frmelmnts?.lnk?.staticsReport}}</a>
                     <a (click)="reportType('graph')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="graph">{{resourceService?.frmelmnts?.lbl?.graphs}}</a>
                     <a (click)="reportType('data')" class="item" appPermission [permission]='adminDashboard'
@@ -27,6 +31,85 @@
                             [telemetryInteractObject]="setTelemetryInteractObject(currentReport.id)"
                             [telemetryInteractEdata]="telemetryInteractDownloadEdata"
                             (click)="downloadCSV(currentReport.downloadUrl)">{{resourceService?.frmelmnts?.lbl?.downloadCsv}}</a>
+                    </div>
+                </div>
+                <div class="ui bottom attached segment" suiTabContent="staticsReport">
+                    <app-content-creation-statics></app-content-creation-statics>
+                </div>
+                <div class="ui bottom attached segment" suiTabContent="trainingdashboard">
+                    <div class="ui grid">
+                        <div class="eight wide column">
+                            <div class="field">
+                                <div class="mt-10" style="cursor: pointer">
+                                    <p-dropdown [options]="batchList" [(ngModel)]="selectedBatch" optionLabel="name"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (onChange)="populateCourseDashboardData(selectedBatch)">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="d-flex my-20" *ngIf="courseDashboardData">
+                                <span class="course-start-dt black-divider pr-15">
+                                    <b *ngIf="courseDashboardData.startDate">
+                                        {{resourceService?.frmelmnts?.lbl?.batchstartdate}}&nbsp;:
+                                    </b>
+                                    &nbsp;&nbsp;{{courseDashboardData.startDate | dateFormat :'DD/MM/YYYY' }}
+                                </span>
+
+                                <span class="course-end-dt black-divider px-15">
+                                    <b>{{resourceService?.frmelmnts?.lbl?.batchenddate}}&nbsp;:
+                                    </b>
+                                    &nbsp;&nbsp;
+                                    <span
+                                        *ngIf="courseDashboardData.endDate">{{courseDashboardData.endDate | dateFormat :'DD/MM/YYYY'}}</span>
+                                    <span *ngIf="!courseDashboardData.endDate">-</span>
+                                </span>
+
+                                <span *ngIf="courseDashboardData.count" class="course-participants black-divider px-15">
+                                    <b>{{resourceService?.frmelmnts?.lbl?.participants}}&nbsp;:
+                                    </b> &nbsp;&nbsp; {{courseDashboardData.count}}
+                                </span>
+                                <span *ngIf="courseDashboardData.completedCount" class="course-completed pl-15">
+                                    <b>{{resourceService?.frmelmnts?.lbl?.completedCourse}}&nbsp;:
+                                    </b>
+                                    &nbsp;&nbsp;{{courseDashboardData.completedCount}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="four wide column" style="width:'30vw'">
+                            <p-chart type="bar" [data]="barChartData" [options]="barChartOptions"></p-chart>
+                        </div>
+                    </div>
+                    <div class="twelve wide column">
+                        <p-table #dtCourseDashboard [value]="courseDashboardData.data"
+                            [columns]="courseDashboardColumns" [paginator]="true" [rows]="10" [resizableColumns]="true">
+                            <ng-template pTemplate="caption">
+                                <div class="ui small left icon input" style="float: left">
+                                    <i class="search icon"></i>
+                                    <input type="text" pInputText placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                                <div class="ui-helper-clearfix">
+                                    <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
+                                        (click)="dtCourseDashboard.exportCSV()" style="float:right"></button>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns" pResizableColumn>
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td *ngFor="let col of columns" class="ui-resizable-column">
+                                        <span *ngIf="col.header != 'Status'">{{rowData[col.field]}}</span>
+                                        <span [style.color]="rowData.isError ? '#f44336' : '#333333'"
+                                            *ngIf="col.header == 'Status'">{{rowData[col.field]}}%</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="trainingstats">

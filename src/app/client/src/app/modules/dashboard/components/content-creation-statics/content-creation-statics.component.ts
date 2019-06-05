@@ -60,6 +60,11 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
     this.reportService.getContentCreationStaticsReport(data).subscribe((response) => {
       if (_.get(response, 'responseCode') === 'OK') {
         this.tableData = response.result.content;
+        var self = this;
+        _.map(this.tableData, function (obj) {
+          obj.subject = _.isEmpty(obj.subject) ? 'N/A' : obj.subject;
+          obj.createdOn = self.datePipe.transform(obj.createdOn, 'dd-MMM-yyyy');
+        });
         this.initializeColumns();
       } else {
         this.toasterService.error(this.resourceService.messages.emsg.m0007);
@@ -71,17 +76,17 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   }
   initializeColumns() {
     this.cols = [
-      { field: 'identifier', header: 'Identifier' },
-      { field: 'subject', header: 'Subject' },
-      { field: 'medium', header: 'Medium' },
-      { field: 'createdOn', header: 'Created On' },
-      { field: 'objectType', header: 'Object Type' },
-      { field: 'gradeLevel', header: 'Grade Level' },
-      { field: 'framework', header: 'Framework' },
       { field: 'name', header: 'Name' },
+      { field: 'board', header: 'Category' },
+      { field: 'subject', header: 'Sub-Category' },
+      { field: 'gradeLevel', header: 'Topic' },
+      { field: 'createdOn', header: 'Creation Date' },
       { field: 'contentType', header: 'Content Type' },
-      { field: 'board', header: 'Board' },
       { field: 'status', header: 'Status' }
+      // { field: 'identifier', header: 'Identifier' },
+      // { field: 'medium', header: 'Medium' },
+      // { field: 'objectType', header: 'Object Type' },
+      // { field: 'framework', header: 'Framework' },
     ]
   }
   resetFields() {
