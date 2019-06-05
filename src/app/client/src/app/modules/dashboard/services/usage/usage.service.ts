@@ -62,28 +62,4 @@ export class UsageService {
     };
     return this.learnerService.get(option);
   }
-  /**
- * To method calls the batch list API
- */
-  getBatches() {
-    const option = {
-      url: this.config.urlConFig.URLS.BATCH.GET_BATCHS,
-      data: {
-        'request': {
-          'filters': {
-            'status': ['0', '1', '2'],
-            'createdBy': this.userid
-          },
-          'sort_by': { 'createdDate': 'desc' }
-        }
-      }
-    };
-    return this.learnerService.post(option);
-  }
-  populateCourseDashboardData(identifier) {
-    const option = {
-      url: this.config.urlConFig.URLS.DASHBOARD.COURSE_PROGRESS_V2 + '/' + identifier + '?limit=200&offset=0',
-    };
-    return this.learnerService.get(option);
-  }
 }
