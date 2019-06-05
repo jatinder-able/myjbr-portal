@@ -104,6 +104,8 @@
                 "dashboardsevendaysfilter": "LAST 7 DAYS",
                 "dashboardfourteendaysfilter": "LAST 14 DAYS",
                 "dashboardfiveweeksfilter": "LAST 5 WEEKS",
+                "dashboardtwomonthsfilter": "LAST 2 MONTHS",
+                "dashboardsixmonthsfilter": "LAST 6 MONTHS",
                 "dashboardfrombeginingfilter": "FROM BEGINING",
                 "dashboardnocourseselected": "No course selected!",
                 "dashboardnocourseselecteddesc": "Please select a course from the above list",

@@ -12,6 +12,7 @@ import { ReportService } from '../../services/reports/reports.service';
 import { DatePipe } from '@angular/common';
 import { OnDelete } from 'fine-uploader/lib/core';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-content-creation-statics',
   templateUrl: './content-creation-statics.component.html',
@@ -23,9 +24,12 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   noResult: boolean;
   value: Date;
   currentDate: Date = new Date();
-  fromDate: Date;
-  toDate: Date;
+  fromDate: any;
+  toDate: any;
   tableData: any = [];
+  polarChartData: any;
+  polarChartOptions: any;
+  selectedDateRange: string;
   cols: any[];
   noResultMessage: INoResultMessage;
   private activatedRoute: ActivatedRoute;
@@ -38,9 +42,12 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.getContentCreationStaticsReport('14d');
   }
-  getContentCreationStaticsReport() {
+  getContentCreationStaticsReport(dateRange) {
+    this.selectedDateRange = dateRange;
+    this.toDate = new Date();
+    this.fromDate = (dateRange === "14d") ? moment().subtract('14', 'days') : ((dateRange === "2m") ? moment().subtract('2', 'months') : moment().subtract('6', 'months'));
     const data = {
       "request": {
         "query": "",
@@ -59,13 +66,14 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
     };
     this.reportService.getContentCreationStaticsReport(data).subscribe((response) => {
       if (_.get(response, 'responseCode') === 'OK') {
-        this.tableData = response.result.content;
+        this.tableData = _.reject(_.reject(response.result.content, { contentType: 'CourseUnit' }), { contentType: 'Asset' });
         var self = this;
         _.map(this.tableData, function (obj) {
           obj.subject = _.isEmpty(obj.subject) ? 'N/A' : obj.subject;
           obj.createdOn = self.datePipe.transform(obj.createdOn, 'dd-MMM-yyyy');
         });
         this.initializeColumns();
+        this.buildChartData();
       } else {
         this.toasterService.error(this.resourceService.messages.emsg.m0007);
       }
@@ -73,6 +81,38 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
       console.log(err);
       this.toasterService.error(this.resourceService.messages.emsg.m0007);
     });
+  }
+  buildChartData() {
+    var self = this;
+    let uniqData = [];
+    let uniqLabel = [];
+    _.map(_.uniqBy(self.tableData, 'board'), function (obj) {
+      uniqData.push(_.filter(self.tableData, { board: _.get(obj, 'board') }).length);
+      uniqLabel.push(_.get(obj, 'board'));
+    });
+    this.initializePolarChart(uniqData, uniqLabel);
+  }
+  initializePolarChart(uniqData, uniqLabel) {
+    this.polarChartData = {
+      datasets: [{
+        data: uniqData,
+        backgroundColor: [
+          "#FF6384",
+          "#4BC0C0",
+          "#FFCE56",
+          "#E7E9ED",
+          "#36A2EB"
+        ]
+      }],
+      labels: uniqLabel
+    }
+    this.polarChartOptions = {
+      // scale: {
+      //   ticks: {
+      //     max: _.sum(uniqData),
+      //   }
+      // }
+    }
   }
   initializeColumns() {
     this.cols = [
