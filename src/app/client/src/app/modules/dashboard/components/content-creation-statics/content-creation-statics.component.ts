@@ -30,6 +30,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   polarChartData: any;
   polarChartOptions: any;
   selectedDateRange: string;
+  interactObject: any;
   cols: any[];
   noResultMessage: INoResultMessage;
   private activatedRoute: ActivatedRoute;
