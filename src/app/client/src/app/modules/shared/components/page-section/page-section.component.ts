@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { ResourceService, ConfigService } from '../../services/index';
-import { Component,  Input, EventEmitter, Output , OnDestroy, Inject, ViewChild} from '@angular/core';
-import {ICaraouselData} from '../../interfaces/caraouselData';
+import { Component, Input, EventEmitter, Output, OnDestroy, Inject, ViewChild } from '@angular/core';
+import { ICaraouselData } from '../../interfaces/caraouselData';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import * as _ from 'lodash';
 import { IInteractEventObject, IInteractEventEdata, IImpressionEventInput } from '@sunbird/telemetry';
@@ -23,7 +23,7 @@ export class PageSectionComponent implements OnInit, OnDestroy {
   /**
   * section is used to render ICaraouselData value on the view
   */
-  @Input() section: ICaraouselData;
+  @Input() section: any;
 
   @Input() cardType: string;
 
@@ -61,6 +61,14 @@ export class PageSectionComponent implements OnInit, OnDestroy {
     this.playEvent.emit(event);
   }
   ngOnInit() {
+    if (this.section.name === 'My Courses') {
+      var self = this;
+      this.section.contents = _.reject(this.section.contents, function (obj) {
+        if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount'))) {
+          return obj;
+        }
+      })
+    }
     this.resourceDataSubscription = this.resourceService.languageSelected$
       .subscribe(item => {
         if (this.section.name !== 'My Courses') {
@@ -145,19 +153,19 @@ export class PageSectionComponent implements OnInit, OnDestroy {
   }
   addSlideConfig() {
     this.slideConfig = this.cardType === 'batch' ? this.config.appConfig.CourseBatchPageSection
-    .slideConfig : this.config.appConfig.CoursePageSection.slideConfig;
+      .slideConfig : this.config.appConfig.CoursePageSection.slideConfig;
     this.resourceService.languageSelected$
-        .subscribe(item => {
-          if (item.value === 'ur') {
-            this.slideConfig['rtl'] = true;
-          } else {
-            this.slideConfig['rtl'] = false;
-          }
-          if (this.slickModal) {
-            this.slickModal.unslick();
-            this.slickModal.initSlick(this.slideConfig);
-          }
-    });
+      .subscribe(item => {
+        if (item.value === 'ur') {
+          this.slideConfig['rtl'] = true;
+        } else {
+          this.slideConfig['rtl'] = false;
+        }
+        if (this.slickModal) {
+          this.slickModal.unslick();
+          this.slickModal.initSlick(this.slideConfig);
+        }
+      });
   }
   navigateToViewAll(section) {
     this.viewAll.emit(section);

@@ -1,7 +1,6 @@
-
 import { combineLatest as observableCombineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
 import { CourseConsumptionService, CourseProgressService } from './../../../services';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import * as _ from 'lodash';
@@ -22,14 +21,19 @@ import { CourseBatchService } from './../../../services/course-batch/course-batc
   styleUrls: ['./course-consumption-header.component.scss']
 })
 export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('enrollBatch') enrollBatch;
+  showModal: boolean = false;
+  submitInteractEdata: IInteractEventEdata;
+  telemetryInteractObject: IInteractEventObject;
+  telemetryCdata: Array<{}>;
   userDataSubscription: Subscription;
   userProfile: IUserProfile;
-  fullName:any
+  fullName: any
   userName: string;
-  title:string = ""
+  title: string = ""
   userId: string;
   fileUrl: any;
-  showCertificateBtn:Boolean; 
+  showCertificateBtn: Boolean = false;
 
   sharelinkModal: boolean;
   /**
@@ -66,9 +70,9 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
     public resourceService: ResourceService, private router: Router, public permissionService: PermissionService,
     public toasterService: ToasterService, public copyContentService: CopyContentService, private changeDetectorRef: ChangeDetectorRef,
     private courseProgressService: CourseProgressService, public contentUtilsServiceService: ContentUtilsServiceService,
-    public externalUrlPreviewService: ExternalUrlPreviewService, public coursesService: CoursesService, 
+    public externalUrlPreviewService: ExternalUrlPreviewService, public coursesService: CoursesService,
     public userService: UserService, private certificateDownloadService: CertificateDownloadService,
-     public courseBatchService: CourseBatchService) {
+    public courseBatchService: CourseBatchService) {
     this.userName = this.userService.userProfile.userName;
     this.userId = this.userService.userid;
   }
@@ -117,6 +121,9 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
         this.lastPlayedContentId = courseProgressData.lastPlayedContentId;
         if (this.batchId && this.progress === 100) {
           this.showCertificateBtn = true;
+          this.showModal = true;
+          this.downloadCertificate();
+          this.setTelemetryData();
         }
         this.showCertificateBtn = (this.progress === 100);
         if (!this.flaggedCourse && this.onPageLoadResume &&
@@ -132,11 +139,14 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
         }
       });
   }
-
   showDashboard() {
     this.router.navigate(['learn/course', this.courseId, 'dashboard']);
   }
-
+  showUserDashboard() {
+    this.enrollBatch.close();
+    this.showModal = false;
+    this.router.navigate(['orgDashboard']);
+  }
   resumeCourse(showExtUrlMsg?: boolean) {
     const navigationExtras: NavigationExtras = {
       queryParams: { 'contentId': this.lastPlayedContentId },
@@ -196,8 +206,15 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
     this.certificateDownloadService.downloadAsPdf(this.title, this.fullName, this.userId, this.courseId, this.courseHierarchy.name, marks)
       .subscribe((res: Response) => {
         this.fileUrl = res['result']['fileUrl'];
-        console.log(this.fileUrl);
-        window.open(this.fileUrl, '_blank');
+        // window.open(this.fileUrl, '_blank');
       });
+  }
+  setTelemetryData() {
+    this.submitInteractEdata = {
+      id: 'enroll-batch',
+      type: 'click',
+      pageid: 'course-consumption'
+    };
+    this.telemetryCdata = [{ 'type': 'batch', 'id': this.courseHierarchy.identifier }];
   }
 }

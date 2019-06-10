@@ -11,18 +11,20 @@
               <h1 class="ui header small">
                 {{courseHierarchy.name}}
               </h1>
-              <sui-rating *ngIf="courseStatus !== 'Unlisted'" class="courseHeader-rating ui star rating black-divider pr-15"
-                [isReadonly]="true" [ngModel]="courseHierarchy.me_averageRating || 0" [maximum]="5"></sui-rating>
+              <sui-rating *ngIf="courseStatus !== 'Unlisted'"
+                class="courseHeader-rating ui star rating black-divider pr-15" [isReadonly]="true"
+                [ngModel]="courseHierarchy.me_averageRating || 0" [maximum]="5"></sui-rating>
               &nbsp;&nbsp;
               <a (click)="onShareLink();sharelinkModal=true;">
                 <i class="cursor-pointer large blue share alternate icon"></i>
               </a>
               <span *ngIf="permissionService.permissionAvailable && courseStatus !== 'Unlisted'" appPermission
-                [permission]="['CONTENT_CREATOR', 'CONTENT_REVIEWER']" (click)="copyContent(courseHierarchy)" class="ui mouse-pointer content-font ml-10 ng-isolate-scope"
-                title="Copy content">
+                [permission]="['CONTENT_CREATOR', 'CONTENT_REVIEWER']" (click)="copyContent(courseHierarchy)"
+                class="ui mouse-pointer content-font ml-10 ng-isolate-scope" title="Copy content">
                 <i class="ui large blue clone outline icon"></i>
               </span>
-              <h6 class="ui small negative message" *ngIf="courseHierarchy.status === 'Flagged'">{{resourceService?.messages?.imsg?.m0001}}</h6>
+              <h6 class="ui small negative message" *ngIf="courseHierarchy.status === 'Flagged'">
+                {{resourceService?.messages?.imsg?.m0001}}</h6>
             </div>
             <div class="three wide column">
               <div *ngIf="enrolledCourse">
@@ -30,21 +32,24 @@
                   <p class="text-align-center m-responsive-cp-header">{{resourceService?.messages?.stmsg?.m0108}} {{
                     progress }}%</p>
                 </span>
-                <button appTelemetryInteract [telemetryInteractEdata]="resumeIntractEdata" [telemetryInteractObject]="courseInteractObject"
+                <button appTelemetryInteract [telemetryInteractEdata]="resumeIntractEdata"
+                  [telemetryInteractObject]="courseInteractObject"
                   class="sb-btn sb-btn-primary sb-btn-normal width-100 mt-0" [disabled]="showResumeCourse"
                   (click)="resumeCourse(true)">
                   {{resourceService?.frmelmnts?.btn?.resumecourse}}
                   <i class="caret right icon"></i>
                 </button>
               </div>
-              <div *ngIf="permissionService.permissionAvailable && !enrolledCourse" appPermission [permission]="dashboardPermission">
-                <button class="sb-btn sb-btn-primary sb-btn-normal width-100 mt-10" (click)="showDashboard()">{{resourceService?.frmelmnts?.btn?.viewCourseStatsDashboard}}</button>
+              <div *ngIf="permissionService.permissionAvailable && !enrolledCourse" appPermission
+                [permission]="dashboardPermission">
+                <button class="sb-btn sb-btn-primary sb-btn-normal width-100 mt-10"
+                  (click)="showDashboard()">{{resourceService?.frmelmnts?.btn?.viewCourseStatsDashboard}}</button>
               </div>
-              
+
               <div *ngIf="showCertificateBtn" class="mt-10">
-                  <button  class="sb-btn sb-btn-primary sb-btn-normal width-100" (click)="downloadCertificate()">
-                      Download Certificate
-                    </button>
+                <button class="sb-btn sb-btn-primary sb-btn-normal width-100" (click)="downloadCertificate()">
+                  Download Certificate
+                </button>
               </div>
 
             </div>
@@ -57,7 +62,7 @@
     </div>
   </div>
 </div>
-<div  *ngIf="enrolledCourse">
+<div *ngIf="enrolledCourse">
   <div class="ui container">
     <div class="ui stackable padded grid m-responsive-cp-nmt-50" *ngIf="getBatchStatus() && batchEndDate">
       <div class="nine wide column pl-0 pt-5">
@@ -72,8 +77,40 @@
     </div>
   </div>
   <div class="twelve wide column p-0">
-    <sui-progress class="ui tiny progress blue status" [ngClass]="{'expired':getBatchStatus()}" [value]="progress" [maximum]="100"></sui-progress>
+    <sui-progress class="ui tiny progress blue status" [ngClass]="{'expired':getBatchStatus()}" [value]="progress"
+      [maximum]="100"></sui-progress>
   </div>
 </div>
-<app-share-link [shareLink]="shareLink" [telemetryShareData]="telemetryShareData" *ngIf="sharelinkModal" (close)="sharelinkModal = false">
+<app-share-link [shareLink]="shareLink" [telemetryShareData]="telemetryShareData" *ngIf="sharelinkModal"
+  (close)="sharelinkModal = false">
 </app-share-link>
+<!-- <sui-modal *ngIf="showModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'small'"
+  class="sb-modal" appBodyScroll #enrollBatch>
+  <div class="sb-modal-header">
+    {{enrolledBatchInfo?.name}}
+  </div>
+  <div class="scrolling content sb-modal-content">
+    <div class="ui grid">
+      <div class="twelve wide column">
+        <div class="content">
+          <div class="ui grid">
+            <div class="ten wide column pl-25">
+              <div class="ui grid">
+                <div class="twelve wide column batch-des pb-0">
+                  {{resourceService?.frmelmnts?.lbl?.batchPopupText}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sb-modal-actions">
+    <button appTelemetryInteract [telemetryInteractObject]="telemetryInteractObject"
+      [telemetryInteractEdata]="submitInteractEdata" [telemetryInteractCdata]="telemetryCdata"
+      class="sb-btn sb-btn-normal sb-btn-primary" (click)="showUserDashboard()">
+      {{resourceService?.frmelmnts?.lbl?.continue}}
+    </button>
+  </div>
+</sui-modal> -->

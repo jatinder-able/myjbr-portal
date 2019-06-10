@@ -46,7 +46,10 @@
 </div>
 <div *ngIf="enrolledCourse && enrolledBatchInfo" class="rightSideSectionCards ui card">
     <div class="content">
-        <div class="header">{{resourceService.frmelmnts.lbl.batchdetails}}</div>
+        <div class="header">
+            <span>{{resourceService.frmelmnts.lbl.batchdetails}}</span>
+            <span style="float: right;"><button class="ui tiny orange button" (click)="playContent();"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{resourceService.frmelmnts.btn.play}}</button></span>
+        </div>
     </div>
     <div class="content">
         <span>

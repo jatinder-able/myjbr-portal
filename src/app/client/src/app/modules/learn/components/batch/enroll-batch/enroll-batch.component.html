@@ -10,7 +10,7 @@
 >
     <!--Header-->
     <div class="sb-modal-header">
-      {{batchDetails.name}}
+      {{batchDetails?.name}}
     </div>
     <!--/Header-->
 
@@ -22,15 +22,15 @@
                 <div class="ui grid">
                     <div class="ten wide column pl-25">
                         <div class="ui grid">
-                            <div class="twelve wide column batch-des pb-0" *ngIf="batchDetails.description">
-                                <label>{{resourceService.frmelmnts.lbl.batchdescription}}</label>
+                            <div class="twelve wide column batch-des pb-0" *ngIf="batchDetails?.description">
+                                <label>{{resourceService?.frmelmnts?.lbl?.batchdescription}}</label>
                                 <div *ngIf="batchDetails.description" class="des-content">
-                                    <p *ngIf="!readMore"> {{ batchDetails.description | slice:0:120}}&nbsp;
-                                        <span class="ui cardsKnowMore mouse-pointer" *ngIf="batchDetails.description && batchDetails.description.length > 120 && readMore === false"
-                                            (click)="readMore = !readMore;">{{resourceService.frmelmnts.lbl.readmore}}</span>
+                                    <p *ngIf="!readMore"> {{ batchDetails?.description | slice:0:120}}&nbsp;
+                                        <span class="ui cardsKnowMore mouse-pointer" *ngIf="batchDetails?.description && batchDetails?.description.length > 120 && readMore === false"
+                                            (click)="readMore = !readMore;">{{resourceService?.frmelmnts?.lbl?.readmore}}</span>
                                     </p>
-                                    <p *ngIf="readMore" class="courseStructureDesc"> {{ batchDetails.description}}&nbsp;
-                                        <span class="ui cardsKnowMore mouse-pointer" (click)="readMore = false;">{{resourceService.frmelmnts.lbl.readless}}</span>
+                                    <p *ngIf="readMore" class="courseStructureDesc"> {{ batchDetails?.description}}&nbsp;
+                                        <span class="ui cardsKnowMore mouse-pointer" (click)="readMore = false;">{{resourceService?.frmelmnts?.lbl?.readless}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -38,12 +38,12 @@
                         </div>
                         <div class="ui grid batch-date">
                             <div class="twelve wide column start-date pb-0">
-                                <label>{{resourceService.frmelmnts.lbl.startdate}}</label>
-                                <span class="pl-10">{{batchDetails.startDate | dateFormat}}</span>
+                                <label>{{resourceService?.frmelmnts?.lbl?.startdate}}</label>
+                                <span class="pl-10">{{batchDetails?.startDate | dateFormat}}</span>
                             </div>
-                            <div class="twelve wide column end-date" *ngIf="batchDetails.endDate">
-                                <label>{{resourceService.frmelmnts.lbl.enddate}}</label>
-                                <span *ngIf="batchDetails.endDate" class="pl-10">{{batchDetails.endDate | dateFormat}}</span>
+                            <div class="twelve wide column end-date" *ngIf="batchDetails?.endDate">
+                                <label>{{resourceService?.frmelmnts?.lbl?.enddate}}</label>
+                                <span *ngIf="batchDetails?.endDate" class="pl-10">{{batchDetails?.endDate | dateFormat}}</span>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
         id="enrollToCourse" 
         (click)="enrollToCourse()"
     >
-        {{resourceService.frmelmnts.lbl.enrollcourse}}
+        {{resourceService?.frmelmnts?.lbl?.enrollcourse}}
     </button>
   </div>
   <!--Actions-->

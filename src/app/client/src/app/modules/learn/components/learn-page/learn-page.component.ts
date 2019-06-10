@@ -1,7 +1,7 @@
 
-import {combineLatest, of, Subject } from 'rxjs';
+import { combineLatest, of, Subject } from 'rxjs';
 import { PageApiService, CoursesService, ISort, PlayerService, FormService } from '@sunbird/core';
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import {
   ResourceService, ServerResponse, ToasterService, ICaraouselData, ConfigService, UtilService, INoResultMessage, BrowserCacheTtlService
 } from '@sunbird/shared';
@@ -14,7 +14,7 @@ import { takeUntil, map, mergeMap, first, filter, catchError, tap, delay } from 
 @Component({
   templateUrl: './learn-page.component.html'
 })
-export class LearnPageComponent implements OnInit, OnDestroy {
+export class LearnPageComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   public showLoader = true;
   public noResultMessage: INoResultMessage;
@@ -38,7 +38,7 @@ export class LearnPageComponent implements OnInit, OnDestroy {
   public showBatchInfo = false;
   public selectedCourseBatches: any;
 
-  constructor(private pageApiService: PageApiService, private toasterService: ToasterService,
+  constructor(private cdr: ChangeDetectorRef, private pageApiService: PageApiService, private toasterService: ToasterService,
     public resourceService: ResourceService, private configService: ConfigService, private activatedRoute: ActivatedRoute,
     public router: Router, private utilService: UtilService, public coursesService: CoursesService,
     private playerService: PlayerService, private cacheService: CacheService,
@@ -46,6 +46,10 @@ export class LearnPageComponent implements OnInit, OnDestroy {
     this.redirectUrl = this.configService.appConfig.courses.inPageredirectUrl;
     this.filterType = this.configService.appConfig.courses.filterType;
     this.sortingOptions = this.configService.dropDownConfig.FILTER.RESOURCES.sortingOptions;
+  }
+  ngAfterViewChecked() {
+    //your code to update the model
+    this.cdr.detectChanges();
   }
   ngOnInit() {
     combineLatest(this.fetchEnrolledCoursesSection(), this.getFrameWork()).pipe(first(),
@@ -59,30 +63,30 @@ export class LearnPageComponent implements OnInit, OnDestroy {
         } else {
           return of({});
         }
-    })).subscribe((filters: any) => {
-      console.log('got enrolled coures');
+      })).subscribe((filters: any) => {
+        console.log('got enrolled coures');
         this.dataDrivenFilters = filters;
         this.fetchContentOnParamChange();
         this.setNoResultMessage();
       },
-      error => {
-        this.toasterService.error(this.resourceService.messages.fmsg.m0002);
-    });
+        error => {
+          this.toasterService.error(this.resourceService.messages.fmsg.m0002);
+        });
   }
   private fetchContentOnParamChange() {
     combineLatest(this.activatedRoute.params, this.activatedRoute.queryParams)
-    .pipe(
-      tap(data => this.prepareVisits([])), // trigger pageexit if last filter resulted 0 contents
-      delay(5), // to trigger telemetry
-      tap(data => {
-        this.showLoader = true;
-        this.setTelemetryData();
-      }),
-      delay(10), // to show loader
-      map((result) => ({params: result[0], queryParams: result[1]})),
-        filter(({queryParams}) => !_.isEqual(this.queryParams, queryParams)), // fetch data if queryParams changed
+      .pipe(
+        tap(data => this.prepareVisits([])), // trigger pageexit if last filter resulted 0 contents
+        delay(5), // to trigger telemetry
+        tap(data => {
+          this.showLoader = true;
+          this.setTelemetryData();
+        }),
+        delay(10), // to show loader
+        map((result) => ({ params: result[0], queryParams: result[1] })),
+        filter(({ queryParams }) => !_.isEqual(this.queryParams, queryParams)), // fetch data if queryParams changed
         takeUntil(this.unsubscribe$))
-      .subscribe(({params, queryParams}) => {
+      .subscribe(({ params, queryParams }) => {
         this.queryParams = { ...queryParams };
         this.carouselData = [];
         this.fetchPageData();
@@ -90,7 +94,7 @@ export class LearnPageComponent implements OnInit, OnDestroy {
   }
   private fetchPageData() {
     const filters = _.pickBy(this.queryParams, (value: Array<string> | string, key) => {
-      if ( _.includes(['sort_by', 'sortType', 'appliedFilters'], key)) {
+      if (_.includes(['sort_by', 'sortType', 'appliedFilters'], key)) {
         return false;
       }
       return value.length;
@@ -99,10 +103,10 @@ export class LearnPageComponent implements OnInit, OnDestroy {
       source: 'web',
       name: 'Course',
       filters: filters,
-      params : this.configService.appConfig.CoursePageSection.contentApiQueryParams
+      params: this.configService.appConfig.CoursePageSection.contentApiQueryParams
     };
     if (this.queryParams.sort_by) {
-      option.sort_by = {[this.queryParams.sort_by]: this.queryParams.sortType  };
+      option.sort_by = { [this.queryParams.sort_by]: this.queryParams.sortType };
     }
     this.pageApiService.getPageData(option).pipe(takeUntil(this.unsubscribe$))
       .subscribe(data => {
@@ -112,27 +116,27 @@ export class LearnPageComponent implements OnInit, OnDestroy {
         this.showLoader = false;
         this.carouselData = [];
         this.toasterService.error(this.resourceService.messages.fmsg.m0002);
-    });
+      });
   }
   private prepareCarouselData(sections = []) {
     const { constantData, metaData, dynamicFields, slickSize } = this.configService.appConfig.CoursePageSection.course;
     const carouselData = _.reduce(sections, (collector, element) => {
-        const contents = _.slice(_.get(element, 'contents'), 0, slickSize) || [];
-        element.contents = _.map(contents, content => this.utilService.processContent(content, constantData, dynamicFields, metaData));
-        if (element.contents && element.contents.length) {
-          collector.push(element);
-        }
-        return collector;
+      const contents = _.slice(_.get(element, 'contents'), 0, slickSize) || [];
+      element.contents = _.map(contents, content => this.utilService.processContent(content, constantData, dynamicFields, metaData));
+      if (element.contents && element.contents.length) {
+        collector.push(element);
+      }
+      return collector;
     }, []);
     return carouselData;
   }
   public getFilters(filters) {
     const defaultFilters = _.reduce(filters, (collector: any, element) => {
-        if (element.code === 'board') {
-          collector.board = _.get(_.orderBy(element.range, ['index'], ['asc']), '[0].name') || '';
-        }
-        return collector;
-      }, {});
+      if (element.code === 'board') {
+        collector.board = _.get(_.orderBy(element.range, ['index'], ['asc']), '[0].name') || '';
+      }
+      return collector;
+    }, {});
     this.dataDrivenFilterEvent.emit(defaultFilters);
   }
   private getFrameWork() {
@@ -147,16 +151,16 @@ export class LearnPageComponent implements OnInit, OnDestroy {
       };
       return this.formService.getFormConfig(formServiceInputParams, this.hashTagId)
         .pipe(map((data: ServerResponse) => {
-            const frameWork = _.find(data, 'framework').framework;
-            this.cacheService.set('framework' + 'search', frameWork, { maxAge: this.browserCacheTtlService.browserCacheTtl});
-            return frameWork;
+          const frameWork = _.find(data, 'framework').framework;
+          this.cacheService.set('framework' + 'search', frameWork, { maxAge: this.browserCacheTtlService.browserCacheTtl });
+          return frameWork;
         }), catchError((error) => {
           return of(false);
         }));
     }
   }
   private fetchEnrolledCoursesSection() {
-    return this.coursesService.enrolledCourseData$.pipe(map(({enrolledCourses, err}) => {
+    return this.coursesService.enrolledCourseData$.pipe(map(({ enrolledCourses, err }) => {
       this.enrolledCourses = enrolledCourses;
       const enrolledSection = {
         name: 'My Courses',
@@ -208,7 +212,7 @@ export class LearnPageComponent implements OnInit, OnDestroy {
       return this.playerService.playContent(metaData);
     }
 
-    const {onGoingBatchCount, expiredBatchCount, openBatch, inviteOnlyBatch} = this.coursesService.findEnrolledCourses(metaData.identifier);
+    const { onGoingBatchCount, expiredBatchCount, openBatch, inviteOnlyBatch } = this.coursesService.findEnrolledCourses(metaData.identifier);
 
     if (!expiredBatchCount && !onGoingBatchCount) { // go to course preview page, if no enrolled batch present
       return this.playerService.playContent(metaData);
@@ -227,7 +231,7 @@ export class LearnPageComponent implements OnInit, OnDestroy {
     const searchQueryParams: any = {};
     _.forIn(searchQuery.request.filters, (value, key) => {
       if (_.isPlainObject(value)) {
-        searchQueryParams.dynamic = JSON.stringify({[key]: value});
+        searchQueryParams.dynamic = JSON.stringify({ [key]: value });
       } else {
         searchQueryParams[key] = value;
       }
@@ -235,10 +239,10 @@ export class LearnPageComponent implements OnInit, OnDestroy {
     searchQueryParams.defaultSortBy = JSON.stringify(searchQuery.request.sort_by);
     searchQueryParams.exists = searchQuery.request.exists;
     this.cacheService.set('viewAllQuery', searchQueryParams, { maxAge: this.browserCacheTtlService.browserCacheTtl });
-    const queryParams = { ...searchQueryParams, ...this.queryParams};
+    const queryParams = { ...searchQueryParams, ...this.queryParams };
     this.cacheService.set('pageSection', event, { maxAge: this.browserCacheTtlService.browserCacheTtl });
     const sectionUrl = this.router.url.split('?')[0] + '/view-all/' + event.name.replace(/\s/g, '-');
-    this.router.navigate([sectionUrl, 1], {queryParams: queryParams});
+    this.router.navigate([sectionUrl, 1], { queryParams: queryParams });
   }
   ngOnDestroy() {
     this.unsubscribe$.next();
