@@ -11,3 +11,9 @@ button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-le
     background-color: #f2711c !important;
     border:1px solid #f2711c !important;
 }
+.dashed-border {
+    border-bottom: 1px dashed #9e9e9e;
+    width: 100%;
+    padding: 2px;
+    display: block;
+}

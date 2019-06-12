@@ -22,15 +22,102 @@
                         *ngIf="courseMentor">{{resourceService?.frmelmnts?.lbl?.trainingdashboard}}</a>
                     <a (click)="reportType('staticsReport')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="staticsReport">{{resourceService?.frmelmnts?.lnk?.staticsReport}}</a>
-                    <a (click)="reportType('graph')" class="item" appPermission [permission]='adminDashboard'
+                    <a (click)="reportType('userDetailsReport')" class="item" appPermission
+                        [permission]='adminDashboard'
+                        suiTabHeader="userDetailsReport">{{resourceService?.frmelmnts?.lnk?.userDetailsReport}}</a>
+                    <!-- <a (click)="reportType('graph')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="graph">{{resourceService?.frmelmnts?.lbl?.graphs}}</a>
                     <a (click)="reportType('data')" class="item" appPermission [permission]='adminDashboard'
-                        suiTabHeader="tableMenu">{{resourceService?.frmelmnts?.lbl?.tables}}</a>
-                    <div class="right menu">
+                        suiTabHeader="tableMenu">{{resourceService?.frmelmnts?.lbl?.tables}}</a> -->
+                    <!-- <div class="right menu">
                         <a *ngIf="currentReport?.downloadUrl" class="ui item" appTelemetryInteract
                             [telemetryInteractObject]="setTelemetryInteractObject(currentReport.id)"
                             [telemetryInteractEdata]="telemetryInteractDownloadEdata"
                             (click)="downloadCSV(currentReport.downloadUrl)">{{resourceService?.frmelmnts?.lbl?.downloadCsv}}</a>
+                    </div> -->
+                </div>
+                <div class="ui bottom attached segment" suiTabContent="userDetailsReport">
+                    <div class="ui grid stackable top aligned my-0">
+                        <!-- <div class="ui grid">
+                            <div class="twelve wide column">
+                                <div class="ui four cards">
+                                    <div class="card" *ngFor="let block of polarChartData.datasets[0].data;let i=index">
+                                        <div class="content center aligned">
+                                            <div class="meta dashBoardCardText">{{polarChartData.labels[i]}}</div>
+                                            <h2 class="description dashboardCardSubText">{{block}}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="twelve wide tablet ten wide computer column mobile-p-0">
+                            <div class="ui grid pl-5">
+                                <div class="six wide column">
+                                    <div class="ui text menu float-ContentLeft my-0">
+                                        <span class="dashBoardMenuItem cursor-pointer active"
+                                            (click)="getUserDetailsReport('14d')"
+                                            [ngClass]="{'active': selectedDateRange === '14d' }" appTelemetryInteract
+                                            [telemetryInteractObject]="interactObject"
+                                            [telemetryInteractEdata]="{id:'14d',type:'click',pageid:'content-creation-dashboard'}">
+                                            {{resourceService?.frmelmnts?.lbl?.dashboardfourteendaysfilter}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="dashBoardMenuItem cursor-pointer"
+                                            (click)="getUserDetailsReport('2m')"
+                                            [ngClass]="{'active': selectedDateRange === '2m' }" appTelemetryInteract
+                                            [telemetryInteractObject]="interactObject"
+                                            [telemetryInteractEdata]="{id:'2m',type:'click',pageid:'content-creation-dashboard'}">
+                                            {{resourceService?.frmelmnts?.lbl?.dashboardtwomonthsfilter}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="dashBoardMenuItem cursor-pointer"
+                                            (click)="getUserDetailsReport('6m')"
+                                            [ngClass]="{'active': selectedDateRange === '6m' }" appTelemetryInteract
+                                            [telemetryInteractObject]="interactObject"
+                                            [telemetryInteractEdata]="{id:'6m',type:'click',pageid:'content-creation-dashboard'}">
+                                            {{resourceService?.frmelmnts?.lbl?.dashboardsixmonthsfilter}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="twelve wide column">
+                            <p-table #dtUserDetails [value]="userDashboardData" [columns]="userDashboardColumns"
+                                [paginator]="true" [rows]="15" [resizableColumns]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-helper-clearfix">
+                                        <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
+                                            (click)="dtUserDetails.exportCSV()" style="float:right"></button>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th *ngFor="let col of columns" pResizableColumn>
+                                            {{col.header}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td *ngFor="let col of columns" class="ui-resizable-column">
+                                            <span *ngIf="col.header != 'Organizations'">{{rowData[col.field]}}</span>
+                                            <span *ngIf="col.header === 'Organizations'">
+                                                <div *ngFor="let obj of rowData?.organisations;let i=index"
+                                                    style="padding-bottom:4px">
+                                                    <span>
+                                                        <b *ngIf="obj.orgName != undefined">{{(obj.orgName)}}</b><b
+                                                            *ngIf="obj.orgName == undefined">{{(obj.organisationId)}}</b>
+                                                        : {{obj.userRoles}}
+                                                    </span>
+                                                    <span *ngIf="i != (rowData?.organisations.length -1)"
+                                                        class="dashed-border"></span>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
                     </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="staticsReport">
@@ -54,7 +141,6 @@
                                     </b>
                                     &nbsp;&nbsp;{{courseDashboardData.startDate | dateFormat :'DD/MM/YYYY' }}
                                 </span>
-
                                 <span class="course-end-dt black-divider px-15">
                                     <b>{{resourceService?.frmelmnts?.lbl?.batchenddate}}&nbsp;:
                                     </b>
@@ -63,7 +149,6 @@
                                         *ngIf="courseDashboardData.endDate">{{courseDashboardData.endDate | dateFormat :'DD/MM/YYYY'}}</span>
                                     <span *ngIf="!courseDashboardData.endDate">-</span>
                                 </span>
-
                                 <span *ngIf="courseDashboardData.count" class="course-participants black-divider px-15">
                                     <b>{{resourceService?.frmelmnts?.lbl?.participants}}&nbsp;:
                                     </b> &nbsp;&nbsp; {{courseDashboardData.count}}

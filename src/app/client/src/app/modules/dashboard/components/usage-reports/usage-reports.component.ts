@@ -10,6 +10,7 @@ import { UUID } from 'angular2-uuid';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from '@sunbird/shared';
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-usage-reports',
@@ -45,13 +46,19 @@ export class UsageReportsComponent implements OnInit {
   telemetryInteractEdata: IInteractEventEdata;
   telemetryInteractDownloadEdata: IInteractEventEdata;
   @ViewChild(TelemetryInteractDirective) telemetryInteractDirective;
+  selectedDateRange: string;
+  fromDate: any;
+  toDate: any;
+  interactObject: any;
+  userDashboardColumns: { field: string; header: string; }[];
+  userDashboardData: any = [];
+  userDetailsBlock: any = [];
   constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
     public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
   ) {
     this.activatedRoute = activatedRoute;
   }
-
   ngOnInit() {
     this.adminDashboard = this.configService.rolesConfig.headerDropdownRoles.adminDashboard;
     const reportsLocation = (<HTMLInputElement>document.getElementById('reportsLocation')).value;
@@ -78,8 +85,8 @@ export class UsageReportsComponent implements OnInit {
       this.courseMentor = false;
     }
     this.getBatches();
+    this.getUserDetailsReport('14d');
   }
-
   setTelemetryInteractObject(val) {
     return {
       id: val,
@@ -162,7 +169,6 @@ export class UsageReportsComponent implements OnInit {
     };
     this.telemetryInteractDirective.onClick();
   }
-
   setTelemetryImpression() {
     this.telemetryInteractEdata = {
       id: 'report-view',
@@ -192,7 +198,6 @@ export class UsageReportsComponent implements OnInit {
       }
     };
   }
-
   renderReport(report: any) {
     this.currentReport = report;
     this.isTableDataLoaded = false;
@@ -209,7 +214,6 @@ export class UsageReportsComponent implements OnInit {
       }
     }, err => { console.log(err); });
   }
-
   createChartData(charts, data) {
     _.forEach(charts, chart => {
       const chartObj: any = {};
@@ -227,15 +231,12 @@ export class UsageReportsComponent implements OnInit {
       });
       this.chartData.push(chartObj);
     });
-
   }
-
   renderTable(table, data) {
     this.table.header = _.get(table, 'columns') || _.get(data, _.get(table, 'columnsExpr'));
     this.table.data = _.get(table, 'values') || _.get(data, _.get(table, 'valuesExpr'));
     this.isTableDataLoaded = true;
   }
-
   getBatches() {
     this.usageService.getBatches().subscribe(response => {
       this.batchList = [];
@@ -251,6 +252,65 @@ export class UsageReportsComponent implements OnInit {
         'messageText': 'messages.stmsg.m0131'
       };
     })
+  }
+  getUserDetailsReport(dateRange) {
+    this.selectedDateRange = dateRange;
+    this.toDate = new Date();
+    this.fromDate = (dateRange === "14d") ? moment().subtract('14', 'days') : ((dateRange === "2m") ? moment().subtract('2', 'months') : moment().subtract('6', 'months'));
+    const data = {
+      "request": {
+        "filters": {
+          "createdDate": { ">=": this.datePipe.transform(this.fromDate, 'yyyy-MM-ddTHH:MM'), "<=": this.datePipe.transform(this.toDate, 'yyyy-MM-ddTHH:MM') }
+        }
+      }
+    };
+    this.usageService.getUserDetailsReport(data).subscribe((response) => {
+      if (_.get(response, 'responseCode') === 'OK') {
+        if (response.result.response.content.length > 0) {
+          var self = this;
+          _.map(response.result.response.content, function (obj) {
+            obj.fullName = !_.isEmpty(obj.firstName) ? obj.firstName : '';
+            obj.fullName += !_.isEmpty(obj.lastName) ? ' ' + obj.lastName : '';
+            obj.createdDate = self.datePipe.transform(obj.createdDate, 'dd-MMM-yyyy');
+            obj.statusName = (obj.status === 1) ? 'Active' : 'Inactive';
+            _.map(obj.organisations, function (obj) {
+              obj.userRoles = _.join(obj.roles, ' | ');
+            });
+          });
+          this.userDashboardData = response.result.response.content;
+          this.initializeUserDetailsColumn();
+          this.getUserDetailsBlock();
+        }
+      } else {
+        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+      }
+    }, (err) => {
+      console.log(err);
+      this.toasterService.error(this.resourceService.messages.emsg.m0007);
+    });
+  }
+  getUserDetailsBlock() {
+    let tempObject = _.cloneDeep(this.userDashboardData);
+    let uniqOrgName = [];
+    _.map(tempObject, function (obj) {
+      _.map(obj.organisations, function (obj) {
+        if (_.indexOf(uniqOrgName, obj.orgName) === -1) {
+          uniqOrgName.push(obj.orgName);
+        }
+      });
+    });
+    console.log("Uniq Org Names");
+    console.log(_.compact(uniqOrgName));
+  }
+  initializeUserDetailsColumn() {
+    this.userDashboardColumns = [
+      { field: 'fullName', header: 'Name' },
+      { field: 'id', header: 'User ID' },
+      { field: 'organisations', header: 'Organizations' },
+      { field: 'createdDate', header: 'CreationDate' },
+      { field: 'statusName', header: 'Status' },
+      { field: 'lastLoginTime', header: 'LastLoginTime' }
+    ]
   }
   populateCourseDashboardData(batch) {
     this.usageService.populateCourseDashboardData(_.get(batch, 'identifier')).subscribe(response => {
@@ -351,7 +411,6 @@ export class UsageReportsComponent implements OnInit {
       this.toasterService.error(this.resourceService.messages.emsg.m0019);
     });
   }
-
   transformHTML(data: any) {
     return this.sanitizer.bypassSecurityTrustHtml(data);
   }

@@ -86,4 +86,11 @@ export class UsageService {
     };
     return this.learnerService.get(option);
   }
+  getUserDetailsReport(data) {
+    const option = {
+      url: this.config.urlConFig.URLS.ADMIN.USER_SEARCH,
+      data: data
+    };
+    return this.learnerService.post(option);
+  }
 }
