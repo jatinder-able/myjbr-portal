@@ -268,13 +268,13 @@ export class UsageReportsComponent implements OnInit {
       if (_.get(response, 'responseCode') === 'OK') {
         if (response.result.response.content.length > 0) {
           var self = this;
-          _.map(response.result.response.content, function (obj) {
-            obj.fullName = !_.isEmpty(obj.firstName) ? obj.firstName : '';
-            obj.fullName += !_.isEmpty(obj.lastName) ? ' ' + obj.lastName : '';
-            obj.createdDate = self.datePipe.transform(obj.createdDate, 'dd-MMM-yyyy');
-            obj.statusName = (obj.status === 1) ? 'Active' : 'Inactive';
-            _.map(obj.organisations, function (obj) {
-              obj.userRoles = _.join(obj.roles, ' | ');
+          _.map(response.result.response.content, function (parentObj) {
+            parentObj.fullName = !_.isEmpty(parentObj.firstName) ? parentObj.firstName : '';
+            parentObj.fullName += !_.isEmpty(parentObj.lastName) ? ' ' + parentObj.lastName : '';
+            parentObj.createdDate = self.datePipe.transform(parentObj.createdDate, 'dd-MMM-yyyy');
+            parentObj.statusName = (parentObj.status === 1) ? 'Active' : 'Inactive';
+            _.map(parentObj.organisations, function (childObj) {
+              childObj.userRoles = _.join(childObj.roles, ' | ');
             });
           });
           this.userDashboardData = response.result.response.content;
@@ -292,15 +292,30 @@ export class UsageReportsComponent implements OnInit {
   getUserDetailsBlock() {
     let tempObject = _.cloneDeep(this.userDashboardData);
     let uniqOrgName = [];
-    _.map(tempObject, function (obj) {
-      _.map(obj.organisations, function (obj) {
-        if (_.indexOf(uniqOrgName, obj.orgName) === -1) {
-          uniqOrgName.push(obj.orgName);
+    this.userDetailsBlock = [];
+    _.map(tempObject, function (parentObj) {
+      _.map(parentObj.organisations, function (childObj) {
+        if (_.indexOf(uniqOrgName, childObj.orgName) === -1) {
+          uniqOrgName.push(childObj.orgName);
         }
       });
     });
-    console.log("Uniq Org Names");
-    console.log(_.compact(uniqOrgName));
+    this.userDetailsBlock.push({ 'label': 'Total Users', 'value': tempObject.length });
+    let userCount: number;
+    let self = this;
+    _.map(_.compact(uniqOrgName), function (x) {
+      userCount = 0;
+      _.map(tempObject, function (y) {
+        _.map(y.organisations, function (z) {
+          if (!_.isEmpty(z.orgName)) {
+            if (z.orgName === x) {
+              userCount += 1;
+            }
+          }
+        });
+      });
+      self.userDetailsBlock.push({ 'label': x, 'value': userCount });
+    });
   }
   initializeUserDetailsColumn() {
     this.userDashboardColumns = [

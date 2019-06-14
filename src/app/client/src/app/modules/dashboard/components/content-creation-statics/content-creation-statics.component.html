@@ -4,7 +4,7 @@
             <div class="twelve wide tablet ten wide computer column mobile-p-0">
                 <div class="ui grid pl-5">
                     <div class="six wide column">
-                        <div class="ui text menu float-ContentLeft my-0">
+                        <div class="ui text menu float-ContentLeft my-0" style="min-height: 0;">
                             <span class="dashBoardMenuItem cursor-pointer active"
                                 (click)="getContentCreationStaticsReport('14d')"
                                 [ngClass]="{'active': selectedDateRange === '14d' }" appTelemetryInteract
@@ -63,8 +63,7 @@
                 </div> -->
             </div>
         </div>
-    </form><br><br>
-
+    </form>
     <div class="ui grid" *ngIf="tableData.length > 0">
         <div class="twelve wide column">
             <div class="ui four cards">
@@ -86,6 +85,11 @@
         <div class="twelve wide column">
             <p-table #dt [value]="tableData" [columns]="cols" [paginator]="true" [rows]="15" [resizableColumns]="true">
                 <ng-template pTemplate="caption">
+                    <div class="ui small left icon input" style="float: left">
+                        <i class="search icon"></i>
+                        <input type="text" pInputText placeholder="Search"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')">
+                    </div>
                     <div class="ui-helper-clearfix">
                         <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
                             (click)="dt.exportCSV()" style="float:right"></button>

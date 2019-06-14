@@ -37,23 +37,23 @@
                     </div> -->
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="userDetailsReport">
-                    <div class="ui grid stackable top aligned my-0">
-                        <!-- <div class="ui grid">
-                            <div class="twelve wide column">
-                                <div class="ui four cards">
-                                    <div class="card" *ngFor="let block of polarChartData.datasets[0].data;let i=index">
-                                        <div class="content center aligned">
-                                            <div class="meta dashBoardCardText">{{polarChartData.labels[i]}}</div>
-                                            <h2 class="description dashboardCardSubText">{{block}}</h2>
-                                        </div>
+                    <div class="ui grid">
+                        <div class="twelve wide column">
+                            <div class="ui four cards">
+                                <div class="card" *ngFor="let block of userDetailsBlock">
+                                    <div class="content center aligned">
+                                        <div class="meta dashBoardCardText">{{block.label}}</div>
+                                        <h2 class="description dashboardCardSubText">{{block.value}}</h2>
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
+                    </div>
+                    <div class="ui grid stackable top aligned my-0">
                         <div class="twelve wide tablet ten wide computer column mobile-p-0">
                             <div class="ui grid pl-5">
-                                <div class="six wide column">
-                                    <div class="ui text menu float-ContentLeft my-0">
+                                <div class="six wide column" style="padding-bottom: 0;">
+                                    <div class="ui text menu float-ContentLeft my-0" style="min-height: 0;">
                                         <span class="dashBoardMenuItem cursor-pointer active"
                                             (click)="getUserDetailsReport('14d')"
                                             [ngClass]="{'active': selectedDateRange === '14d' }" appTelemetryInteract
@@ -81,10 +81,15 @@
                         </div>
                     </div>
                     <div class="ui grid">
-                        <div class="twelve wide column">
+                        <div class="twelve wide column" style="padding-top: 0;">
                             <p-table #dtUserDetails [value]="userDashboardData" [columns]="userDashboardColumns"
                                 [paginator]="true" [rows]="15" [resizableColumns]="true">
                                 <ng-template pTemplate="caption">
+                                    <div class="ui small left icon input" style="float: left">
+                                        <i class="search icon"></i>
+                                        <input type="text" pInputText placeholder="Search"
+                                            (input)="dtUserDetails.filterGlobal($event.target.value, 'contains')">
+                                    </div>
                                     <div class="ui-helper-clearfix">
                                         <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
                                             (click)="dtUserDetails.exportCSV()" style="float:right"></button>
@@ -171,7 +176,7 @@
                                 <div class="ui small left icon input" style="float: left">
                                     <i class="search icon"></i>
                                     <input type="text" pInputText placeholder="Search"
-                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        (input)="dtCourseDashboard.filterGlobal($event.target.value, 'contains')">
                                 </div>
                                 <div class="ui-helper-clearfix">
                                     <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
