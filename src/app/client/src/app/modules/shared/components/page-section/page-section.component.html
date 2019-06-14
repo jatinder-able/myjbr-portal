@@ -2,7 +2,7 @@
     <div class="ui twelve wide column">
         <div class="d-flex flex-ai-center">
             <h4 *ngIf="section.name != 'My Courses' && section.name != 'Open Courses'" class="ui header m-0 mr-5 pageSection-heading">{{section.name}}</h4>
-            <h4 *ngIf="section.name == 'My Courses'" class="ui header m-0 mr-5 pageSection-heading" style="text-transform: none !important">Mandatory Trainings</h4>
+            <h4 *ngIf="section.name == 'My Courses'" class="ui header m-0 mr-5 pageSection-heading" style="text-transform: none !important">Your Mandatory {{resourceService?.frmelmnts?.tab?.courses}}</h4>
             <h4 *ngIf="section.name == 'Open Courses'" class="ui header m-0 mr-5 pageSection-heading" style="text-transform: none !important">Available Trainings</h4>
             <span class="ui primary label pageSection-count">{{section.count}}</span>
             <button appTelemetryInteract [telemetryInteractEdata]="{id:'viewall-button' , type:'click' ,pageid:pageid , extra : {section: section.name}}" class="sb-btn sb-btn-xs sb-btn-secondary ml-auto" *ngIf="section.count > 10 && section.name != 'My Courses' " type="button" (click)="navigateToViewAll(section)">{{ resourceService.frmelmnts.lnk.viewall}}</button>

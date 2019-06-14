@@ -13,7 +13,7 @@
 			 [class.active]="router.isActive('/search/Courses') || router.isActive('/learn')" 
 			 appTelemetryInteract [telemetryInteractEdata]="learnMenuIntractEdata" 
 			 routerLink="/learn">
-			Trainings
+			 {{resourceService?.frmelmnts?.tab?.courses}}
 		</a>
 		<a class="item" 
 			 [class.active]="router.isActive('/workspace')" 

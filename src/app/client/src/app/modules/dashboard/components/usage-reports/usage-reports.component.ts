@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from '@sunbird/shared';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import { IEmployee } from 'ng2-org-chart';
 const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-usage-reports',
@@ -53,6 +54,7 @@ export class UsageReportsComponent implements OnInit {
   userDashboardColumns: { field: string; header: string; }[];
   userDashboardData: any = [];
   userDetailsBlock: any = [];
+  orgChartData: IEmployee;
   constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
     public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
@@ -86,6 +88,7 @@ export class UsageReportsComponent implements OnInit {
     }
     this.getBatches();
     this.getUserDetailsReport('14d');
+    this.getOrgDetails();
   }
   setTelemetryInteractObject(val) {
     return {
@@ -142,7 +145,7 @@ export class UsageReportsComponent implements OnInit {
   }
   initializeColumns() {
     this.cols = [
-      { field: 'trainingName', header: 'Training Name' },
+      { field: 'trainingName', header: 'Name' },
       { field: 'enrollmentType', header: 'Enrollment Type' },
       { field: 'startDate', header: 'Start Date' },
       { field: 'endDate', header: 'Target End Date' },
@@ -244,6 +247,48 @@ export class UsageReportsComponent implements OnInit {
         if (response.result.response.content.length > 0) {
           this.batchList = response.result.response.content;
           this.populateCourseDashboardData(this.batchList[0]);
+        }
+      }
+    }, (err) => {
+      console.log(err);
+      this.noResultMessage = {
+        'messageText': 'messages.stmsg.m0131'
+      };
+    })
+  }
+  getOrgDetails() {
+    const data = {
+      "request": {
+        "filters": {}
+      }
+    };
+    this.usageService.getOrgDetails(data).subscribe(response => {
+      if (_.get(response, 'responseCode') === 'OK') {
+        if (response.result.response.content.length > 0) {
+          let tempOrgChartData = [];
+          let responseData = response.result.response.content;
+          let rootOrgs = _.filter(_.cloneDeep(responseData), { isRootOrg: true });
+          let subOrgs = _.filter(_.cloneDeep(responseData), { isRootOrg: false });
+          let tempRootOrgs: any;
+          let tempSubOrgs: any;
+          let self = this;
+          _.map(rootOrgs, function (parentObj, parentIndex) {
+            tempRootOrgs = {};
+            tempRootOrgs.name = _.get(parentObj, 'orgName');
+            tempRootOrgs.designation = '';
+            tempRootOrgs.img = "";
+            tempRootOrgs.subordinates = [];
+            _.map(_.filter(_.cloneDeep(subOrgs), { rootOrgId: _.get(parentObj, 'rootOrgId') }), function (childObj) {
+              tempSubOrgs = {};
+              tempSubOrgs.name = _.get(childObj, 'orgName');
+              tempSubOrgs.designation = '';
+              tempSubOrgs.img = "";
+              tempSubOrgs.subordinates = [];
+              tempRootOrgs.subordinates.push(tempSubOrgs);
+            });
+            tempOrgChartData.push(tempRootOrgs);
+          });
+          this.orgChartData = { name: 'Organizations', designation: '', img: '', subordinates: tempOrgChartData }
         }
       }
     }, (err) => {

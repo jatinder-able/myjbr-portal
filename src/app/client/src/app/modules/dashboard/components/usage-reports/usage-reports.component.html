@@ -22,7 +22,7 @@
                         *ngIf="courseMentor">{{resourceService?.frmelmnts?.lbl?.trainingdashboard}}</a>
                     <a (click)="reportType('staticsReport')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="staticsReport">{{resourceService?.frmelmnts?.lnk?.staticsReport}}</a>
-                    <a (click)="reportType('userDetailsReport')" class="item" appPermission
+                    <a (click)="reportType('userDetailsReport');" class="item" appPermission
                         [permission]='adminDashboard'
                         suiTabHeader="userDetailsReport">{{resourceService?.frmelmnts?.lnk?.userDetailsReport}}</a>
                     <!-- <a (click)="reportType('graph')" class="item" appPermission [permission]='adminDashboard'
@@ -37,18 +37,12 @@
                     </div> -->
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="userDetailsReport">
-                    <div class="ui grid">
-                        <div class="twelve wide column">
-                            <div class="ui four cards">
-                                <div class="card" *ngFor="let block of userDetailsBlock">
-                                    <div class="content center aligned">
-                                        <div class="meta dashBoardCardText">{{block.label}}</div>
-                                        <h2 class="description dashboardCardSubText">{{block.value}}</h2>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="ui grid" style="overflow-x: scroll">
+                        <div class="twelve wide column" id="orgChartDataSection">
+                            <ng2-org-chart [topEmployee]="orgChartData"></ng2-org-chart>
                         </div>
                     </div>
+                    <br>
                     <div class="ui grid stackable top aligned my-0">
                         <div class="twelve wide tablet ten wide computer column mobile-p-0">
                             <div class="ui grid pl-5">
@@ -75,6 +69,18 @@
                                             [telemetryInteractEdata]="{id:'6m',type:'click',pageid:'content-creation-dashboard'}">
                                             {{resourceService?.frmelmnts?.lbl?.dashboardsixmonthsfilter}}
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="twelve wide column">
+                            <div class="ui four cards">
+                                <div class="card" *ngFor="let block of userDetailsBlock">
+                                    <div class="content center aligned">
+                                        <div class="meta dashBoardCardText">{{block.label}}</div>
+                                        <h2 class="description dashboardCardSubText">{{block.value}}</h2>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LearnerService, UserService, ICourses, IEnrolledCourses } from '@sunbird/core';
+import { LearnerService, UserService, ICourses, IEnrolledCourses, PublicDataService } from '@sunbird/core';
 import { ConfigService, ServerResponse } from '@sunbird/shared';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { skipWhile, map, catchError } from 'rxjs/operators';
@@ -27,6 +27,10 @@ export class UsageService {
    */
   userid: string;
   /**
+   * Reference of public data service
+   */
+  public publicDataService: PublicDataService;
+  /**
    * BehaviorSubject Containing enrolled courses.
    */
   private _enrolledCourseData$ = new BehaviorSubject<IEnrolledCourses>(undefined);
@@ -44,12 +48,13 @@ export class UsageService {
  * @param {HttpClient} http HttpClient reference
  */
   constructor(http: HttpClient, userService: UserService, learnerService: LearnerService,
-    config: ConfigService) {
+    config: ConfigService, publicDataService: PublicDataService) {
     this.http = http;
     this.config = config;
     this.learnerService = learnerService;
     this.userService = userService;
     this.userid = this.userService.userid;
+    this.publicDataService = publicDataService;
   }
 
   getData(url: string) {
@@ -92,5 +97,12 @@ export class UsageService {
       data: data
     };
     return this.learnerService.post(option);
+  }
+  getOrgDetails(data) {
+    const option = {
+      url: this.config.urlConFig.URLS.ADMIN.ORG_SEARCH,
+      data: data
+    };
+    return this.publicDataService.post(option);
   }
 }

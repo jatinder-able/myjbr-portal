@@ -17,3 +17,33 @@ button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-le
     padding: 2px;
     display: block;
 }
+/*Org Chart Styles*/
+.oc-border {
+    border: 1px solid #6d6e71;
+}
+ 
+.oc-background {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.40);
+}
+
+.oc-name {
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    white-space: nowrap;
+}
+ 
+.oc-designation {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    white-space: nowrap;
+}
+ 
+.oc-img {
+    margin-left: -10px;
+    width: 60px;
+    height: 60px;
+    display: none;
+}
+.oc-h-bar.ng-star-inserted {
+    height: 1.5em !important;
+}

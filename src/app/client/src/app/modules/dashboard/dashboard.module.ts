@@ -25,6 +25,8 @@ import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { PermissionDirective } from './directives';
+//Imported Org Charts Modules
+import { OrgChartModule } from 'ng2-org-chart';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { PermissionDirective } from './directives';
     CalendarModule,
     TableModule,
     ChartModule,
-    DropdownModule
+    DropdownModule,
+    OrgChartModule
   ],
   declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent, PermissionDirective],
   exports: [CourseProgressComponent, PermissionDirective],
