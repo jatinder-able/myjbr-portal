@@ -21,7 +21,7 @@ import * as moment from 'moment';
 })
 export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   public unsubscribe = new Subject<void>();
-  noResult: boolean;
+  noResult: boolean = false;
   value: Date;
   currentDate: Date = new Date();
   fromDate: any;
@@ -62,7 +62,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
         "sort_by": {
           "lastUpdatedOn": "desc"
         },
-        "fields": ["identifier", "name", "contentType", "createdFor", "channel", "board", "medium", "gradeLevel", "subject", "lastUpdatedOn", "status", "createdBy", "framework", "createdOn"]
+        "fields": ["identifier", "name", "contentType", "mimeType", "createdFor", "channel", "board", "medium", "gradeLevel", "subject", "lastUpdatedOn", "status", "createdBy", "framework", "createdOn"]
       }
     };
     this.reportService.getContentCreationStaticsReport(data).subscribe((response) => {
@@ -72,7 +72,15 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
         _.map(this.tableData, function (obj) {
           obj.subject = _.isEmpty(obj.subject) ? 'N/A' : obj.subject;
           obj.createdOn = self.datePipe.transform(obj.createdOn, 'dd-MMM-yyyy');
+          obj.contentType = (obj.contentType === 'Resource') ? obj.contentType + " (" + _.replace(_.upperCase(_.split(obj.mimeType, '/')[1]), ' ', '') + ")" : obj.contentType;
         });
+        this.noResult = false;
+        if (_.isEmpty(this.tableData)) {
+          this.noResultMessage = {
+            'messageText': 'messages.stmsg.m0131'
+          };
+          this.noResult = true;
+        }
         this.initializeColumns();
         this.buildChartData();
       } else {

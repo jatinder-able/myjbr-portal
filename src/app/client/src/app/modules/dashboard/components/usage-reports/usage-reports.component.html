@@ -74,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui grid">
+                    <div class="ui grid" *ngIf="showUserDetailsReport && userDashboardData.length > 0">
                         <div class="twelve wide column">
                             <div class="ui four cards">
                                 <div class="card" *ngFor="let block of userDetailsBlock">
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui grid">
+                    <div class="ui grid" *ngIf="showUserDetailsReport && userDashboardData.length > 0">
                         <div class="twelve wide column" style="padding-top: 0;">
                             <p-table #dtUserDetails [value]="userDashboardData" [columns]="userDashboardColumns"
                                 [paginator]="true" [rows]="15" [resizableColumns]="true">
@@ -130,6 +130,18 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="ui grid" *ngIf="!showUserDetailsReport">
+                        <div class="one wide column"></div>
+                        <div class="ten wide column">
+                            <div class="ui two column centered grid no-result-container">
+                                <div class="column">
+                                    <img src="{{'assets/images/erroricon.png' | cdnprefixurl}}">
+                                    <div class="no-result-text">{{resourceService?.messages?.stmsg?.m0131}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="one wide column"></div>
+                    </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="staticsReport">
                     <app-content-creation-statics></app-content-creation-statics>
@@ -145,38 +157,42 @@
                                     </p-dropdown>
                                 </div>
                             </div>
-                            <div class="d-flex my-20" *ngIf="courseDashboardData">
+                            <div class="d-flex my-20"
+                                *ngIf="courseDashboardData && showTrainingdashboard && courseDashboardData?.data?.length > 0">
                                 <span class="course-start-dt black-divider pr-15">
-                                    <b *ngIf="courseDashboardData.startDate">
+                                    <b *ngIf="courseDashboardData?.startDate">
                                         {{resourceService?.frmelmnts?.lbl?.batchstartdate}}&nbsp;:
                                     </b>
-                                    &nbsp;&nbsp;{{courseDashboardData.startDate | dateFormat :'DD/MM/YYYY' }}
+                                    &nbsp;&nbsp;{{courseDashboardData?.startDate | dateFormat :'DD/MM/YYYY' }}
                                 </span>
                                 <span class="course-end-dt black-divider px-15">
                                     <b>{{resourceService?.frmelmnts?.lbl?.batchenddate}}&nbsp;:
                                     </b>
                                     &nbsp;&nbsp;
                                     <span
-                                        *ngIf="courseDashboardData.endDate">{{courseDashboardData.endDate | dateFormat :'DD/MM/YYYY'}}</span>
-                                    <span *ngIf="!courseDashboardData.endDate">-</span>
+                                        *ngIf="courseDashboardData?.endDate">{{courseDashboardData?.endDate | dateFormat :'DD/MM/YYYY'}}</span>
+                                    <span *ngIf="!courseDashboardData?.endDate">-</span>
                                 </span>
-                                <span *ngIf="courseDashboardData.count" class="course-participants black-divider px-15">
+                                <span *ngIf="courseDashboardData?.count"
+                                    class="course-participants black-divider px-15">
                                     <b>{{resourceService?.frmelmnts?.lbl?.participants}}&nbsp;:
-                                    </b> &nbsp;&nbsp; {{courseDashboardData.count}}
+                                    </b> &nbsp;&nbsp; {{courseDashboardData?.count}}
                                 </span>
-                                <span *ngIf="courseDashboardData.completedCount" class="course-completed pl-15">
+                                <span *ngIf="courseDashboardData?.completedCount" class="course-completed pl-15">
                                     <b>{{resourceService?.frmelmnts?.lbl?.completedCourse}}&nbsp;:
                                     </b>
-                                    &nbsp;&nbsp;{{courseDashboardData.completedCount}}
+                                    &nbsp;&nbsp;{{courseDashboardData?.completedCount}}
                                 </span>
                             </div>
                         </div>
-                        <div class="four wide column" style="width:'30vw'">
+                        <div class="four wide column" style="width:'30vw'"
+                            *ngIf="showTrainingdashboard && courseDashboardData?.data?.length > 0">
                             <p-chart type="bar" [data]="barChartData" [options]="barChartOptions"></p-chart>
                         </div>
                     </div>
-                    <div class="twelve wide column">
-                        <p-table #dtCourseDashboard [value]="courseDashboardData.data"
+                    <div class="twelve wide column"
+                        *ngIf="showTrainingdashboard && courseDashboardData?.data?.length > 0">
+                        <p-table #dtCourseDashboard [value]="courseDashboardData?.data"
                             [columns]="courseDashboardColumns" [paginator]="true" [rows]="10" [resizableColumns]="true">
                             <ng-template pTemplate="caption">
                                 <div class="ui small left icon input" style="float: left">
@@ -207,13 +223,25 @@
                             </ng-template>
                         </p-table>
                     </div>
+                    <div class="ui grid" *ngIf="!showTrainingdashboard">
+                        <div class="one wide column"></div>
+                        <div class="ten wide column">
+                            <div class="ui two column centered grid no-result-container">
+                                <div class="column">
+                                    <img src="{{'assets/images/erroricon.png' | cdnprefixurl}}">
+                                    <div class="no-result-text">{{resourceService?.messages?.stmsg?.m0131}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="one wide column"></div>
+                    </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="trainingstats">
-                    <div class="twelve wide column">
+                    <div class="twelve wide column" *ngIf="showTrainingstats && enrolledCourseData.length > 0">
                         <p-chart type="doughnut" [data]="donutChartData" width="80vw" height="40vh"></p-chart>
                     </div>
                     <br>
-                    <div class="twelve wide column">
+                    <div class="twelve wide column" *ngIf="showTrainingstats && enrolledCourseData.length > 0">
                         <p-table #dt [value]="enrolledCourseData" [columns]="cols" [paginator]="true" [rows]="10"
                             [resizableColumns]="true">
                             <ng-template pTemplate="caption">
@@ -247,6 +275,18 @@
                             </ng-template>
                         </p-table>
                     </div>
+                    <div class="ui grid" *ngIf="!showTrainingstats">
+                        <div class="one wide column"></div>
+                        <div class="ten wide column">
+                            <div class="ui two column centered grid no-result-container">
+                                <div class="column">
+                                    <img src="{{'assets/images/erroricon.png' | cdnprefixurl}}">
+                                    <div class="no-result-text">{{resourceService?.messages?.stmsg?.m0131}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="one wide column"></div>
+                    </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="graph">
                     <div *ngFor="let chart of chartData; let i = index; let l = last;">
@@ -268,7 +308,4 @@
             </sui-tabset>
         </div>
     </div>
-    <!-- <div *ngIf="noResult">
-        <app-no-result [data]="noResultMessage"></app-no-result>
-    </div> -->
 </div>

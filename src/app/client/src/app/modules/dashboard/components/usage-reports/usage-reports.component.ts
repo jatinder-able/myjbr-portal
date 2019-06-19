@@ -1,17 +1,17 @@
 import { IInteractEventEdata, IInteractEventObject, TelemetryInteractDirective } from '@sunbird/telemetry';
 import { IImpressionEventInput } from './../../../telemetry/interfaces/telemetry';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { UsageService } from './../../services';
 import * as _ from 'lodash';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PermissionService, UserService } from '@sunbird/core';
-import { ToasterService, ResourceService, INoResultMessage } from '@sunbird/shared';
+import { ToasterService, ResourceService, INoResultMessage, ConfigService } from '@sunbird/shared';
 import { UUID } from 'angular2-uuid';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigService } from '@sunbird/shared';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { IEmployee } from 'ng2-org-chart';
+import { Subject } from 'rxjs';
 const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-usage-reports',
@@ -19,13 +19,14 @@ const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certific
   styleUrls: ['./usage-reports.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class UsageReportsComponent implements OnInit {
+export class UsageReportsComponent implements OnInit, OnDestroy {
   /**
  * Admin Dashboard access roles
  */
   adminDashboard: Array<string>;
   enrolledCourseData: any = [];
   selectedBatch: object;
+  public unsubscribe = new Subject<void>();
   cols: any = [];
   courseDashboardColumns: any = [];
   batchList: any = [];
@@ -55,6 +56,9 @@ export class UsageReportsComponent implements OnInit {
   userDashboardData: any = [];
   userDetailsBlock: any = [];
   orgChartData: IEmployee;
+  showTrainingstats: boolean = true;
+  showTrainingdashboard: boolean = true;
+  showUserDetailsReport: boolean = true;
   constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
     public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
@@ -116,6 +120,12 @@ export class UsageReportsComponent implements OnInit {
           this.initializeColumns();
           this.initializeDonutChart();
         }
+        this.showTrainingstats = true;
+        if (_.isEmpty(this.enrolledCourseData)) {
+          this.showTrainingstats = false;
+        }
+      } else {
+        this.toasterService.error(this.resourceService.messages.emsg.m0007);
       }
     }, (err) => {
       console.log(err);
@@ -213,7 +223,7 @@ export class UsageReportsComponent implements OnInit {
         if (_.get(report, 'charts')) { this.createChartData(_.get(report, 'charts'), data); }
         if (_.get(report, 'table')) { this.renderTable(_.get(report, 'table'), data); }
       } else {
-        console.log(response);
+        this.toasterService.error(this.resourceService.messages.emsg.m0007);
       }
     }, err => { console.log(err); });
   }
@@ -248,6 +258,8 @@ export class UsageReportsComponent implements OnInit {
           this.batchList = response.result.response.content;
           this.populateCourseDashboardData(this.batchList[0]);
         }
+      } else {
+        this.toasterService.error(this.resourceService.messages.emsg.m0007);
       }
     }, (err) => {
       console.log(err);
@@ -275,13 +287,13 @@ export class UsageReportsComponent implements OnInit {
           _.map(rootOrgs, function (parentObj, parentIndex) {
             tempRootOrgs = {};
             tempRootOrgs.name = _.get(parentObj, 'orgName');
-            tempRootOrgs.designation = '';
+            tempRootOrgs.designation = '(' + _.get(parentObj, 'identifier') + ')';
             tempRootOrgs.img = "";
             tempRootOrgs.subordinates = [];
             _.map(_.filter(_.cloneDeep(subOrgs), { rootOrgId: _.get(parentObj, 'rootOrgId') }), function (childObj) {
               tempSubOrgs = {};
               tempSubOrgs.name = _.get(childObj, 'orgName');
-              tempSubOrgs.designation = '';
+              tempSubOrgs.designation = '(' + _.get(childObj, 'identifier') + ')';
               tempSubOrgs.img = "";
               tempSubOrgs.subordinates = [];
               tempRootOrgs.subordinates.push(tempSubOrgs);
@@ -290,6 +302,8 @@ export class UsageReportsComponent implements OnInit {
           });
           this.orgChartData = { name: 'Organizations', designation: '', img: '', subordinates: tempOrgChartData }
         }
+      } else {
+        this.toasterService.error(this.resourceService.messages.emsg.m0007);
       }
     }, (err) => {
       console.log(err);
@@ -325,6 +339,10 @@ export class UsageReportsComponent implements OnInit {
           this.userDashboardData = response.result.response.content;
           this.initializeUserDetailsColumn();
           this.getUserDetailsBlock();
+        }
+        this.showUserDetailsReport = true;
+        if (_.isEmpty(this.userDashboardData)) {
+          this.showUserDetailsReport = false;
         }
       } else {
         this.toasterService.error(this.resourceService.messages.emsg.m0007);
@@ -390,6 +408,12 @@ export class UsageReportsComponent implements OnInit {
           this.initializeCourseDashboardColumns();
           this.initializeBarChart(this.courseDashboardData.data);
         }
+        this.showTrainingdashboard = true;
+        if (_.isEmpty(this.courseDashboardData.data)) {
+          this.showTrainingdashboard = false;
+        }
+      } else {
+        this.toasterService.error(this.resourceService.messages.emsg.m0007);
       }
     }, (err) => {
       console.log(err);
@@ -473,5 +497,9 @@ export class UsageReportsComponent implements OnInit {
   }
   transformHTML(data: any) {
     return this.sanitizer.bypassSecurityTrustHtml(data);
+  }
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

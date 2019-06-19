@@ -64,10 +64,10 @@
             </div>
         </div>
     </form>
-    <div class="ui grid" *ngIf="tableData.length > 0">
+    <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
             <div class="ui four cards">
-                <div class="card" *ngFor="let block of polarChartData.datasets[0].data;let i=index">
+                <div class="card" *ngFor="let block of polarChartData?.datasets[0].data;let i=index">
                     <div class="content center aligned">
                         <div class="meta dashBoardCardText">{{polarChartData.labels[i]}}</div>
                         <h2 class="description dashboardCardSubText">{{block}}</h2>
@@ -76,12 +76,12 @@
             </div>
         </div>
     </div>
-    <div class="ui grid" *ngIf="tableData.length > 0">
+    <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
             <p-chart type="polarArea" [data]="polarChartData" [options]="polarChartOptions"></p-chart>
         </div>
     </div>
-    <div class="ui grid" *ngIf="tableData.length > 0">
+    <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
             <p-table #dt [value]="tableData" [columns]="cols" [paginator]="true" [rows]="15" [resizableColumns]="true">
                 <ng-template pTemplate="caption">
@@ -112,7 +112,7 @@
             </p-table>
         </div>
     </div>
-    <!-- <div *ngIf="noResult">
+    <div *ngIf="noResult">
         <app-no-result [data]="noResultMessage"></app-no-result>
-    </div> -->
+    </div>
 </div>
