@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProfilePageComponent } from './components';
+import { ProfilePageComponent, OrgUserManagementComponent } from './components';
 import {
   OrgManagementModule, OrganizationUploadComponent,
   UserUploadComponent, BulkUploadComponent, StatusComponent
@@ -16,12 +16,20 @@ const routes: Routes = [
       telemetry: {
         env: telemetryEnv, type: 'view', mode: 'create', subtype: 'paginate', object: { type: objectType, ver: '1.0' }
       }, breadcrumbs: [{ label: 'Home', url: '/home' }, { label: 'Profile', url: '' }]
+    }
+  },
+  {
+    path: 'orgUserManagement', component: OrgUserManagementComponent,
+    data: {
+      telemetry: {
+        env: telemetryEnv, type: 'view', mode: 'create', subtype: 'paginate', object: { type: objectType, ver: '1.0' }
+      }, breadcrumbs: [{ label: 'Home', url: '/home' }, { label: 'OrgUserManagement', url: '' }]
     },
     children: [
       {
         path: 'bulkUpload/organizationUpload', component: OrganizationUploadComponent,
         data: {
-          redirectUrl: '/profile', roles: 'bulkUpload',
+          redirectUrl: '/orgUserManagement', roles: 'bulkUpload',
           telemetry: {
             env: telemetryEnv, type: 'view', mode: 'create',
             subtype: 'paginate', object: { type: objectType, ver: '1.0' }
@@ -31,7 +39,7 @@ const routes: Routes = [
       {
         path: 'bulkUpload/userUpload', component: UserUploadComponent,
         data: {
-          redirectUrl: '/profile', roles: 'bulkUpload',
+          redirectUrl: '/orgUserManagement', roles: 'bulkUpload',
           telemetry: {
             env: telemetryEnv, type: 'view', mode: 'create',
             subtype: 'paginate', object: { type: objectType, ver: '1.0' }
@@ -41,7 +49,7 @@ const routes: Routes = [
       {
         path: 'bulkUpload/checkStatus', component: StatusComponent,
         data: {
-          redirectUrl: '/profile', roles: 'bulkUpload',
+          redirectUrl: '/orgUserManagement', roles: 'bulkUpload',
           telemetry: {
             env: telemetryEnv, type: 'view', mode: 'create',
             subtype: 'paginate', object: { type: objectType, ver: '1.0' }

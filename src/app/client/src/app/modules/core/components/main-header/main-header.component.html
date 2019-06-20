@@ -54,6 +54,11 @@
                         routerLink="orgDashboard">
                         {{resourceService.frmelmnts?.lnk?.dashboard}}
                     </a>
+                    <a *ngIf="userProfile?.rootOrgAdmin"
+                        class="item" 
+                        routerLink="orgUserManagement">
+                        {{resourceService.frmelmnts?.lnk?.usermanagement}}
+                    </a>
                     <!-- <a 
                         class="item" 
                         *ngIf='permissionService.permissionAvailable' 
@@ -75,13 +80,13 @@
                         routerLink="announcement/outbox/1">
                         {{resourceService.frmelmnts?.lnk?.announcement}}
                     </a>
-                    <a 
+                    <!-- <a 
                         class="item" 
                         *ngIf='permissionService.permissionAvailable' 
                         appPermission [permission]='myActivityRole' 
                         routerLink="myActivity">
                         {{resourceService.frmelmnts?.lnk?.myactivity}}
-                    </a>
+                    </a> -->
                     <a 
                         class="item" 
                         *ngIf='permissionService.permissionAvailable' 
