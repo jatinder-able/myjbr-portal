@@ -5,7 +5,7 @@ import { UsageService } from './../../services';
 import * as _ from 'lodash';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PermissionService, UserService } from '@sunbird/core';
-import { ToasterService, ResourceService, INoResultMessage, ConfigService } from '@sunbird/shared';
+import { ToasterService, ResourceService, INoResultMessage, ConfigService, IUserProfile } from '@sunbird/shared';
 import { UUID } from 'angular2-uuid';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -26,6 +26,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   adminDashboard: Array<string>;
   enrolledCourseData: any = [];
   selectedBatch: object;
+  userProfile: IUserProfile;
   public unsubscribe = new Subject<void>();
   cols: any = [];
   courseDashboardColumns: any = [];
@@ -66,6 +67,11 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     this.activatedRoute = activatedRoute;
   }
   ngOnInit() {
+    this.userService.userData$.subscribe(userdata => {
+      if (userdata && !userdata.err) {
+        this.userProfile = userdata.userProfile;
+      }
+    });
     this.adminDashboard = this.configService.rolesConfig.headerDropdownRoles.adminDashboard;
     const reportsLocation = (<HTMLInputElement>document.getElementById('reportsLocation')).value;
     this.slug = _.get(this.userService, 'userProfile.rootOrg.slug');
@@ -271,13 +277,14 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   getOrgDetails() {
     const data = {
       "request": {
-        "filters": {}
+        "filters": {
+          rootOrgId: this.userProfile.rootOrgId
+        }
       }
     };
     this.usageService.getOrgDetails(data).subscribe(response => {
       if (_.get(response, 'responseCode') === 'OK') {
         if (response.result.response.content.length > 0) {
-          let tempOrgChartData = [];
           let responseData = response.result.response.content;
           let rootOrgs = _.filter(_.cloneDeep(responseData), { isRootOrg: true });
           let subOrgs = _.filter(_.cloneDeep(responseData), { isRootOrg: false });
@@ -298,9 +305,8 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
               tempSubOrgs.subordinates = [];
               tempRootOrgs.subordinates.push(tempSubOrgs);
             });
-            tempOrgChartData.push(tempRootOrgs);
           });
-          this.orgChartData = { name: 'Organizations', designation: '', img: '', subordinates: tempOrgChartData }
+          this.orgChartData = tempRootOrgs;
         }
       } else {
         this.toasterService.error(this.resourceService.messages.emsg.m0007);
@@ -319,7 +325,8 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     const data = {
       "request": {
         "filters": {
-          "createdDate": { ">=": this.datePipe.transform(this.fromDate, 'yyyy-MM-ddTHH:MM'), "<=": this.datePipe.transform(this.toDate, 'yyyy-MM-ddTHH:MM') }
+          "createdDate": { ">=": this.datePipe.transform(this.fromDate, 'yyyy-MM-ddTHH:MM'), "<=": this.datePipe.transform(this.toDate, 'yyyy-MM-ddTHH:MM') },
+          "rootOrgId": this.userProfile.rootOrgId
         }
       }
     };

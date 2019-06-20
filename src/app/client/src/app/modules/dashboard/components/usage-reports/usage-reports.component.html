@@ -23,7 +23,7 @@
                     <a (click)="reportType('staticsReport')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="staticsReport">{{resourceService?.frmelmnts?.lnk?.staticsReport}}</a>
                     <a (click)="reportType('userDetailsReport');" class="item" appPermission
-                        [permission]='adminDashboard'
+                        *ngIf="userProfile?.rootOrgAdmin" [permission]='adminDashboard'
                         suiTabHeader="userDetailsReport">{{resourceService?.frmelmnts?.lnk?.userDetailsReport}}</a>
                     <!-- <a (click)="reportType('graph')" class="item" appPermission [permission]='adminDashboard'
                         suiTabHeader="graph">{{resourceService?.frmelmnts?.lbl?.graphs}}</a>
@@ -37,7 +37,7 @@
                     </div> -->
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="userDetailsReport">
-                    <div class="ui grid" style="overflow-x: scroll">
+                    <div class="ui grid">
                         <div class="twelve wide column" id="orgChartDataSection">
                             <ng2-org-chart [topEmployee]="orgChartData"></ng2-org-chart>
                         </div>
@@ -147,7 +147,7 @@
                     <app-content-creation-statics></app-content-creation-statics>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="trainingdashboard">
-                    <div class="ui grid">
+                    <div class="ui grid" *ngIf="batchList?.length > 0">
                         <div class="eight wide column">
                             <div class="field">
                                 <div class="mt-10" style="cursor: pointer">
@@ -223,7 +223,7 @@
                             </ng-template>
                         </p-table>
                     </div>
-                    <div class="ui grid" *ngIf="!showTrainingdashboard">
+                    <div class="ui grid" *ngIf="!showTrainingdashboard || batchList?.length === 0">
                         <div class="one wide column"></div>
                         <div class="ten wide column">
                             <div class="ui two column centered grid no-result-container">

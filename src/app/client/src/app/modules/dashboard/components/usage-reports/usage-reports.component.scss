@@ -44,9 +44,15 @@ button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-le
     height: 60px;
     display: none;
 }
+
 .oc-h-bar.ng-star-inserted {
     height: 1.5em !important;
 }
-#orgChartDataSection {
-    padding-left: 45%;
+
+.oc-content {
+    text-align: center
+}
+
+.oc-name {
+    font-weight: bold;
 }
