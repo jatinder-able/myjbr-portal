@@ -84,11 +84,11 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
         this.initializeColumns();
         this.buildChartData();
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, (err) => {
       console.log(err);
-      this.toasterService.error(this.resourceService.messages.emsg.m0007);
+      this.toasterService.error(this.resourceService.messages.emsg.m0005);
     });
   }
   buildChartData() {

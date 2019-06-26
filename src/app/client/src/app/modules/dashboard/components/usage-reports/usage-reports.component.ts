@@ -131,7 +131,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           this.showTrainingstats = false;
         }
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, (err) => {
       console.log(err);
@@ -229,7 +229,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
         if (_.get(report, 'charts')) { this.createChartData(_.get(report, 'charts'), data); }
         if (_.get(report, 'table')) { this.renderTable(_.get(report, 'table'), data); }
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, err => { console.log(err); });
   }
@@ -265,7 +265,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           this.populateCourseDashboardData(this.batchList[0]);
         }
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, (err) => {
       console.log(err);
@@ -309,7 +309,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           this.orgChartData = tempRootOrgs;
         }
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, (err) => {
       console.log(err);
@@ -352,11 +352,11 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           this.showUserDetailsReport = false;
         }
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, (err) => {
       console.log(err);
-      this.toasterService.error(this.resourceService.messages.emsg.m0007);
+      this.toasterService.error(this.resourceService.messages.emsg.m0005);
     });
   }
   getUserDetailsBlock() {
@@ -420,7 +420,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           this.showTrainingdashboard = false;
         }
       } else {
-        this.toasterService.error(this.resourceService.messages.emsg.m0007);
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
       }
     }, (err) => {
       console.log(err);
