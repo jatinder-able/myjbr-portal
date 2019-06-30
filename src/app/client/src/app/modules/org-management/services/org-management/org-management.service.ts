@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ConfigService, RequestParam, ServerResponse, HttpOptions } from '@sunbird/shared';
 import { LearnerService } from '@sunbird/core';
 import { Observable } from 'rxjs';
-  /**
- * This service is used to manage bulk upload of users data or organization data.
- * This service is also used to check status of uploaded file
- */
+/**
+* This service is used to manage bulk upload of users data or organization data.
+* This service is also used to check status of uploaded file
+*/
 @Injectable()
 export class OrgManagementService {
   /**
@@ -24,9 +24,9 @@ export class OrgManagementService {
     this.learnerService = learnerService;
     this.configService = configService;
   }
-    /**
- * This method is used to call upload api to upload organizations file
- */
+  /**
+* This method is used to call upload api to upload organizations file
+*/
   public bulkOrgUpload(req): Observable<ServerResponse> {
     const httpOptions: RequestParam = {
       url: this.configService.urlConFig.URLS.ADMIN.BULK.ORGANIZATIONS_UPLOAD,
@@ -34,9 +34,9 @@ export class OrgManagementService {
     };
     return this.learnerService.post(httpOptions);
   }
-    /**
- * This method is used to call upload api to upload users file
- */
+  /**
+* This method is used to call upload api to upload users file
+*/
   public bulkUserUpload(req): Observable<ServerResponse> {
     const httpOptions: RequestParam = {
       url: this.configService.urlConFig.URLS.ADMIN.BULK.USERS_UPLOAD,
@@ -44,13 +44,23 @@ export class OrgManagementService {
     };
     return this.learnerService.post(httpOptions);
   }
-      /**
- * This method is used to call status api to get the status of uploaded file
- */
+  /**
+* This method is used to call status api to get the status of uploaded file
+*/
   getBulkUploadStatus(processId) {
     const options = {
       url: this.configService.urlConFig.URLS.ADMIN.BULK.STATUS + '/' + processId
     };
     return this.learnerService.get(options);
+  }
+  /**
+ * This method is used to create the single user
+ */
+  public createUser(data): Observable<ServerResponse> {
+    const httpOptions: RequestParam = {
+      url: this.configService.urlConFig.URLS.USER.SIGNUP,
+      data: data
+    };
+    return this.learnerService.post(httpOptions);
   }
 }

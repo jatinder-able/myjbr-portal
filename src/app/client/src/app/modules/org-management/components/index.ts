@@ -4,3 +4,4 @@ export * from './organization-upload/organization-upload.component';
 export * from './user-upload/user-upload.component';
 export * from './bulk-upload/bulk-upload.component';
 export * from './status/status.component';
+export * from './onboard-user/onboard-user.component';

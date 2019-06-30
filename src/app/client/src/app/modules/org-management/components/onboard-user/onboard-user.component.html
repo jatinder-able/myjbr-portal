@@ -1,0 +1,106 @@
+<sui-modal [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'large'" class="sb-modal"
+  appBodyScroll (dismissed)="redirect();modal.deny();" #modal>
+  <!--Header-->
+  <div class="sb-modal-header" [appTelemetryImpression]="telemetryImpression">
+    {{resourceService?.frmelmnts?.lbl?.onboardUser}}
+  </div>
+  <!--/Header-->
+  <!--Content-->
+  <div class="sb-modal-content" style="height: auto;">
+    <div class="ui stackable grid">
+      <div class="twelve wide column workspacesegment">
+        <sui-tabset #tabSection>
+          <div class="ui top attached tabular menu">
+            <a class="item" (click)="changeTab()"
+              suiTabHeader="createUser">{{resourceService?.frmelmnts?.lbl?.createUser}}</a>
+            <a class="item" (click)="changeTab()"
+              suiTabHeader="assignUser">{{resourceService?.frmelmnts?.lbl?.assignUser}}</a>
+          </div>
+          <div class="ui bottom attached segment" suiTabContent="createUser"
+            style="border-width: 0px 1px 1px;border-style: solid;border-color: #ddd;">
+            <div *ngIf="showLoader">
+              <app-loader></app-loader>
+            </div>
+            <form *ngIf="!showLoader" class="ui form" [formGroup]="createUserForm">
+              <div class="ui grid">
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': cfSubmitted && cf.firstName.errors }">
+                    <label>{{resourceService?.frmelmnts?.lbl?.firstName}}</label>
+                    <input formControlName="firstName" type="text" placeholder="First name" autofocus>
+                    <div *ngIf="cfSubmitted && cf.firstName.errors">
+                      <label *ngIf="cf.firstName.errors.required">First name is required</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': cfSubmitted && cf.lastName.errors }">
+                    <label>{{resourceService?.frmelmnts?.lbl?.lastName}}</label>
+                    <input formControlName="lastName" type="text" placeholder="Last name">
+                    <div *ngIf="cfSubmitted && cf.lastName.errors">
+                      <label *ngIf="cf.lastName.errors.required">Last name is required</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': cfSubmitted && cf.email.errors }">
+                    <label>{{resourceService?.frmelmnts?.lbl?.email}}</label>
+                    <input formControlName="email" type="email" placeholder="Email ID">
+                    <div *ngIf="cfSubmitted && cf.email.errors">
+                      <label *ngIf="cf.email.errors.required">Email is required</label>
+                      <label *ngIf="cf.email.errors.email">Please enter valid email address</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': cfSubmitted && cf.phonenumber.errors }">
+                    <label>{{resourceService?.frmelmnts?.lbl?.phonenumber}}</label>
+                    <input formControlName="phonenumber" type="text" placeholder="Phone Number">
+                    <div *ngIf="cfSubmitted && cf.phonenumber.errors">
+                      <label *ngIf="cf.phonenumber.errors.required">Phone number is required</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="field">
+                    <label>{{resourceService?.frmelmnts?.lbl?.username}}</label>
+                    <input formControlName="username" type="text" placeholder="User Name">
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="field">
+                    <label>{{resourceService?.frmelmnts?.lbl?.password}}</label>
+                    <input formControlName="password" type="text" placeholder="Password">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="ui bottom attached segment" suiTabContent="assignUser"
+            style="border-width: 0px 1px 1px;border-style: solid;border-color: #ddd;">
+            Assign User
+          </div>
+        </sui-tabset>
+      </div>
+    </div>
+  </div>
+  <!--/Content-->
+  <!--Actions-->
+  <div class="sb-modal-actions">
+    <button *ngIf="selectedTab != 'createUser'" appTelemetryInteract [telemetryInteractObject]="telemetryInteractObject"
+      [telemetryInteractEdata]="createUserInteractEdata" class="sb-btn sb-btn-normal sb-btn-primary"
+      (click)="createUserSubmit()">
+      {{resourceService?.frmelmnts?.btn?.submit}}
+    </button>
+    <button *ngIf="selectedTab != 'assignUser'" appTelemetryInteract [telemetryInteractObject]="telemetryInteractObject"
+      [telemetryInteractEdata]="assignUserInteractEdata" class="sb-btn sb-btn-normal sb-btn-primary"
+      (click)="assignUserSubmit()">
+      {{resourceService?.frmelmnts?.btn?.submit}}
+    </button>
+    <div *ngIf="createUserErrorMessage != null" class="errorMsg">{{createUserErrorMessage}}</div>
+    <div *ngIf="createdUserId != null" class="successMsg"><span style="display: block">The user was successfully
+        created. And the user id is</span>
+      <span style="display: block">{{createdUserId}}</span>
+    </div>
+  </div>
+  <!--/Actions-->
+</sui-modal>

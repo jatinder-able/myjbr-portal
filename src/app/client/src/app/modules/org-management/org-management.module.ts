@@ -6,7 +6,7 @@ import { ResourceService, ToasterService, RouterNavigationService, SharedModule 
 import { OrgTypeService, OrgManagementService } from './services';
 import {
   CreateOrgTypeComponent, ViewOrgTypeComponent, OrganizationUploadComponent,
-  UserUploadComponent, BulkUploadComponent, StatusComponent
+  UserUploadComponent, BulkUploadComponent, StatusComponent, OnBoardUserComponent
 } from './components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@sunbird/core';
@@ -26,7 +26,7 @@ import { NgInviewModule } from 'angular-inport';
     NgInviewModule
   ],
   declarations: [CreateOrgTypeComponent, ViewOrgTypeComponent, OrganizationUploadComponent,
-    UserUploadComponent, BulkUploadComponent, StatusComponent],
+    UserUploadComponent, BulkUploadComponent, StatusComponent, OnBoardUserComponent],
   exports: [BulkUploadComponent],
   providers: [ResourceService, ToasterService, RouterNavigationService, OrgTypeService, OrgManagementService]
 })
