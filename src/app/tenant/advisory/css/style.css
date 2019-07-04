@@ -1,6 +1,6 @@
 
 body {
-  background: #fff;
+  background: #F6F6F6;
   color: #444;
   font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
 }
@@ -2799,9 +2799,9 @@ ul.list-unstyled li {
   margin: 0 !important;
 }
 .pageSection-count {
-  background: #eb8b00 !important;
+  background: #ad1b02 !important;
   color: #fff;
-  padding: 3px 6px !important;
+  padding: 3px 7px 5px !important;
   display: inline-block;
   line-height: 1;
   vertical-align: baseline;
@@ -2812,6 +2812,7 @@ ul.list-unstyled li {
   font-family: "ITC_Charter_Regular",Georgia,Serif;
   letter-spacing: 0.2px;
   font-size: 12px;
+  border-radius: 25px;
 }
 /* Slick Carousel Code Ends Here */
 @font-face {
@@ -2845,3 +2846,301 @@ ul.list-unstyled li {
 input[type="search"].form-control::-webkit-input-placeholder {
   color: #919191;
 }
+.line-border {
+  border-bottom: 1px solid #e88d14;
+  margin: 10px 0 20px 0;
+}
+.white-drop {
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+  background-color: white;
+  margin: 20px 0 0 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-right: 26px;
+  margin-left: -4px;
+}
+.card-counter.primary {
+  background-color: #ad1b02;
+  color: #FFF;
+}
+.card-counter {
+  box-shadow: 2px 2px 10px #DADADA;
+  margin: 5px;
+  padding: 20px 10px;
+  background-color: #fff;
+  height: 140px;
+  border-radius: 5px;
+  transition: .3s linear all;
+}
+.card-counter i {
+  font-size: 5em;
+  opacity: 0.2;
+}
+.card-counter .count-numbers {
+  position: absolute;
+  right: 35px;
+  top: 20px;
+  font-size: 32px;
+  display: block;
+}
+.card-counter .count-name {
+  position: absolute;
+  right: 33px;
+  top: 40px;
+  font-style: italic;
+  /* text-transform: capitalize; */
+  display: block;
+  font-size: 13px;
+  text-align: right;
+  width: 80%;
+}
+.card-counter.danger {
+  background-color: #d85604;
+  color: #FFF;
+}
+a {
+  cursor: pointer;
+  line-height: normal;
+  color: #fff;
+  transition: 0.5s;
+}
+.card-counter.success {
+  background-color: #e88d14;
+  color: #FFF;
+}
+h3 {
+  font-size: 16px !important;
+}
+.card-counter.info {
+  background-color: #f3be26;
+  color: #FFF;
+}
+
+/* Content Box Code Starts Here */
+.pin {
+  padding-bottom: 10px;
+  float: left;
+  margin: 20px 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.pin .thumbnail {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  position: relative;
+  height: /*480px*/ 415px;
+  border-radius: 5px;
+}
+.content-pin.thumbnail {
+  height: 405px !important;
+  font-size: 12px;
+  color: #888;
+  width: 275px !important;
+}
+.scale-effect {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+}
+.pin .thumbnail .grid {
+  height: 100%;
+}
+.pin .thumbnail .grid {
+  border: 1px solid #fbfbfb;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+a {
+  cursor: pointer;
+  line-height: normal;
+  color: #fff;
+  transition: 0.5s;
+}
+.content-pin .grid .content-imp {
+  padding: 0 19px;
+  padding-top: 15px;
+}
+.pin .thumbnail a div {
+  background-repeat: no-repeat;
+}
+.content-pin .grid a div {
+  height: auto !important;
+}
+.lesson-title, .lesson-title a, .word-title a {
+  color: #383838;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 14px !important;
+}
+.content-info {
+  line-height: 17px;
+  padding-bottom: 10px;
+  color: #383838;
+}
+.content-pin .content-info p {
+  display: inline-block;
+  margin: 0;
+  line-height: 100%;
+  text-transform: capitalize !important;
+  background: none !important;
+  padding: 0 8px 0 0 !important;
+}
+.content-pin .grid .content-pin-img {
+  position: relative;
+}
+.content-pin .grid .content-pin-img {
+  width: 100%;
+}
+.content-pin .grid .content-pin-img div.content-pin-inner {
+  text-align: center;
+}
+@media (min-width: 1025px) {
+  .content-pin .grid .content-pin-img div.content-pin-inner {
+    height: auto!important;
+  }
+}
+.content-pin .grid .content-pin-img div.content-pin-inner img {
+  max-width: 100%;
+  height: 220px;
+  width: 100%;
+}
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+.content-pin .content-imp-top {
+  padding: 0px;
+  background-color: #424242;
+  color: rgb(255, 255, 255);
+  text-align: left;
+  position: absolute;
+  bottom: -4px;
+  width: 100%;
+  left: 0;
+}
+.content-imp-top-inner {
+  position: relative;
+}
+.language-grade-age {
+  padding: 15px 19px;
+}
+.lesson-ratings.jq-ry-container {
+  padding: 0 0px 3px 0px;
+}
+ul.post-info {
+  list-style: none;
+  width: 16vw;
+  margin: 0;
+  padding: 0;
+}
+.post-info li {
+  display: inline-block;
+  margin: 0;
+}
+.post-info li i {
+  margin-right: 0;
+  font-size: 10px;
+  padding-right: 3px;
+}
+.pin .content-pin .caption {
+  padding: 0px 19px !important;
+}
+.content-pin.scale-effect .description {
+  margin: 0px;
+  word-break: break-all;
+  height: 45px !important;
+  overflow: hidden;
+  /* border-bottom: 1px solid #E6E7E8; */
+  padding-top: 10px;
+  color: #000;
+  border-top: 1px solid rgb(221, 221, 221);
+}
+.content-pin .updated-date {
+  position: absolute;
+  bottom: 53px;
+}
+.content-pin .updated-date i {
+  margin-right: 3px;
+}
+.pin .creator {
+  position: absolute;
+  display: block;
+  width: 100%;
+}
+.content-pin .creator {
+  /* bottom: 0px !important; */
+  margin-top: 12px;
+  margin-left: -5px;
+}
+.pin .creator span {
+  border-top: 1px solid #fafafa;
+  padding: 6px 0;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #000000;
+}
+.content-pin .creator span {
+  line-height: 30px;
+  margin-bottom: 5px;
+  border: 0 !important;
+  color: #ad1b02;
+}
+span.lesson-pin-last-updated.changeformat, i.fa.fa-history {
+  color: #ffffff;
+}
+.scale-effect:hover {
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 6px 15px 2px rgba(0,0,0,0.1);
+  -moz-box-shadow: 1px 6px 15px 2px rgba(0,0,0,0.1);
+  -o-box-shadow: 1px 6px 15px 2px rgba(0,0,0,0.1);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  z-index: 100;
+  transform: scale(1.02);
+  -webkit-transform: scale(1.02);
+  -moz-transform: scale(1.02);
+  -o-transform: scale(1.02);
+  -ms-transform: scale(1.02);
+  background-color: #fff;
+  border-radius: 5px;
+  position: relative;
+}
+.content-pin:hover .grid .content-imp {
+  background-color: #ad1b02;
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+}
+.content-pin:hover .grid .content-imp .lesson-title span, .content-pin:hover .grid .content-imp .content-info {
+  color: #fff;
+}
+.content-imp-top.static {
+  /* border-top: 1px solid #e1e1e1; */
+  background-color: #ffffff00;
+  color: #000000;
+}
+.resource-card-new {
+  padding: 10px;
+}
+.fa-star {
+  color: #e1e1e1;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.fa-commenting {
+  font-size: 13px !important;
+}
+.resource-contents {
+  margin-top: 0 !important;
+}
+/* Content Box Code Ends Here */

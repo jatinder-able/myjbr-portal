@@ -23,10 +23,13 @@
     "RESOURCEBUNDLES": {
       "ENG": "/read"
     },
-    "REVIEW_COMMENT":{
+    "REVIEW_COMMENT": {
       "READ": "review/comment/v1/read/comment",
       "DELETE": "review/comment/v1/delete/comment",
       "CREATE": "review/comment/v1/create/comment"
+    },
+    "MEMBER": {
+      "ADD": "org/v1/member/add"
     },
     "USER": {
       "SIGNUP": "user/v1/create",
@@ -47,11 +50,11 @@
     "COMPOSITE": {
       "SEARCH": "composite/v1/search"
     },
-    "SYSTEM_SETTING":{
-      "CUSTODIAN_ORG":"data/v1/system/settings/get/custodianOrgId"
+    "SYSTEM_SETTING": {
+      "CUSTODIAN_ORG": "data/v1/system/settings/get/custodianOrgId"
     },
-    "COURSE_FRAMEWORK":{
-      "COURSE_FRAMEWORKID":"data/v1/system/settings/get/courseFrameworkId"
+    "COURSE_FRAMEWORK": {
+      "COURSE_FRAMEWORKID": "data/v1/system/settings/get/courseFrameworkId"
     },
     "COURSE": {
       "SEARCH": "course/v1/search",
@@ -61,12 +64,12 @@
       "GET_ENROLLED_COURSES": "course/v1/user/enrollment/list",
       "ENROLL_USER_COURSE": "course/v1/enrol",
       "RECOMMENDED_COURSE": "recommended/courses",
-      "UNENROLL_USER_COURSE":"course/v1/unenrol",
-      "COURSE_DISCUSSIONS_POST":"thread/create",
-      "RETRIEVE_DISCUSSION":"list",
-      "REPLY_TO_THREAD":"thread/reply",
-      "RETRIEVE_REPLIES":"thread/",
-      "LIKE_POST":  "thread/vote",
+      "UNENROLL_USER_COURSE": "course/v1/unenrol",
+      "COURSE_DISCUSSIONS_POST": "thread/create",
+      "RETRIEVE_DISCUSSION": "list",
+      "REPLY_TO_THREAD": "thread/reply",
+      "RETRIEVE_REPLIES": "thread/",
+      "LIKE_POST": "thread/vote",
       "UPLOAD_FILE": "files/service"
     },
     "CONTENT": {
@@ -90,7 +93,7 @@
       "ORG_CONSUMPTION": "dashboard/v1/consumption/org",
       "COURSE_PROGRESS": "dashboard/v1/progress/course",
       "COURSE_CONSUMPTION": "dashboard/v1/consumption/course",
-      "COURSE_PROGRESS_V2":"dashboard/v2/progress/course"
+      "COURSE_PROGRESS_V2": "dashboard/v2/progress/course"
     },
     "NOTES": {
       "SEARCH": "notes/v1/search",

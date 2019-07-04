@@ -36,6 +36,8 @@
   <!-- Slick Slider Starts Here -->
   <link rel="stylesheet" type="text/css" href="slick/slick.css" />
   <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
   <script>
     if (localStorage.getItem('isLogged') == 'true') {
       window.location.href = "/learn";
@@ -51,12 +53,13 @@
   <header id="header">
     <div class="container">
       <nav class="navbar navbar-light justify-content-between">
-        <a class="navbar-brand" href="#"><img src="img/able-logo.png" width="100%" height="100%" alt=""></a>
+        <a class="navbar-brand" href="#"><img src="img/able-logo.png" style="width: 142px;" alt=""></a>
         <form class="form-inline search" id="searchForm">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search in Contents" aria-label="Search" id="ableSearch"
-            autocomplete="off" style="width: 260px;border-radius: 5px 0 0 5px;">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search in Contents" aria-label="Search"
+            id="ableSearch" autocomplete="off" style="width: 260px;border-radius: 5px 0 0 5px;">
           <button class="btn btn-outline-success my-2 my-sm-0 search" type="button"><img src="img/search_ico.gif"
-              width="100%" height="100%" alt="" onclick="navigateToExplore()" style="border-radius: 0 20% 20% 0;"></button>
+              width="100%" height="100%" alt="" onclick="navigateToExplore()"
+              style="border-radius: 0 20% 20% 0;"></button>
 
 
           <div class="dropdown" style="margin: 0px 11px;">
@@ -88,68 +91,86 @@
     </div>
     <div id="intro-carousel" class="owl-carousel">
       <!-- <div class="overlay-color"></div> -->
-      <div class="item" style="background-image: url('img/intro-carousel/landing.png');"></div>
-      <div class="item" style="background-image: url('img/intro-carousel/iudx.jpg');"></div>
-      <div class="item" style="background-image: url('img/intro-carousel/about-us.png');"></div>
-      <div class="item" style="background-image: url('img/intro-carousel/Innovate.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/GettyImages-1035176106.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/Skills _ education - lecturer teaching class.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/Skills _ education - Computer classroom.jpg');"></div>
+      <!-- <div class="item" style="background-image: url('img/intro-carousel/Innovate.jpg');"></div> -->
 
     </div>
   </section>
   <br>
-  <section class="explore-contents-section">
-    <div class="row" style="padding: 0 130px;">
-      <div class="col-md-12">
-        <h5 style="margin-bottom: 17px;"><b>Focus on</b></h5>
+  <section>
+    <div class="row" style="padding: 0 105px 0 100px;">
+      <div class="col-md-12" style="padding-left: 0;">
+        <h5 class="pageSection-heading" style="margin-left: 10px !important;"><b>Focus on</b></h5>
       </div>
     </div>
-    <div class="row" style="padding: 0 130px;">
-      <div class="col-md-3" onclick="redirectToExplore('Soft Skills');"
-        style="background-color: #d93954;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 13px 10px 0px 10px;">
-        <h4 style="color: #ffffff;padding: 0px 11px;padding-bottom: 0;margin-bottom: 15px;"
-          class="ui header pageSection-heading"><b>Soft Skills</b></h4>
-        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
-        <span style="display:block;color: #ffffff;padding: 2px 0px 0 12px;font-size: 13px;">Improve your soft skills proficiency by leveraging high-quality learning content in multiple areas.</span>
-        <span title="Soft Skills"
-          style="border: 0.1em solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-bottom: 10px;"
-          class="pull-right">
-          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1;font-size:20px;"></i>
-        </span>
-      </div>
-      <div class="col-md-3" onclick="redirectToExplore('Technical Trainings');"
-        style="background-color: #6d6e71;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 13px 10px 0px 10px;">
-        <h4 style="color: #ffffff;padding: 0px 11px;padding-bottom: 0;margin-bottom: 15px;"
-          class="ui header pageSection-heading"><b>Technical Areas</b></h4>
-        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
-        <span style="display:block;color: #ffffff;padding: 2px 0px 0 12px;font-size: 13px;">Developing your techinical skills.</span>
-        <span title="Technical Areas"
-          style="border: 0.1em solid #e1e1e1;padding: 2px 9px 1px 10px;border-radius: 15px;margin-top: 38px;"
-          class="pull-right">
-          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1;font-size:20px;"></i>
-        </span>
-      </div>
-      <div class="col-md-3" onclick="redirectToExplore('Technology Trainings');"
-        style="background-color: #e0301e;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 13px 10px 0px 10px;">
-        <h4 style="color: #ffffff;padding: 0px 11px;padding-bottom: 0;margin-bottom: 15px;"
-          class="ui header pageSection-heading"><b>Technology Areas</b></h4>
-        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
-        <span style="display:block;color: #ffffff;padding: 2px 0px 0 12px;font-size: 13px;">Find all technology related contents.</span>
-        <span title="Technology Areas"
-          style="border: 0.1em solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: 38px;"
-          class="pull-right">
-          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1;font-size:20px;"></i>
-        </span>
-      </div>
-      <div class="col-md-3" onclick="redirectToExplore('Practice Specific Trainings');"
-        style="background-color: #602320;max-width: 23%;cursor:pointer;max-height:140px;margin-right: 20px;padding: 13px 10px 0px 10px;">
-        <h4 style="color: #ffffff;padding: 0px 11px;padding-bottom: 0;margin-bottom: 15px;"
-          class="ui header pageSection-heading"><b>Advisory, Tax & &nbsp;&nbsp;Assurance</b></h4>
-        <!-- <h3 style="color: #ffffff;padding: 25px 15px;padding-bottom: 0;margin-bottom: 15px;font-size: 23px;">New to vantage</h3> -->
-        <span style="display:block;color: #ffffff;padding: 2px 0px 0 12px;font-size: 13px;">Access all available learnings in each Line of Service.</span>
-        <span title="Advisory, Tax & Assurance"
-          style="border: 0.1em solid #e1e1e1;padding: 2px 10px 1px 11px;border-radius: 15px;margin-top: -5px;"
-          class="pull-right">
-          <i class="fa fa-angle-right" aria-hidden="true" style="color:#e1e1e1;font-size:20px;"></i>
-        </span>
+    <div style="padding: 0 65px 0 90px;">
+      <div class="row white-drop" style="margin-top: 10px;">
+        <div class="container">
+          <div class="col-md-3 pull-left" onclick="redirectToExplore('Soft Skills');">
+            <div class="card-counter primary cursor-pointer">
+              <i class="fa fa-code-fork"></i>
+              <span class="count-numbers">
+                <h3 class="title">Soft Skills</h3>
+              </span>
+              <span class="count-name">
+                Improve your soft skills proficiency by leveraging high-quality learning content in multiple
+                areas.</span>
+
+              <span class="col-md-12">
+                <h3 class="title pull-right"><a href="#">>></h3> </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-3 pull-left" onclick="redirectToExplore('Technical Trainings');">
+            <div class="card-counter danger cursor-pointer">
+              <i class="fa fa-ticket"></i>
+              <span class="count-numbers">
+                <h3 class="title">Technical Areas</h3>
+              </span>
+              <span class="count-name">
+                Developing your techinical skills.
+              </span>
+
+              <span class="col-md-12">
+                <h3 class="title pull-right"><a href="#">>></h3> </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-3 pull-left" onclick="redirectToExplore('Technology Trainings');">
+            <div class="card-counter success cursor-pointer">
+              <i class="fa fa-database"></i>
+              <span class="count-numbers">
+                <h3 class="title">Technology Areas</h3>
+              </span>
+              <span class="count-name">
+                Find all technology related contents. </span>
+
+              <span class="col-md-12">
+                <h3 class="title pull-right"><a href="#">>></h3> </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-3 pull-left" onclick="redirectToExplore('Practice Specific Trainings');">
+            <div class="card-counter info cursor-pointer">
+              <i class="fa fa-users"></i>
+              <span class="count-numbers">
+                <h3 class="title">Advisory, Tax &amp; Assurance</h3>
+              </span>
+              <span class="count-name">
+                Access all available learnings in each Line of Service. </span>
+
+              <span class="col-md-12">
+                <h3 class="title pull-right"><a href="#">>></h3> </a>
+              </span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -157,12 +178,14 @@
   <br>
   <section class="resource-section">
     <div class="row">
-      <div style="padding: 0 130px;width: 100%;">
-        <div class="d-flex flex-ai-center">
-          <h4 class="ui header m-0 mr-5 pageSection-heading">Latest Trainings <span
-            class="ui primary label pageSection-count">20</span></h4>
+      <div style="width: 100%;padding:0 80px;">
+        <div class="d-flex flex-ai-center" style="margin: 10px 25px 0px 20px;">
+          <h5 class="ui header m-0 mr-5 pageSection-heading" style="margin-bottom: 5px !important;">
+            <b>Latest Trainings&nbsp;</b>
+            <span class="ui primary label pageSection-count"></span>
+          </h5>
         </div>
-        <div class="resource-contents">
+        <div class="pin resource-contents">
           Loading.......
         </div>
       </div>
@@ -178,11 +201,14 @@
           <!-- <p class="copy-right-grids mt-lg-1">© 2019. All Rights Reserved.
 
           </p> -->
-          <p style="margin-bottom: 10px;text-align: left;font-size: 13px;" class="copy-right-grids mt-lg-1">©&nbsp;2019 PwC. All rights reserved. PwC refers to the PwC network and/or one or more of its member firms,<br> each of which is a separate legal entity. Please see <a href="http://www.pwc.com/structure" target="_blank" style="color:#ffffff">www.pwc.com/structure</a> for further details.</p>
+          <p style="margin-bottom: 10px;text-align: left;font-size: 13px;" class="copy-right-grids mt-lg-1">©&nbsp;2019
+            PwC. All rights reserved. PwC refers to the PwC network and/or one or more of its member firms,<br> each of
+            which is a separate legal entity. Please see <a href="http://www.pwc.com/structure" target="_blank"
+              style="color:#ffffff">www.pwc.com/structure</a> for further details.</p>
           <div class="row" style="margin-bottom: 20px;">
 
             <div class="col-md-4 w3l-footer">
-  
+
               <div class="nav-w3-l">
                 <ul class="list-unstyled">
                   <li style="margin-left:-27px;">
@@ -191,16 +217,16 @@
                   <li>
                     <a href="javascript:">Privacy</a>
                   </li>
-  
+
                   <li>
                     <a href="javascript:">Cookies</a>
                   </li>
-  
+
                 </ul>
               </div>
             </div>
           </div>
-  
+
         </div>
       </div>
     </div>
@@ -801,6 +827,10 @@
     function redirectToExplore(param) {
       location.href = "/explore/1?key=" + param;
     }
+    function calculateTimeAgo(lastUpdatedOn) {
+      const local = moment(lastUpdatedOn).local().format('YYYY-MM-DD HH:mm:ss');
+      return moment(local).fromNow();
+    }
     $(function () {
       $.ajax({
         url: window.location.origin + '/api/data/v1/page/assemble?orgdetails=orgName,email',
@@ -809,35 +839,53 @@
         processData: false,
         contentType: 'application/json',
         success: function (response) {
-          // $(".pageSection-count").html(response.result.response.sections[0].count);
+          var latestCourses = _.find(response.result.response.sections, { name: 'Latest Courses' });
+          $(".pageSection-count").html(latestCourses.count);
           var resourceContents = '';
-          $.each(response.result.response.sections[0].contents, function (index, value) {
-            resourceContents += '<div class="resource-card">';
+          $.each(latestCourses.contents, function (index, value) {
+            resourceContents += '<div class="resource-card-new">';
+            resourceContents += '<div class="thumbnail content-pin scale-effect">';
             resourceContents += '<input type="hidden" value="' + value.identifier + '">';
-            resourceContents += '<div class="resource-header">';
-            resourceContents += '<div class="resource-image">';
+            resourceContents += '<div class="grid">';
+            resourceContents += '<div class="content-imp">';
+            resourceContents += '<span class="lesson-title"><span>' + value.name + '</span></span>';
+            resourceContents += '<div class="content-info"><p class="type">' + value.resourceType + '</p></div></div>';
+            resourceContents += '<div class="content-pin-img"><div class="content-pin-inner">';
             if (value.appIcon != undefined) {
-              resourceContents += '<img src="' + value.appIcon + '" alt="' + value.name + '">';
+              resourceContents += '<img class="lazy" src="' + value.appIcon + '" alt="' + value.name + '">';
             }
             else {
-              resourceContents += '<img src="img/book.png" alt="' + value.name + '">';
+              resourceContents += '<img class="lazy" src="img/book.png" alt="' + value.name + '">';
             }
-            resourceContents += '</div>';
-            resourceContents += '<div class="resource-meta">';
-            resourceContents += '<div class="resource-label-section">';
-            resourceContents += '<div class="resource-label-data">' + value.resourceType + '</div>';
-            resourceContents += '</div>';
-            resourceContents += '<div class="subject ellipsis mt-3" title="Overview">Category : ' + value.board + '</div>';
-            resourceContents += '<div class="class ellipsis mt-3" title="Mission">Sub-Category : ' + value.gradeLevel + '</div>';
-            resourceContents += '<div class="medium ellipsis mt-3" title="English">Language : ' + value.medium + '</div>';
-            resourceContents += '</div>';
-            resourceContents += '</div>';
-            resourceContents += '<div class="resource-sub-header">';
-            resourceContents += '<h4 class="resource-title"> ' + value.name + ' </h4>';
-            resourceContents += '<div class="resource-creator ellipsis"> ' + value.organisation + ' </div>';
-            resourceContents += '</div>';
-            resourceContents += '<div class="py-2"></div>';
-            resourceContents += '</div>';
+            resourceContents += '</div><div class="content-imp-top"><div class="content-imp-top-inner"><div class="language-grade-age"><span><i class="fa fa-check"aria-hidden="true"></i>&nbsp;' + value.status + '</span><span style="float:right"><i class="fa fa-history"aria-hidden="true"></i>&nbsp;' + calculateTimeAgo(value.lastUpdatedOn) + '</span></div></div></div></div>';
+            resourceContents += '<div class="caption"><div class="description hasTooltip" title="">' + value.description + '</div>';
+            resourceContents += '<div class="row creator"><div class="col-xs-12 col-sm-12 col-md-12 hasTooltip" title=""><span>' + value.organisation + '</span></div></div></div>';
+            resourceContents += '<div class="content-imp-top static"><div class="content-imp-top-inner"><div class="language-grade-age"><div class="lesson-ratings jq-ry-container" readonly="readonly" style="width: 89px;"><div class="jq-ry-group-wrapper"><div class="jq-ry-normal-group jq-ry-group"><ul class="post-info"><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i>(0)</li><li style="float:right;margin-right:-20px"><i class="fa fa-commenting" aria-hidden="true"></i>(0)</li></ul></div></div></div></div></div></div></div></div></div>';
+            // resourceContents += '<div class="resource-card">';
+            // resourceContents += '<div class="resource-header">';
+            // resourceContents += '<div class="resource-image">';
+            // if (value.appIcon != undefined) {
+            //   resourceContents += '<img src="' + value.appIcon + '" alt="' + value.name + '">';
+            // }
+            // else {
+            //   resourceContents += '<img src="img/book.png" alt="' + value.name + '">';
+            // }
+            // resourceContents += '</div>';
+            // resourceContents += '<div class="resource-meta">';
+            // resourceContents += '<div class="resource-label-section">';
+            // resourceContents += '<div class="resource-label-data">' + value.resourceType + '</div>';
+            // resourceContents += '</div>';
+            // resourceContents += '<div class="subject ellipsis mt-3" title="Overview">Category : ' + value.board + '</div>';
+            // resourceContents += '<div class="class ellipsis mt-3" title="Mission">Sub-Category : ' + value.gradeLevel + '</div>';
+            // resourceContents += '<div class="medium ellipsis mt-3" title="English">Language : ' + value.medium + '</div>';
+            // resourceContents += '</div>';
+            // resourceContents += '</div>';
+            // resourceContents += '<div class="resource-sub-header">';
+            // resourceContents += '<h4 class="resource-title"> ' + value.name + ' </h4>';
+            // resourceContents += '<div class="resource-creator ellipsis"> ' + value.organisation + ' </div>';
+            // resourceContents += '</div>';
+            // resourceContents += '<div class="py-2"></div>';
+            // resourceContents += '</div>';
           });
           $(".resource-contents").html(resourceContents);
           $('.resource-contents').slick({
@@ -875,7 +923,7 @@
           });
         },
       });
-      $(".resource-contents").on("click", ".resource-card", function () {
+      $(".resource-contents").on("click", ".resource-card-new", function () {
         location.href = '/explore-course/course/' + $(this).find('input').val();
       })
       $("#searchForm").on("submit", function () {

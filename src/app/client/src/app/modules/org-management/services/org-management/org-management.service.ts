@@ -63,4 +63,14 @@ export class OrgManagementService {
     };
     return this.learnerService.post(httpOptions);
   }
+  /**
+ * This method is used to assign user to the member org
+ */
+  public assignUser(data): Observable<ServerResponse> {
+    const httpOptions: RequestParam = {
+      url: this.configService.urlConFig.URLS.MEMBER.ADD,
+      data: data
+    };
+    return this.learnerService.post(httpOptions);
+  }
 }

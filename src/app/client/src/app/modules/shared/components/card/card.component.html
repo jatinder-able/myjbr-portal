@@ -1,19 +1,96 @@
-<div 
-  class="sbCard mt-20 mb-5" 
-  *ngIf="data" 
-  (click)="onAction(data,data.action.onImage)" 
-  appTelemetryInteract 
-  [telemetryInteractObject]="{id:data.metaData.identifier,type:data.telemetryObjectType,ver:data.metaData.pkgVersion ? data.metaData.pkgVersion.toString():'1.0'}" 
-  [telemetryInteractEdata]="data.telemetryInteractEdata"
-  tabindex="0"
-  >
-    <div class="header p-15 pb-0">
-      <div class="image m-0 mr-15 br-4">
-        <img *ngIf="data.showImage? false : true" src="{{data.image || 'assets/images/book.png' | cdnprefixurl}}" alt="{{data.name}}">
+<div class="sbCard sb-content-pin sb-scale-effect mt-20 mb-20 ml-20" *ngIf="data"
+  (click)="onAction(data,data.action.onImage)" appTelemetryInteract
+  [telemetryInteractObject]="{id:data.metaData.identifier,type:data.telemetryObjectType,ver:data.metaData.pkgVersion ? data.metaData.pkgVersion.toString():'1.0'}"
+  [telemetryInteractEdata]="data.telemetryInteractEdata" tabindex="0">
+  <div class="grid">
+    <div class="content-imp" style="height: 59px !important;">
+      <span class="lesson-title">
+        <span>
+          {{data.name | slice:0:23 }}
+          <span *ngIf="data.name && data.name.length > 23">...</span>
+        </span>
+      </span>
+      <div class="content-info">
+        <p class="type" *ngIf="data.ribbon && data.ribbon.right && data.ribbon.right.name">{{data.ribbon.right.name}}
+        </p>
       </div>
+    </div>
+    <div class="content-pin-img">
+      <div class="content-pin-inner">
+        <img src="{{data.ribbon.left.image}}" *ngIf="data.ribbon && data.ribbon.left && data.ribbon.left.image"
+          class="lazy" alt="{{data.ribbon.left.name}}">
+        <img *ngIf="data.showImage? false : true" src="{{data.image || 'assets/images/book.png' | cdnprefixurl}}"
+          class="lazy" alt="{{data.name}}">
+      </div>
+      <div class="content-imp-top" *ngIf="data.maxCount === undefined">
+        <div class="content-imp-top-inner">
+          <div class="language-grade-age">
+            <span>
+              <i class="fa fa-check" aria-hidden="true"></i>&nbsp;{{data?.status}}
+            </span>
+            <span style="float: right">
+              <i class="fa fa-history" aria-hidden="true"></i>
+              &nbsp;{{data.lastUpdatedOn | fromNow}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="content-imp-top" *ngIf="data.maxCount && data.progress">
+        <div class="content-imp-top-inner">
+          <div class="language-grade-age">
+            <span class="course-progress">
+              {{data.progress/data.maxCount | percent:0}}
+            </span>
+            <span style="float: right;">
+              <i class="fa fa-check" aria-hidden="true"></i>
+              {{showCourseStatus(data.progress/data.maxCount*100)}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">
+      <div class="description hasTooltip" *ngIf="data.description">
+        {{data.description | slice:0:65 }}
+        <span *ngIf="data.description && data.description.length > 65">...</span>
+      </div>
+      <div class="creator">{{data.orgDetails?.orgName}}</div>
+    </div>
+    <div class="content-imp-top static">
+      <div class="content-imp-top-inner">
+        <div class="language-grade-age">
 
-      <!--Course-->
-      <div class="meta course" *ngIf="data.contentType && data.contentType.toLowerCase() === 'course'">
+
+          <div class="lesson-ratings jq-ry-container" readonly="readonly" style="width: 89px;">
+            <div class="jq-ry-group-wrapper">
+              <div class="jq-ry-normal-group jq-ry-group">
+                <ul class="post-info">
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i>(0)</li>
+
+                  <li style="float:right;margin-right:-13px"><i class="fa fa-commenting"
+                      aria-hidden="true"></i>&nbsp;(0)</li>
+                </ul>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="header p-15 pb-0"> -->
+    <!-- <div class="image m-0 mr-15 br-4">
+        <img *ngIf="data.showImage? false : true" src="{{data.image || 'assets/images/book.png' | cdnprefixurl}}" alt="{{data.name}}">
+      </div> -->
+
+    <!--Course-->
+    <!-- <div class="meta course" *ngIf="data.contentType && data.contentType.toLowerCase() === 'course'">
         <div class="topic mb-15" *ngIf="data.topic" title="{{data.topic}}">
           {{data.topic | slice:0:40}} 
           <span *ngIf="data.topic && data.topic.length > 40">...</span>
@@ -22,11 +99,11 @@
           {{data.subTopic | slice:0:40}} 
           <span *ngIf="data.subTopic && data.subTopic.length > 40">...</span>
         </div>
-      </div>
-      <!--/Course-->
+      </div> -->
+    <!--/Course-->
 
-      <!--Non-Course-->
-      <div class="meta non-course" *ngIf="!data.contentType || data.contentType.toLowerCase() !== 'course'">
+    <!--Non-Course-->
+    <!-- <div class="meta non-course" *ngIf="!data.contentType || data.contentType.toLowerCase() !== 'course'">
         <div class="mb-auto d-flex">
           <div class="ui label tiny right" *ngIf="data.ribbon && data.ribbon.right && data.ribbon.right.name">{{data.ribbon.right.name}}</div>
           <img src="{{data.ribbon.left.image}}" class="avatar ml-auto" *ngIf="data.ribbon && data.ribbon.left && data.ribbon.left.image" alt="{{data.ribbon.left.name}}">
@@ -34,11 +111,11 @@
         <div class="subject ellipsis mt-3" *ngIf="data.subject" title="{{data.subject}}">{{resourceService.frmelmnts.lbl.subject}} : {{data.subject}}</div>
         <div class="class ellipsis mt-3" *ngIf="data.gradeLevel" title="{{data.gradeLevel}}">{{resourceService.frmelmnts.lbl.class}} : {{data.gradeLevel}}</div>
         <div class="medium ellipsis mt-3" *ngIf="data.medium" title="{{data.medium}}">{{resourceService.frmelmnts.lbl.medium}} : {{data.medium}}</div>
-      </div>
-      <!--/Non-Course-->
+      </div> -->
+    <!--/Non-Course-->
 
-    </div>
-    <div class="sub-header">
+    <!-- </div> -->
+    <!-- <div class="sub-header">
         <h4 class="title">
           {{data.name | slice:0:60 }}
           <span *ngIf="data.name && data.name.length > 60">...</span>
@@ -52,5 +129,6 @@
     </div>
     <ng-template #blank>
       <div class="py-2"></div>
-    </ng-template>
+    </ng-template> -->
+  </div>
 </div>

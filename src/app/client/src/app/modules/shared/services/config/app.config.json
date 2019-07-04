@@ -246,8 +246,8 @@
         {
           "breakpoint": 1600,
           "settings": {
-            "slidesToShow": 3.5,
-            "slidesToScroll": 3.5
+            "slidesToShow": 4,
+            "slidesToScroll": 4
           }
         },
         {

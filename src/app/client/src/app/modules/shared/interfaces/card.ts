@@ -1,6 +1,9 @@
 export interface ICard {
     name: string;
     image?: string;
+    status?: string;
+    createdOn?: any;
+    lastUpdatedOn?: any;
     imageVisibility?: boolean;
     description?: string;
     subject?: string;

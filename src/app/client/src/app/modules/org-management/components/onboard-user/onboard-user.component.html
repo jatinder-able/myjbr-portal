@@ -6,7 +6,7 @@
   </div>
   <!--/Header-->
   <!--Content-->
-  <div class="sb-modal-content" style="height: auto;">
+  <div class="sb-modal-content onboard-user-modal" style="height: auto;">
     <div class="ui stackable grid">
       <div class="twelve wide column workspacesegment">
         <sui-tabset #tabSection>
@@ -18,10 +18,10 @@
           </div>
           <div class="ui bottom attached segment" suiTabContent="createUser"
             style="border-width: 0px 1px 1px;border-style: solid;border-color: #ddd;">
-            <div *ngIf="showLoader">
+            <!-- <div *ngIf="showLoader">
               <app-loader></app-loader>
-            </div>
-            <form *ngIf="!showLoader" class="ui form" [formGroup]="createUserForm">
+            </div> -->
+            <form class="ui form" [formGroup]="createUserForm">
               <div class="ui grid">
                 <div class="six wide column">
                   <div class="required field" [ngClass]="{ 'error': cfSubmitted && cf.firstName.errors }">
@@ -77,7 +77,51 @@
           </div>
           <div class="ui bottom attached segment" suiTabContent="assignUser"
             style="border-width: 0px 1px 1px;border-style: solid;border-color: #ddd;">
-            Assign User
+            <form class="ui form" [formGroup]="assignUserForm">
+              <div class="ui grid">
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': afSubmitted && af.userId.errors }">
+                    <label>{{resourceService?.frmelmnts?.lbl?.userId}}</label>
+                    <input type="text" formControlName="userId" placeholder="User Id" autofocus>
+                    <div *ngIf="afSubmitted && af.userId.errors">
+                      <label *ngIf="af.userId.errors.required">User Id is required</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': afSubmitted && af.organisationId.errors}">
+                    <label>Member Organization</label>
+                    <div class="field">
+                      <sui-select [isSearchable]="false" class="selection" formControlName="organisationId"
+                        [options]="organizationsList" labelField="orgName" valueField="organisationId"
+                        name="organisationId" placeholder="Select Organization">
+                        <sui-select-option *ngFor="let orgDetail of organizationsList" [value]="orgDetail">
+                        </sui-select-option>
+                      </sui-select>
+                    </div>
+                    <div *ngIf="afSubmitted && af.organisationId.errors">
+                      <label *ngIf="af.organisationId.errors.required">Member Organization is required</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="required field" [ngClass]="{ 'error': afSubmitted && af.roles.errors }">
+                    <label>{{resourceService?.frmelmnts?.lbl?.roles}}</label>
+                    <div class="field">
+                      <sui-multi-select [isSearchable]="false" class="selection" formControlName="roles"
+                        [options]="allRoles" labelField="roleName" valueField="role" name="role"
+                        placeholder="{{resourceService?.frmelmnts?.btn?.selrole}}" #allroles>
+                        <sui-select-option *ngFor="let role of allroles.filteredOptions" [value]="role">
+                        </sui-select-option>
+                      </sui-multi-select>
+                    </div>
+                    <div *ngIf="afSubmitted && af.roles.errors">
+                      <label *ngIf="af.roles.errors.required">Roles are required</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </sui-tabset>
       </div>
@@ -96,10 +140,16 @@
       (click)="assignUserSubmit()">
       {{resourceService?.frmelmnts?.btn?.submit}}
     </button>
-    <div *ngIf="createUserErrorMessage != null" class="errorMsg">{{createUserErrorMessage}}</div>
-    <div *ngIf="createdUserId != null" class="successMsg"><span style="display: block">The user was successfully
-        created. And the user id is</span>
+    <div *ngIf="createUserErrorMessage != null && selectedTab != 'createUser'" class="errorMsg">
+      {{createUserErrorMessage}}</div>
+    <div *ngIf="createdUserId != null && selectedTab != 'createUser'" class="successMsg">
+      <span style="display: block">The user was successfully created. And the user id is</span>
       <span style="display: block">{{createdUserId}}</span>
+    </div>
+    <div *ngIf="assignUserErrorMessage != null && selectedTab != 'assignUser'" class="errorMsg">
+      {{assignUserErrorMessage}}</div>
+    <div *ngIf="assignUserSuccess && selectedTab != 'assignUser'" class="successMsg">
+      The user was successfully assigned
     </div>
   </div>
   <!--/Actions-->

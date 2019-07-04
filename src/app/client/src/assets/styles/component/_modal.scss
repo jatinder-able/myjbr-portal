@@ -19,6 +19,9 @@
             min-height: 100px;
             padding: $sb-modal-content-padding;
             overflow-y: auto;
+            &.onboard-user-modal {
+                overflow-y: visible !important;
+            }
         }
         &>.close {
             color: $white-color;

@@ -74,6 +74,15 @@ export class AppComponent implements OnInit {
     private orgDetailsService: OrgDetailsService, private activatedRoute: ActivatedRoute,
     private profileService: ProfileService, private toasterService: ToasterService, public utilService: UtilService,
     @Inject(DOCUMENT) private _document: any) {
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        if (_.indexOf(_.split(window.location.href, '/'), 'learn') > -1 || _.indexOf(_.split(window.location.href, '/'), 'resources') > -1 || _.indexOf(_.split(window.location.href, '/'), 'explore') > -1) {
+          $('body').find(".footer-fix").css("background-color", "#F6F6F6");
+        } else {
+          $('body').find(".footer-fix").removeAttr("style");
+        }
+      }
+    });
   }
   /**
    * dispatch telemetry window unload event before browser closes

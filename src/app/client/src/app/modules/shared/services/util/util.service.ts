@@ -33,6 +33,9 @@ export class UtilService {
       orgDetails: data.orgDetails || {},
       gradeLevel: '',
       contentType: data.contentType,
+      status: data.status,
+      createdOn: data.createdOn,
+      lastUpdatedOn: data.lastUpdatedOn,
       topic: this.getTopicSubTopic('topic', data.topic),
       subTopic: this.getTopicSubTopic('subTopic', data.topic),
       metaData: {}

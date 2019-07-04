@@ -4,7 +4,7 @@ import { ResourceService, ToasterService, ServerResponse, ConfigService } from '
 import { OrgManagementService } from '../../services/org-management/org-management.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IInteractEventInput, IImpressionEventInput, IInteractEventEdata, IInteractEventObject } from '@sunbird/telemetry';
-import { UserService } from '@sunbird/core';
+import { UserService, RolesAndPermissions, PermissionService } from '@sunbird/core';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 @Component({
@@ -15,8 +15,11 @@ import * as _ from 'lodash';
 export class OnBoardUserComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modal;
   @ViewChild('tabSection') tabSection;
+  allRoles: Array<RolesAndPermissions>;
   selectedTab: string;
   userProfile: any;
+  userId: any;
+  organizationsList: any = [];
   /**
 * reference for ActivatedRoute
 */
@@ -73,7 +76,9 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
   cfSubmitted: boolean = false;
   afSubmitted: boolean = false;
   createUserErrorMessage: string = null;
+  assignUserErrorMessage: string = null;
   createdUserId: string = null;
+  assignUserSuccess: boolean = false;
   /**
 * Constructor to create injected service(s) object
 *
@@ -83,9 +88,10 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
 */
   constructor(orgManagementService: OrgManagementService, config: ConfigService,
     formBuilder: FormBuilder, toasterService: ToasterService, private router: Router,
-    resourceService: ResourceService, activatedRoute: ActivatedRoute, public userService: UserService) {
+    resourceService: ResourceService, activatedRoute: ActivatedRoute, public userService: UserService, private permissionService: PermissionService) {
     this.resourceService = resourceService;
     this.createUserFormBuilder = formBuilder;
+    this.assignUserFormBuilder = formBuilder;
     this.orgManagementService = orgManagementService;
     this.toasterService = toasterService;
     this.config = config;
@@ -106,6 +112,8 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
         this.userProfile = userdata.userProfile;
       }
     });
+    this.getOrgList();
+    this.getAllRoles();
     document.body.classList.add('no-scroll'); // This is a workaround  we need to remove it when library add support to remove body scroll
     this.activatedRoute.data.subscribe(data => {
       if (data.redirectUrl) {
@@ -115,7 +123,8 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       }
     });
     this.initializeCreateUserForm();
-    this.showLoader = false;
+    this.initializeAssignUserForm();
+    // this.showLoader = false;
     this.telemetryImpression = {
       context: {
         env: this.activatedRoute.snapshot.data.telemetry.env
@@ -130,6 +139,24 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
     this.setInteractEventData();
     this.selectedTab = 'assignUser';
   }
+  getOrgList() {
+    this.organizationsList = _.filter(_.reject(this.userProfile.organisations, { 'organisationId': this.userProfile.rootOrgId }), function (obj) {
+      if (_.indexOf(_.get(obj, 'roles'), 'ADMIN') > -1) {
+        return obj;
+      }
+    });
+  }
+  getAllRoles() {
+    this.permissionService.permissionAvailable$.subscribe(params => {
+      if (params === 'success') {
+        this.allRoles = this.permissionService.allRoles;
+      }
+      let rolesArray = ["COURSE_ADMIN", "COURSE_MENTOR", "CONTENT_REVIEWER", "COURSE_CREATOR", "ANNOUNCEMENT_SENDER", "CONTENT_CREATOR", "PUBLIC"]
+      this.allRoles = _.filter(this.allRoles, (role) => {
+        return _.indexOf(rolesArray, role.role) > -1;
+      });
+    });
+  }
   initializeCreateUserForm() {
     this.createUserForm = this.createUserFormBuilder.group({
       firstName: ['', Validators.required],
@@ -140,11 +167,17 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       password: ['', null]
     });
   }
+  initializeAssignUserForm() {
+    this.assignUserForm = this.assignUserFormBuilder.group({
+      userId: ['', [Validators.required]],
+      organisationId: ['', [Validators.required]],
+      roles: ['', [Validators.required]]
+    });
+  }
   // convenience getter for easy access to form fields
   get cf() { return this.createUserForm.controls; }
+  get af() { return this.assignUserForm.controls; }
   changeTab() {
-    this.createUserErrorMessage = null;
-    // this.createdUserId = null;
     this.selectedTab = this.tabSection._activeTab.id;
   }
   createUserSubmit() {
@@ -183,6 +216,30 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
     }
   }
   assignUserSubmit() {
+    this.afSubmitted = true;
+    this.assignUserErrorMessage = null;
+    this.assignUserSuccess = false;
+    if (this.assignUserForm.invalid) {
+      return;
+    } else {
+      const data = {
+        "request": this.assignUserForm.value
+      }
+      this.orgManagementService.assignUser(data).subscribe(response => {
+        if (_.get(response, 'responseCode') === 'OK') {
+          this.initializeAssignUserForm();
+          this.afSubmitted = false;
+          this.assignUserSuccess = true;
+          // this.createdUserId = response.result.userId;
+        } else {
+          this.toasterService.error(this.resourceService.messages.emsg.m0005);
+        }
+      }, (err) => {
+        console.log(err);
+        this.assignUserErrorMessage = err.error.params.errmsg;
+        // this.toasterService.error(this.resourceService.messages.emsg.m0005);
+      });
+    }
   }
   /**
  * This method helps to redirect to the parent component

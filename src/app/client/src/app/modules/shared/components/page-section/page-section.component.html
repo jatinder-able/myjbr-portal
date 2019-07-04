@@ -1,5 +1,5 @@
 <div class="ui grid" *ngIf="section.contents && section.contents.length > 0">
-    <div class="ui twelve wide column">
+    <div class="ui twelve wide column" style="padding-left: 0;padding-right: 0">
         <div class="d-flex flex-ai-center">
             <h4 *ngIf="section.name != 'My Courses' && section.name != 'Open Courses'" class="ui header m-0 mr-5 pageSection-heading">{{section.name}}</h4>
             <h4 *ngIf="section.name == 'My Courses'" class="ui header m-0 mr-5 pageSection-heading" style="text-transform: none !important">Your Mandatory {{resourceService?.frmelmnts?.tab?.courses}}</h4>

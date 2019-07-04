@@ -1,11 +1,11 @@
 <div class="ui container">
     <div  class="ui grid">
-        <div class="twelve wide column">
+        <div class="twelve wide column" style="background-color: #ffffff">
             <app-data-driven-filter [pageId]="'explore-search'" *ngIf="initFilters" [filterEnv]="filterType"
                 [enrichFilters]="facetsList" [ignoreQuery]="['key']" [accordionDefaultOpen]=true
                 [isShowFilterLabel]=true [hashTagId]="hashTagId" [showSearchedParam]=true (dataDrivenFilter)="getFilters($event)"></app-data-driven-filter>
         </div>
-        <div class="twelve wide column">
+        <div class="twelve wide column" style="background-color: #ffffff">
             <div class="ui clearing segment content-player-header search-content-header" *ngIf="!showLoader && contentList.length && this.queryParams.key">
                 <div class="ui left floated header">
                     <p class="serch-allresult">{{resourceService.frmelmnts?.lbl?.showingResultsFor |
