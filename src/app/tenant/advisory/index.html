@@ -92,8 +92,10 @@
     <div id="intro-carousel" class="owl-carousel">
       <!-- <div class="overlay-color"></div> -->
       <div class="item" style="background-image: url('img/intro-carousel/GettyImages-1035176106.jpg');"></div>
-      <div class="item" style="background-image: url('img/intro-carousel/Skills _ education - lecturer teaching class.jpg');"></div>
-      <div class="item" style="background-image: url('img/intro-carousel/Skills _ education - Computer classroom.jpg');"></div>
+      <div class="item"
+        style="background-image: url('img/intro-carousel/Skills _ education - lecturer teaching class.jpg');"></div>
+      <div class="item"
+        style="background-image: url('img/intro-carousel/Skills _ education - Computer classroom.jpg');"></div>
       <!-- <div class="item" style="background-image: url('img/intro-carousel/Innovate.jpg');"></div> -->
 
     </div>
@@ -185,7 +187,7 @@
             <span class="ui primary label pageSection-count"></span>
           </h5>
         </div>
-        <div class="pin resource-contents">
+        <div class="pin resource-contents" id="resource-contents-section">
           Loading.......
         </div>
       </div>
@@ -859,7 +861,7 @@
             }
             resourceContents += '</div><div class="content-imp-top"><div class="content-imp-top-inner"><div class="language-grade-age"><span><i class="fa fa-check"aria-hidden="true"></i>&nbsp;' + value.status + '</span><span style="float:right"><i class="fa fa-history"aria-hidden="true"></i>&nbsp;' + calculateTimeAgo(value.lastUpdatedOn) + '</span></div></div></div></div>';
             resourceContents += '<div class="caption"><div class="description hasTooltip" title="">' + value.description + '</div>';
-            resourceContents += '<div class="row creator"><div class="col-xs-12 col-sm-12 col-md-12 hasTooltip" title=""><span>' + value.organisation + '</span></div></div></div>';
+            resourceContents += '<div class="row creator"><div class="col-xs-12 col-sm-12 col-md-12 hasTooltip" title=""><span><b>' + value.organisation[0] + '</b></span></div></div></div>';
             resourceContents += '<div class="content-imp-top static"><div class="content-imp-top-inner"><div class="language-grade-age"><div class="lesson-ratings jq-ry-container" readonly="readonly" style="width: 89px;"><div class="jq-ry-group-wrapper"><div class="jq-ry-normal-group jq-ry-group"><ul class="post-info"><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i></li><li><i class="fa fa-star" aria-hidden="true"></i>(0)</li><li style="float:right;margin-right:-20px"><i class="fa fa-commenting" aria-hidden="true"></i>(0)</li></ul></div></div></div></div></div></div></div></div></div>';
             // resourceContents += '<div class="resource-card">';
             // resourceContents += '<div class="resource-header">';
@@ -887,8 +889,8 @@
             // resourceContents += '<div class="py-2"></div>';
             // resourceContents += '</div>';
           });
-          $(".resource-contents").html(resourceContents);
-          $('.resource-contents').slick({
+          $("#resource-contents-section").html(resourceContents);
+          $('#resource-contents-section').slick({
             dots: false,
             infinite: false,
             speed: 300,
@@ -923,7 +925,7 @@
           });
         },
       });
-      $(".resource-contents").on("click", ".resource-card-new", function () {
+      $("#resource-contents-section").on("click", ".resource-card-new", function () {
         location.href = '/explore-course/course/' + $(this).find('input').val();
       })
       $("#searchForm").on("submit", function () {

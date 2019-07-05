@@ -24,6 +24,6 @@ export class CardComponent {
     this.clickEvent.emit({ 'action': action, 'data': data });
   }
   showCourseStatus(statusCode) {
-    return (_.toInteger(statusCode) === 0) ? 'Not-Started' : ((_.toInteger(statusCode) > 0 && _.toInteger(statusCode) < 100) ? 'In-progress' : 'Completed');
+    return (_.round(statusCode) === 0) ? 'Not-Started' : ((_.round(statusCode) > 0 && _.round(statusCode) < 100) ? 'In-progress' : 'Completed');
   }
 }

@@ -30,7 +30,7 @@
             </span>
             <span style="float: right">
               <i class="fa fa-history" aria-hidden="true"></i>
-              &nbsp;{{data.lastUpdatedOn | fromNow}}
+              {{data.lastUpdatedOn | fromNow}}
             </span>
           </div>
         </div>
@@ -54,7 +54,7 @@
         {{data.description | slice:0:65 }}
         <span *ngIf="data.description && data.description.length > 65">...</span>
       </div>
-      <div class="creator">{{data.orgDetails?.orgName}}</div>
+      <div class="creator"><b>{{data.orgDetails?.orgName}}</b></div>
     </div>
     <div class="content-imp-top static">
       <div class="content-imp-top-inner">
