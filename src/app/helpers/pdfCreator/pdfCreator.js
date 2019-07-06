@@ -17,8 +17,8 @@ const UploadUtil = require('./uploadUtil')
 
 const envVariables = require('./../environmentVariablesHelper.js')
 
-const backgroundImg = FileSystem.readFileSync(path.join(__dirname, 'CertBackground.jpg'))
-const backgroundImgMarks = FileSystem.readFileSync(path.join(__dirname, 'CertBackground_marks.jpg'))
+const backgroundImg = FileSystem.readFileSync(path.join(__dirname, 'Certificate.jpg'))
+const backgroundImgMarks = FileSystem.readFileSync(path.join(__dirname, 'Certificate.jpg'))
 const containerName = envVariables.CERTIFICATE_STORE_CONTAINER_NAME || 'container'
 const certificateInstructor = envVariables.CERTIFICATE_INSTRUCTOR_NAME
 const platformName = envVariables.CERTIFICATE_PLATFORM_NAME
@@ -36,7 +36,7 @@ module.exports = function (app) {
  */
 function getCertificateDate (reqDate) {
   var date = reqDate ? new Date(reqDate) : new Date()
-  return moment(date).format('DD-MMM-YYYY')
+  return moment(date).format('DD/MM/YYYY')
 }
 
 /**
@@ -160,9 +160,10 @@ function createPDF (data, filePath, callback) {
     var doc = new PDFDocument({ autoFirstPage: false })
 
     var stream = doc.pipe(FileSystem.createWriteStream(filePath))
-
     doc.addPage({
-      layout: 'landscape'
+      size: [843,524],
+      // layout: 'landscape',
+      margin:0
     })
     if(data.marks.scoredMarks !== null) {
     doc.image(backgroundImgMarks, {
@@ -172,16 +173,17 @@ function createPDF (data, filePath, callback) {
   }
   else {
     doc.image(backgroundImg, {
-      width: 700
+      // width: 795,
+      // height:615
     })
   }
-  doc.font('Helvetica-Bold').fontSize(15).text(title + ' ' + name, 200, 293, { align: 'center' })
-  doc.font('Helvetica-Bold').fontSize(15).text(courseName, 200, 376, { align: 'center' })
-    if(platformName) {
-      doc.font('Helvetica').fontSize(15).text(platformName, 200, 416, { align: 'center' })
-    }
-    doc.text(courseCompletionDate, 340, 470, { align: 'left' })
-    doc.text(instructor, 375, 470, { align: 'center' })
+  doc.font('helpers/pdfCreator/fonts/charter-itc-tt.ttf').fontSize(17).text(title + ' ' + name, 0, 273, { align: 'center' })
+  doc.font('helpers/pdfCreator/fonts/charter-bd-osf-bt.ttf').fontSize(20).text(courseName, 0, 365, { align: 'center' })
+    // if(platformName) {
+    //   doc.font('Helvetica').fontSize(15).text(platformName, 200, 416, { align: 'center' })
+    // }
+    doc.font('helpers/pdfCreator/fonts/charter-itc-tt.ttf').fontSize(15).text(courseCompletionDate, 120, 413, { align: 'center' })
+    // doc.text(instructor, 375, 470, { align: 'center' })
 
     doc.end()
     stream.on('error', function (err) {
