@@ -34,6 +34,7 @@ export class UtilService {
       gradeLevel: '',
       contentType: data.contentType,
       status: data.status,
+      enrolledDate: data.enrolledDate,
       createdOn: data.createdOn,
       lastUpdatedOn: data.lastUpdatedOn,
       topic: this.getTopicSubTopic('topic', data.topic),

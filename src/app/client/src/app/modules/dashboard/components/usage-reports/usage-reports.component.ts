@@ -115,12 +115,15 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           this.enrolledCourseData = response.result.courses;
           var self = this;
           _.map(this.enrolledCourseData, function (obj) {
-            obj.trainingName = obj.batch.name;
+            obj.batchName = obj.batch.name;
+            obj.courseName = obj.courseName;
             obj.enrollmentType = obj.batch.enrollmentType;
             obj.startDate = self.datePipe.transform(obj.batch.startDate, 'dd-MMM-yyyy');
+            obj.enrollmentDate = self.datePipe.transform(obj.enrolledDate, 'dd-MMM-yyyy');
             obj.endDate = self.datePipe.transform(obj.batch.endDate, 'dd-MMM-yyyy');
             obj.completedOn = self.datePipe.transform(obj.completedOn, 'dd-MMM-yyyy');
             obj.statusName = (obj.progress === 0) ? 'Not-Started' : ((obj.progress === obj.leafNodesCount || obj.progress > obj.leafNodesCount) ? 'Completed' : 'In-Progress');
+            obj.statusName = (obj.statusName != 'Completed' && (new Date(obj.batch.endDate) < new Date())) ? 'Expired' : obj.statusName;
             obj.downloadUrl = azureUrl + obj.courseName + '-' + self.userService.userid + '-' + obj.courseId + '.pdf';
           });
           this.initializeColumns();
@@ -142,28 +145,32 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   }
   initializeDonutChart() {
     this.donutChartData = {
-      labels: ['COMPLETED - ' + _.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, 'IN-PROGRESS - ' + _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, 'NOT-STARTED - ' + _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length],
+      labels: ['COMPLETED - ' + _.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, 'IN-PROGRESS - ' + _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, 'NOT-STARTED - ' + _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length, 'EXPIRED - ' + _.filter(this.enrolledCourseData, { statusName: 'Expired' }).length],
       datasets: [
         {
-          data: [_.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length],
+          data: [_.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length, _.filter(this.enrolledCourseData, { statusName: 'Expired' }).length],
           backgroundColor: [
             "#D93954",
             "#6D6E71",
-            "#602320"
+            "#602320",
+            "#a20303"
           ],
           hoverBackgroundColor: [
             "#D93954",
             "#6D6E71",
-            "#602320"
+            "#602320",
+            "#a20303"
           ]
         }]
     };
   }
   initializeColumns() {
     this.cols = [
-      { field: 'trainingName', header: 'Name' },
+      { field: 'batchName', header: 'Batch Name' },
+      { field: 'courseName', header: 'Course Name' },
       { field: 'enrollmentType', header: 'Enrollment Type' },
-      { field: 'startDate', header: 'Start Date' },
+      { field: 'startDate', header: 'Batch Start Date' },
+      { field: 'enrollmentDate', header: 'Enrollment Date' },
       { field: 'endDate', header: 'Target End Date' },
       { field: 'completedOn', header: 'Completion Date' },
       { field: 'statusName', header: 'Status' },

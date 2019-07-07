@@ -206,7 +206,7 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
     this.certificateDownloadService.downloadAsPdf(this.title, this.fullName, this.userId, this.courseId, this.courseHierarchy.name, marks)
       .subscribe((res: Response) => {
         this.fileUrl = res['result']['fileUrl'];
-        window.open(this.fileUrl, '_blank');
+        // window.open(this.fileUrl, '_blank');
       });
   }
   setTelemetryData() {

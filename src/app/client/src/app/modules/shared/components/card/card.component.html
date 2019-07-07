@@ -42,8 +42,9 @@
               {{data.progress/data.maxCount | percent:0}}
             </span>
             <span style="float: right;">
-              <i class="fa fa-check" aria-hidden="true"></i>
-              {{showCourseStatus(data.progress/data.maxCount*100)}}
+              <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
+              <!-- {{showCourseStatus(data.progress/data.maxCount*100)}} -->
+              Enrolled on {{data?.enrolledDate | date :'dd-MMM-yyyy'}}
             </span>
           </div>
         </div>

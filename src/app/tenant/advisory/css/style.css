@@ -3020,7 +3020,7 @@ img {
 }
 .content-pin .content-imp-top {
   padding: 0px;
-  background-color: #424242;
+  background-color: rgba(219, 83,106, 0.95);
   color: rgb(255, 255, 255);
   text-align: left;
   position: absolute;
