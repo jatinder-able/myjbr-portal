@@ -30,7 +30,7 @@ const configHelper = require('./helpers/configServiceSDKHelper.js')
 
 
 
-const app = express()
+let app = express()
 
 let keycloak = getKeyCloakClient({
   'realm': envHelper.PORTAL_REALM,
@@ -139,7 +139,7 @@ app.use('/resourcebundles/v1', bodyParser.urlencoded({ extended: false }),
 
 console.log('[Extensible framework]: Bootstrapping...')
 
-const subApp = express()
+let subApp = express()
 subApp.use(bodyParser.json({ limit: '50mb' }))
 
 // subApp.use('/plugin/review/comment/*', keycloak.protect()); // keycloak protection 

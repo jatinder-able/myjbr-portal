@@ -25,7 +25,7 @@ class GoogleOauth {
     return new google.auth.OAuth2(clientId, clientSecret, redirect);
   }
   generateAuthUrl(req) {
-    const connection = this.createConnection(req);
+    let connection = this.createConnection(req);
     return connection.generateAuthUrl({
         access_type: 'offline',
         prompt: 'consent',
@@ -33,7 +33,7 @@ class GoogleOauth {
     });
   }
   async getProfile(req) {
-    const client = this.createConnection(req);
+    let client = this.createConnection(req);
     if(req.query.error === 'access_denied'){
       throw new Error('GOOGLE_ACCESS_DENIED');
     }

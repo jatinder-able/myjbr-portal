@@ -69,7 +69,6 @@ var topicModal;
             }
             widget.unbind("click");
             widget.on('click', function(e) {
-                console.log('click event received', nodes);
                 modal.modal('show');
                 showTree();
                 if (!nodes.length) {
