@@ -1,9 +1,9 @@
 
 import { combineLatest, of, Subject } from 'rxjs';
-import { PageApiService, CoursesService, ISort, PlayerService, FormService } from '@sunbird/core';
+import { PageApiService, CoursesService, ISort, PlayerService, FormService, UserService } from '@sunbird/core';
 import { Component, OnInit, OnDestroy, EventEmitter, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import {
-  ResourceService, ServerResponse, ToasterService, ICaraouselData, ConfigService, UtilService, INoResultMessage, BrowserCacheTtlService
+  ResourceService, ServerResponse, ToasterService, ICaraouselData, ConfigService, UtilService, INoResultMessage, BrowserCacheTtlService, IUserProfile
 } from '@sunbird/shared';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -33,12 +33,15 @@ export class LearnPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   public loaderMessage;
   public sortingOptions: ISort;
   public enrolledSection: any;
+  public myCourseSection: any;
+  public completedCourseSection: any;
   public redirectUrl: string;
   public enrolledCourses: Array<any>;
   public showBatchInfo = false;
   public selectedCourseBatches: any;
+  public userProfile: IUserProfile;
 
-  constructor(private cdr: ChangeDetectorRef, private pageApiService: PageApiService, private toasterService: ToasterService,
+  constructor(public userService: UserService, private cdr: ChangeDetectorRef, private pageApiService: PageApiService, private toasterService: ToasterService,
     public resourceService: ResourceService, private configService: ConfigService, private activatedRoute: ActivatedRoute,
     public router: Router, private utilService: UtilService, public coursesService: CoursesService,
     private playerService: PlayerService, private cacheService: CacheService,
@@ -52,9 +55,31 @@ export class LearnPageComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.cdr.detectChanges();
   }
   ngOnInit() {
+    this.userService.userData$.subscribe(userdata => {
+      if (userdata && !userdata.err) {
+        this.userProfile = userdata.userProfile;
+      }
+    });
     combineLatest(this.fetchEnrolledCoursesSection(), this.getFrameWork()).pipe(first(),
       mergeMap((data: Array<any>) => {
         this.enrolledSection = data[0];
+        //Create My Course Section
+        this.myCourseSection = _.cloneDeep(this.enrolledSection);
+        this.myCourseSection.contents = _.reject(_.cloneDeep(this.myCourseSection.contents), function (obj) {
+          if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount'))) {
+            return obj;
+          }
+        });
+        this.myCourseSection.count = this.myCourseSection.contents.length;
+        //Create Completed Course Section
+        this.completedCourseSection = _.cloneDeep(this.enrolledSection);
+        this.completedCourseSection.contents = _.filter(_.cloneDeep(this.completedCourseSection.contents), function (obj) {
+          if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount'))) {
+            return obj;
+          }
+        });
+        this.completedCourseSection.count = this.completedCourseSection.contents.length;
+        this.completedCourseSection.name = "Certificates of Completion";
         if (data[1]) {
           this.initFilters = true;
           this.frameWorkName = data[1];

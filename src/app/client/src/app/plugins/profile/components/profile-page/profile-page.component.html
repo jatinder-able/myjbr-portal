@@ -82,9 +82,10 @@
     <div class="d-flex flex-dc">
       <div class="d-flex flex-jc-center">
         <div (click)="showContactPopup=true;contactType='phone'"
-          class="ui semi-circular dodger-blue basic label mb-15 cursor-pointer" *ngIf="userProfile.phone" appTelemetryInteract [telemetryInteractObject]="telemetryInteractObject"
+          class="ui semi-circular dodger-blue basic label mb-15 cursor-pointer" *ngIf="userProfile.phone"
+          appTelemetryInteract [telemetryInteractObject]="telemetryInteractObject"
           [telemetryInteractEdata]="editMobileInteractEdata">
-          <i class="phone blue icon mr-5" ></i> &#x200E;+91 {{userProfile.phone}}
+          <i class="phone blue icon mr-5"></i> &#x200E;+91 {{userProfile.phone}}
         </div>
         <div (click)="showContactPopup=true;contactType='phone'"
           class="ui semi-circular update basic label mb-15 cursor-pointer font-weight-normal" *ngIf="!userProfile.phone"
@@ -220,17 +221,27 @@
         *ngIf="attendedTraining && attendedTraining.length > 0">
         <thead>
           <tr>
-            <th colspan="2" class="fs-1-7 pl-30">{{resourceService.frmelmnts.lbl.trainingAttended}}
-              ({{attendedTraining.length}})&#x200E;</th>
+            <th class="d-flex flex-jc-space-between pl-30" style="font-size: 16px;">
+              <span>{{resourceService.frmelmnts.lbl.trainingAttended}}
+                ({{attendedTraining.length}})&#x200E;</span>
+              <span style="margin-left: 40px;">Completion Date</span>
+              <span style="margin-right: 25px;">Certificate</span>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <ul class="pl-30 pr-30">
-              <li class="d-flex flex-jc-space-between mb-20"
-                *ngFor="let data of attendedTraining | slice:0:courseLimit">
-                <span class="fs-1-16 color-3">{{data.courseName}}</span>
-                <span class="fs-1 color-4" *ngIf="data.completedOn">{{data.completedOn | date :'MMMM yyy' }}</span>
+              <li class="d-flex flex-jc-space-between mb-20" *ngFor="let data of attendedTraining | slice:0:courseLimit"
+                style="height: 25px;">
+                <span class="fs-1 color-3" style="width: 175px;">{{data.courseName | slice:0:35}}
+                  <span *ngIf="data.name && data.name.length > 35">...</span>
+                </span>
+                <span class="fs-1 color-4" *ngIf="data.completedOn">{{data.completedOn | date :'dd-MMM-yyyy' }}</span>
+                <span class="fs-1 color-4 cursor-pointer" *ngIf="data.completedOn" (click)="downloadCertificate(data)"
+                  style="margin-right: 35px;">
+                  <img src="{{'assets/images/certificate-badge.png' | cdnprefixurl}}" style="height: 20px;">
+                </span>
               </li>
               <div class=" mb-15 d-flex flex-jc-center relative" *ngIf="attendedTraining.length > 3">
                 <button class="ui semi-circular dodger-blue button" *ngIf="showMoreTrainings"

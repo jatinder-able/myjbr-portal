@@ -1,4 +1,5 @@
-<div class="sbCard sb-content-pin sb-scale-effect mt-20 mb-20 ml-20" *ngIf="data"
+<!-- For Open Courses and Latest Courses -->
+<div class="sbCard sb-content-pin sb-scale-effect mt-20 mb-20 ml-20" *ngIf="data && data?.maxCount === undefined"
   (click)="onAction(data,data.action.onImage)" appTelemetryInteract
   [telemetryInteractObject]="{id:data.metaData.identifier,type:data.telemetryObjectType,ver:data.metaData.pkgVersion ? data.metaData.pkgVersion.toString():'1.0'}"
   [telemetryInteractEdata]="data.telemetryInteractEdata" tabindex="0">
@@ -22,7 +23,7 @@
         <img *ngIf="data.showImage? false : true" src="{{data.image || 'assets/images/book.png' | cdnprefixurl}}"
           class="lazy" alt="{{data.name}}">
       </div>
-      <div class="content-imp-top" *ngIf="data.maxCount === undefined">
+      <div class="content-imp-top" *ngIf="data?.maxCount === undefined">
         <div class="content-imp-top-inner">
           <div class="language-grade-age">
             <span>
@@ -35,15 +36,15 @@
           </div>
         </div>
       </div>
-      <div class="content-imp-top" *ngIf="data.maxCount && data.progress">
+      <div class="content-imp-top" *ngIf="data?.maxCount && data.progress">
         <div class="content-imp-top-inner">
           <div class="language-grade-age">
             <span class="course-progress">
-              {{data.progress/data.maxCount | percent:0}}
+              {{data.progress/data?.maxCount | percent:0}}
             </span>
             <span style="float: right;">
               <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
-              <!-- {{showCourseStatus(data.progress/data.maxCount*100)}} -->
+              <!-- {{showCourseStatus(data.progress/data?.maxCount*100)}} -->
               Enrolled on {{data?.enrolledDate | date :'dd-MMM-yyyy'}}
             </span>
           </div>
@@ -125,11 +126,115 @@
           {{data.orgDetails?.orgName}}
         </div>
     </div>
-    <div *ngIf="data.maxCount && data.progress > 0 else blank">
-      <sui-progress class="ui progress" [value]="data.progress" [maximum]="data.maxCount" ></sui-progress>
+    <div *ngIf="data?.maxCount && data.progress > 0 else blank">
+      <sui-progress class="ui progress" [value]="data.progress" [maximum]="data?.maxCount" ></sui-progress>
     </div>
     <ng-template #blank>
       <div class="py-2"></div>
     </ng-template> -->
+  </div>
+</div>
+<!-- For Enrolled Courses -->
+<div class="sbCard sb-content-pin sb-scale-effect mt-20 mb-20 ml-20"
+  *ngIf="data && data?.maxCount != undefined && (data?.progress < data?.maxCount)"
+  (click)="onAction(data,data.action.onImage)" appTelemetryInteract
+  [telemetryInteractObject]="{id:data.metaData.identifier,type:data.telemetryObjectType,ver:data.metaData.pkgVersion ? data.metaData.pkgVersion.toString():'1.0'}"
+  [telemetryInteractEdata]="data.telemetryInteractEdata" tabindex="0">
+  <div class="grid">
+    <div class="content-imp" style="height: 59px !important;">
+      <span class="lesson-title">
+        <span>
+          {{data.name | slice:0:23 }}
+          <span *ngIf="data.name && data.name.length > 23">...</span>
+        </span>
+      </span>
+      <div class="content-info">
+        <p class="type" *ngIf="data.ribbon && data.ribbon.right && data.ribbon.right.name">{{data.ribbon.right.name}}
+        </p>
+      </div>
+    </div>
+    <div class="content-pin-img">
+      <div class="content-pin-inner">
+        <img src="{{data.ribbon.left.image}}" *ngIf="data.ribbon && data.ribbon.left && data.ribbon.left.image"
+          class="lazy" alt="{{data.ribbon.left.name}}">
+        <img *ngIf="data.showImage? false : true" src="{{data.image || 'assets/images/book.png' | cdnprefixurl}}"
+          class="lazy" alt="{{data.name}}">
+      </div>
+      <div class="content-imp-top" *ngIf="data?.maxCount === undefined">
+        <div class="content-imp-top-inner">
+          <div class="language-grade-age">
+            <span>
+              <i class="fa fa-check" aria-hidden="true"></i>&nbsp;{{data?.status}}
+            </span>
+            <span style="float: right">
+              <i class="fa fa-history" aria-hidden="true"></i>
+              {{data.lastUpdatedOn | fromNow}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="content-imp-top" *ngIf="data?.maxCount && data.progress">
+        <div class="content-imp-top-inner">
+          <div class="language-grade-age">
+            <span class="course-progress">
+              {{data.progress/data?.maxCount | percent:0}}
+            </span>
+            <span style="float: right;">
+              <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
+              <!-- {{showCourseStatus(data.progress/data?.maxCount*100)}} -->
+              Enrolled on {{data?.enrolledDate | date :'dd-MMM-yyyy'}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">
+      <div class="description hasTooltip" *ngIf="data.description">
+        {{data.description | slice:0:65 }}
+        <span *ngIf="data.description && data.description.length > 65">...</span>
+      </div>
+      <div class="creator"><b>{{data.orgDetails?.orgName}}</b></div>
+    </div>
+    <div class="content-imp-top static">
+      <div class="content-imp-top-inner">
+        <div class="language-grade-age">
+
+
+          <div class="lesson-ratings jq-ry-container" readonly="readonly" style="width: 89px;">
+            <div class="jq-ry-group-wrapper">
+              <div class="jq-ry-normal-group jq-ry-group">
+                <ul class="post-info">
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i>(0)</li>
+
+                  <li style="float:right;margin-right:-13px"><i class="fa fa-commenting"
+                      aria-hidden="true"></i>&nbsp;(0)</li>
+                </ul>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- For Completed Courses -->
+<div class="completed-section mt-20" *ngIf="data && data?.maxCount != undefined && (data?.progress >= data?.maxCount)"
+  (click)="downloadCertificate(data?.metaData,data?.name)">
+  <img class="lazy" alt="Completed Course" src="{{'assets/images/completed-course.png' | cdnprefixurl}}">
+  <div class="lesson-title text-center mt-5">
+    <span>
+      {{data.name | slice:0:23 }}
+      <span *ngIf="data.name && data.name.length > 23">...</span>
+    </span>
+  </div>
+  <div class="text-center mt-5">
+    Completed on <b>{{data?.enrolledDate | date :'dd-MMM-yyyy'}}</b>
   </div>
 </div>

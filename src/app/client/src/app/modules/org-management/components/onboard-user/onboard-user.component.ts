@@ -141,7 +141,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
   }
   getOrgList() {
     this.organizationsList = _.filter(_.reject(this.userProfile.organisations, { 'organisationId': this.userProfile.rootOrgId }), function (obj) {
-      if (_.indexOf(_.get(obj, 'roles'), 'ADMIN') > -1) {
+      if (_.indexOf(_.get(obj, 'roles'), 'ORG_ADMIN') > -1) {
         return obj;
       }
     });

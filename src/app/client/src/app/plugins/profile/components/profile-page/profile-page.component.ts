@@ -14,6 +14,7 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 import { IInteractEventInput, IImpressionEventInput, IInteractEventEdata, IInteractEventObject } from '@sunbird/telemetry';
 import { ActivatedRoute } from '@angular/router';
 import { CacheService } from 'ng2-cache-service';
+const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -81,10 +82,10 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   showEditUserDetailsPopup = false;
   state: string;
   district: string;
-   /**
   /**
-    * Slider setting to display number of cards on the slider.
-    */
+ /**
+   * Slider setting to display number of cards on the slider.
+   */
   slideConfig = {
     'slidesToShow': 4,
     'slidesToScroll': 4,
@@ -173,11 +174,11 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   editMobileInteractEdata: IInteractEventEdata;
   editEmailInteractEdata: IInteractEventEdata;
   telemetryInteractObject: IInteractEventObject;
-  constructor( private cacheService: CacheService, public resourceService: ResourceService, public coursesService: CoursesService,
+  constructor(private cacheService: CacheService, public resourceService: ResourceService, public coursesService: CoursesService,
     public permissionService: PermissionService, public toasterService: ToasterService, public profileService: ProfileService,
     public userService: UserService, public configService: ConfigService, public router: Router, public utilService: UtilService,
     public searchService: SearchService, private playerService: PlayerService, private activatedRoute: ActivatedRoute,
-  public orgDetailsService: OrgDetailsService) {
+    public orgDetailsService: OrgDetailsService) {
     this.btnArrow = 'prev-button';
   }
 
@@ -186,9 +187,9 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this.getCustodianOrgUser().subscribe(custodianOrgUser => {
       this.isCustodianOrgUser = custodianOrgUser;
     },
-    err => {
-      this.toasterService.warning(this.resourceService.messages.emsg.m0012);
-    });
+      err => {
+        this.toasterService.warning(this.resourceService.messages.emsg.m0012);
+      });
 
     this.userSubscription = this.userService.userData$.subscribe(
       (user: IUserData) => {
@@ -205,7 +206,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
           });
           this.district = _.get(district, 'name') || '';
 
-          this.inputData =  _.get(this.userProfile, 'framework') ? _.cloneDeep(_.get(this.userProfile, 'framework')) : {};
+          this.inputData = _.get(this.userProfile, 'framework') ? _.cloneDeep(_.get(this.userProfile, 'framework')) : {};
           this.getOrgDetails();
           this.getMyContent();
           this.getAttendedTraining();
@@ -220,7 +221,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
         type: 'user',
         ver: '1.0'
       },
-        edata: {
+      edata: {
         type: this.activatedRoute.snapshot.data.telemetry.type,
         pageid: 'profile-read',
         subtype: this.activatedRoute.snapshot.data.telemetry.subtype,
@@ -241,7 +242,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
       }
       _.forEach(org.roles, (value, key) => {
         if (value !== 'PUBLIC') {
-          const roleName = _.find(this.userProfile.roleList, {id: value});
+          const roleName = _.find(this.userProfile.roleList, { id: value });
           if (roleName) {
             this.roles.push(roleName['name']);
           }
@@ -285,7 +286,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
         contentType: ['Collection', 'TextBook', 'Course', 'LessonPlan', 'Resource'],
         params: { lastUpdatedOn: 'desc' }
       };
-      const inputParams = {params: this.configService.appConfig.PROFILE.contentApiQueryParams};
+      const inputParams = { params: this.configService.appConfig.PROFILE.contentApiQueryParams };
       this.searchService.searchContentByUserId(searchParams, inputParams).subscribe(
         (data: ServerResponse) => {
           this.formatMyContributionData(data.result.content);
@@ -297,17 +298,17 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
   addSlideConfig() {
     this.resourceService.languageSelected$
-        .subscribe(item => {
-          if (item.value === 'ur') {
-            this.slideConfig['rtl'] = true;
-          } else {
-            this.slideConfig['rtl'] = false;
-          }
-          if (this.slickModal) {
-            this.slickModal.unslick();
-            this.slickModal.initSlick(this.slideConfig);
-          }
-    });
+      .subscribe(item => {
+        if (item.value === 'ur') {
+          this.slideConfig['rtl'] = true;
+        } else {
+          this.slideConfig['rtl'] = false;
+        }
+        if (this.slickModal) {
+          this.slickModal.unslick();
+          this.slickModal.initSlick(this.slideConfig);
+        }
+      });
   }
   private formatMyContributionData(contents) {
     _.forEach(contents, (content, key) => {
@@ -359,7 +360,10 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
       this.courseLimit = 3;
     }
   }
-
+  downloadCertificate(data) {
+    let downloadUrl = azureUrl + data.courseName + '-' + (<HTMLInputElement>document.getElementById('userId')).value + '-' + data.courseId + '.pdf';
+    window.open(downloadUrl, '_blank');
+  }
   updateProfile(data) {
     const request = {
       framework: data
@@ -375,7 +379,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
         this.toasterService.warning(this.resourceService.messages.emsg.m0012);
         this.profileModal.modal.deny();
         this.router.navigate(['/resources']);
-        this.cacheService.set('showFrameWorkPopUp', 'installApp' );
+        this.cacheService.set('showFrameWorkPopUp', 'installApp');
       });
   }
 

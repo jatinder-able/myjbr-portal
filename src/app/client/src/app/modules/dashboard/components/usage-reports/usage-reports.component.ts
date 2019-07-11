@@ -107,6 +107,9 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
       ver: '1.0'
     };
   }
+  downloadCertificate(url) {
+    window.open(url, '_blank');
+  }
   getEnrolledCourses() {
     this.usageService.getEnrolledCourses().subscribe(response => {
       this.enrolledCourseData = [];

@@ -61,17 +61,17 @@ export class PageSectionComponent implements OnInit, OnDestroy {
     this.playEvent.emit(event);
   }
   ngOnInit() {
-    if (this.section.name === 'My Courses') {
-      var self = this;
-      this.section.contents = _.reject(this.section.contents, function (obj) {
-        if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount'))) {
-          return obj;
-        }
-      })
-    }
+    // Removing 100% Completed Courses
+    // if (this.section.name === 'My Courses') {
+    //   this.section.contents = _.reject(this.section.contents, function (obj) {
+    //     if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount'))) {
+    //       return obj;
+    //     }
+    //   })
+    // }
     this.resourceDataSubscription = this.resourceService.languageSelected$
       .subscribe(item => {
-        if (this.section.name !== 'My Courses') {
+        if (this.section.name !== 'My Courses' && this.section.name !== 'Certificates of Completion') {
           this.selectedLanguageTranslation(item.value);
         }
       }

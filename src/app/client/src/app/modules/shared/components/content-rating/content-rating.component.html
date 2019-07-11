@@ -1,17 +1,22 @@
-<sui-modal [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'normal'" class="sb-modal rating-modal" appBodyScroll
-  (dismissed)="closeModal(contentFeedbackModal);" #contentFeedbackModal>
+<sui-modal [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'normal'"
+  class="sb-modal rating-modal" appBodyScroll (dismissed)="closeModal(contentFeedbackModal);" #contentFeedbackModal>
   <!--Header-->
   <div class="sb-modal-header">
-      {{resourceService?.frmelmnts?.lbl?.ratingHeading}}
+    {{resourceService?.frmelmnts?.lbl?.ratingHeading}}
   </div>
   <!--/Header-->
   <!--Content-->
   <div class="sb-modal-content text-center">
-    <div class="ui basic icon circular button">
-      <i class="ui huge star icon"></i>
+    <div>
+      <i class="ui huge star icon" style="color: #ffd322"></i>
     </div>
     <div class="ui form">
       <div class="field">
+        <p class="meta" style="text-align: center;margin-top: 15px;">
+          You have successfully completed <b>{{courseHierarchy.name}}</b> training on
+          {{currentDate | date:'dd-MMM-yyyy'}}
+          at {{currentDate | date:'hh:mm a'}}.<br>
+        </p>
         <h5>{{resourceService?.frmelmnts?.lbl?.ratingContent}}</h5>
       </div>
       <div class="field">
@@ -19,16 +24,17 @@
       </div>
       <div class="field">
         <textarea rows="2" [(ngModel)]="comments"></textarea>
-      </div>      
+      </div>
     </div>
   </div>
   <!--/Content-->
   <!--Actions-->
   <div class="sb-modal-actions">
-      <button class="sb-btn sb-btn-normal sb-btn-primary" type="submit" (click)="sendFeedback(contentFeedbackModal, true);">{{resourceService?.frmelmnts?.btn?.submit}}</button>  
-      <button class="sb-btn sb-btn-normal sb-btn-outline-error" type="submit" (click)="closeModal(contentFeedbackModal);">
+    <button class="sb-btn sb-btn-normal sb-btn-primary" type="submit"
+      (click)="sendFeedback(contentFeedbackModal, true);">{{resourceService?.frmelmnts?.btn?.submit}}</button>
+    <button class="sb-btn sb-btn-normal sb-btn-outline-error" type="submit" (click)="closeModal(contentFeedbackModal);">
       {{resourceService?.frmelmnts?.btn?.cancel}}
-       </button>
+    </button>
   </div>
   <!--/Actions-->
 </sui-modal>

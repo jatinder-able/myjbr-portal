@@ -266,10 +266,17 @@
                                 <tr>
                                     <td *ngFor="let col of columns" class="ui-resizable-column">
                                         {{rowData[col.field]}}
-                                        <a href="{{rowData.downloadUrl}}" style="display: inline-flex"
+                                        <img *ngIf="col.header === 'Certificate' && rowData.statusName == 'Completed'"
+                                            src="{{'assets/images/certificate-badge.png' | cdnprefixurl}}"
+                                            style="height: 20px;margin-left: 40px;cursor: pointer;"
+                                            (click)="downloadCertificate(rowData.downloadUrl)">
+                                        <img *ngIf="col.header === 'Certificate' && rowData.statusName != 'Completed'"
+                                            src="{{'assets/images/certificate-badge-grey.png' | cdnprefixurl}}"
+                                            style="height: 20px;margin-left: 40px;cursor: not-allowed;">
+                                        <!-- <a href="{{rowData.downloadUrl}}" style="display: inline-flex"
                                             class="ui mini orange button" target="_blank"
                                             *ngIf="col.header === 'Certificate' && rowData.statusName == 'Completed'"><i
-                                                class="download icon" style="float: left"></i>&nbsp;Download</a>
+                                                class="download icon" style="float: left"></i>&nbsp;Download</a> -->
                                     </td>
                                 </tr>
                             </ng-template>

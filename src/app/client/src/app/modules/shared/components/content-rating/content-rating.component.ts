@@ -2,7 +2,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { IFeedbackEdata, IFeedbackObject, IFeedbackEventInput } from '@sunbird/telemetry';
 import { TelemetryService } from './../../../telemetry/services/telemetry/telemetry.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResourceService } from './../../services/resource/resource.service';
 
 @Component({
@@ -11,9 +11,10 @@ import { ResourceService } from './../../services/resource/resource.service';
   styleUrls: ['./content-rating.component.scss']
 })
 export class ContentRatingComponent {
-
+  currentDate: Date = new Date();
   feedbackEdata: IFeedbackEdata;
   @Input() feedbackObject: IFeedbackObject;
+  @Input() courseHierarchy?: any;
   submitClicked: false;
   rating: number;
   comments: string;
@@ -22,7 +23,7 @@ export class ContentRatingComponent {
   appTelemetryFeedbackInput: IFeedbackEventInput;
   public telemetryService: TelemetryService;
 
-  constructor(telemetryService: TelemetryService, private activatedRoute: ActivatedRoute, public resourceService: ResourceService) {
+  constructor(telemetryService: TelemetryService, private router: Router, private activatedRoute: ActivatedRoute, public resourceService: ResourceService) {
     this.telemetryService = telemetryService;
   }
 
@@ -34,7 +35,9 @@ export class ContentRatingComponent {
     console.log('rating feedback', this.rating, this.comments);
     this.generateFeedbackTelemetry();
   }
-
+  showLearnPage() {
+    this.router.navigate(['learn']);
+  }
   generateFeedbackTelemetry() {
     if (this.feedbackEdata) {
       this.appTelemetryFeedbackInput = {
@@ -57,6 +60,7 @@ export class ContentRatingComponent {
     if (submitClicked) {
       this.setFeedbackData();
     }
+    this.router.navigate(['learn']);
     this.closeModal(contentFeedbackModal);
   }
   closeModal(contentFeedbackModal) {

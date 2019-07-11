@@ -84,6 +84,25 @@
 <app-share-link [shareLink]="shareLink" [telemetryShareData]="telemetryShareData" *ngIf="sharelinkModal"
   (close)="sharelinkModal = false">
 </app-share-link>
+<!-- <sui-modal [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" class="sb-modal sb-success"
+  (dismissed)="modal.deny();showLearnPage();showSuccessModal = false;" #modal *ngIf="showSuccessModal">
+  <div class="header">
+    <div class="ui grid">
+      <div class="eleven wide column">
+        <span class="ui header">{{resourceService?.frmelmnts?.instn?.t0060}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="sb-modal-content">
+    
+  </div>
+  <div class="sb-modal-actions">
+    <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="modal.deny();showLearnPage();">
+      Ok
+    </button>
+  </div>
+</sui-modal> -->
+
 <!-- <sui-modal *ngIf="showModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'small'"
   class="sb-modal" appBodyScroll #enrollBatch>
   <div class="sb-modal-header">

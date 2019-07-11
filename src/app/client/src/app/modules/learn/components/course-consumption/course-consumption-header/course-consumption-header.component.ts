@@ -22,6 +22,7 @@ import { CourseBatchService } from './../../../services/course-batch/course-batc
 })
 export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('enrollBatch') enrollBatch;
+  currentDate: Date = new Date();
   showModal: boolean = false;
   submitInteractEdata: IInteractEventEdata;
   telemetryInteractObject: IInteractEventObject;
@@ -65,6 +66,7 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
   courseStatus: string;
   public unsubscribe = new Subject<void>();
   batchEndDate: any;
+  showSuccessModal: boolean = false;
   // showCertificateBtn: Boolean;
   constructor(private activatedRoute: ActivatedRoute, private courseConsumptionService: CourseConsumptionService,
     public resourceService: ResourceService, private router: Router, public permissionService: PermissionService,
@@ -121,6 +123,7 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
         this.lastPlayedContentId = courseProgressData.lastPlayedContentId;
         if (this.batchId && this.progress === 100) {
           this.showCertificateBtn = true;
+          this.showSuccessModal = true;
           this.showModal = true;
           this.downloadCertificate();
           this.setTelemetryData();
@@ -146,6 +149,9 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
     this.enrollBatch.close();
     this.showModal = false;
     this.router.navigate(['orgDashboard']);
+  }
+  showLearnPage() {
+    this.router.navigate(['learn']);
   }
   resumeCourse(showExtUrlMsg?: boolean) {
     const navigationExtras: NavigationExtras = {
