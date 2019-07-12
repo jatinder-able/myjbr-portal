@@ -8,7 +8,8 @@
 
         <!--Logo-->
         <a class="d-flex logo" tabindex="0" title="{{tenantName}}" role="banner" (click)="navigateToHome()">
-            <img style="margin-left: 8px;width: 142px;" class="cursor-pointer" alt={{tenantName}} src="{{logo}}">
+            <img style="margin-left: 8px;width: 90px;margin-top: -40px;" class="cursor-pointer" alt={{tenantName}} src="{{logo}}">
+            <div *ngIf="logo" class="logo-text">Third Party Training Platform</div>
         </a>
         <!--/Logo-->
 

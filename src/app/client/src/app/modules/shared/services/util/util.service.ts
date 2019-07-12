@@ -34,6 +34,7 @@ export class UtilService {
       gradeLevel: '',
       contentType: data.contentType,
       status: data.status,
+      batch: data.batch || {},
       enrolledDate: data.enrolledDate,
       createdOn: data.createdOn,
       lastUpdatedOn: data.lastUpdatedOn,

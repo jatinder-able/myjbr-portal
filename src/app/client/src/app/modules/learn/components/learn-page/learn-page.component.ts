@@ -66,7 +66,7 @@ export class LearnPageComponent implements OnInit, AfterViewChecked, OnDestroy {
         //Create My Course Section
         this.myCourseSection = _.cloneDeep(this.enrolledSection);
         this.myCourseSection.contents = _.reject(_.cloneDeep(this.myCourseSection.contents), function (obj) {
-          if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount'))) {
+          if (_.toNumber(_.get(obj, 'progress')) >= _.toNumber(_.get(obj, 'maxCount')) || new Date() > new Date(obj.batch.endDate)) {
             return obj;
           }
         });
