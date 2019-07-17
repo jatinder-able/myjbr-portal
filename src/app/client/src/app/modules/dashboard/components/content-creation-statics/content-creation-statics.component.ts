@@ -27,9 +27,11 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   fromDate: any;
   toDate: any;
   tableData: any = [];
+  selectedTableData: any = [];
   polarChartData: any;
   polarChartOptions: any;
   selectedDateRange: string;
+  selectedCategory: string = '';
   interactObject: any;
   cols: any[];
   noResultMessage: INoResultMessage;
@@ -62,7 +64,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
         "sort_by": {
           "lastUpdatedOn": "desc"
         },
-        "fields": ["identifier", "name", "contentType", "mimeType", "createdFor", "channel", "board", "medium", "gradeLevel", "subject", "lastUpdatedOn", "status", "createdBy", "framework", "createdOn"]
+        "fields": ["identifier", "creator", "name", "contentType", "mimeType", "createdFor", "channel", "board", "medium", "gradeLevel", "subject", "lastUpdatedOn", "status", "createdBy", "framework", "createdOn"]
       }
     };
     this.reportService.getContentCreationStaticsReport(data).subscribe((response) => {
@@ -74,6 +76,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
           obj.createdOn = self.datePipe.transform(obj.createdOn, 'dd-MMM-yyyy');
           obj.contentType = (obj.contentType === 'Resource') ? obj.contentType + " (" + _.replace(_.upperCase(_.split(obj.mimeType, '/')[1]), ' ', '') + ")" : obj.contentType;
         });
+        this.selectedTableData = _.cloneDeep(this.tableData);
         this.noResult = false;
         if (_.isEmpty(this.tableData)) {
           this.noResultMessage = {
@@ -101,6 +104,15 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
     });
     this.initializePolarChart(uniqData, uniqLabel);
   }
+  filterCreationData(category) {
+    if (this.selectedCategory != category) {
+      this.selectedCategory = category;
+      this.selectedTableData = _.filter(_.cloneDeep(this.tableData), { board: category });
+    } else {
+      this.selectedTableData = _.cloneDeep(this.tableData);
+      this.selectedCategory = '';
+    }
+  }
   initializePolarChart(uniqData, uniqLabel) {
     this.polarChartData = {
       datasets: [{
@@ -125,13 +137,14 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   }
   initializeColumns() {
     this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'board', header: 'Category' },
-      { field: 'subject', header: 'Sub-Category' },
-      { field: 'gradeLevel', header: 'Topic' },
-      { field: 'createdOn', header: 'Creation Date' },
-      { field: 'contentType', header: 'Content Type' },
-      { field: 'status', header: 'Status' }
+      { field: 'name', header: 'Name', width: '166px' },
+      { field: 'board', header: 'Category', width: '198px' },
+      { field: 'subject', header: 'Sub-Category', width: '98px' },
+      { field: 'gradeLevel', header: 'Topic', width: '250px' },
+      { field: 'createdOn', header: 'Creation Date', width: '99px' },
+      { field: 'creator', header: 'Creator', width: '108px' },
+      { field: 'contentType', header: 'Content Type', width: '101px' },
+      { field: 'status', header: 'Status', width: '64px' }
       // { field: 'identifier', header: 'Identifier' },
       // { field: 'medium', header: 'Medium' },
       // { field: 'objectType', header: 'Object Type' },

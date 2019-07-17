@@ -1,3 +1,19 @@
+.reset-button {
+    float: right;
+}
+.dashBoardCardText {
+    text-transform: uppercase;
+}
+.card {
+    -webkit-box-shadow: 2px 3px 10px 0px rgba(0, 0, 0, 0.26) !important;
+    &.active {
+        border-bottom: 5px solid #fe7a51 !important;
+        -webkit-box-shadow: inset 2px 3px 10px 0px rgba(0, 0, 0, 0.26) !important;
+        .dashboardCardSubText,.dashBoardCardText {
+            color:#fe7a51 !important;
+        }
+    }
+}
 .ui-table.ui-widget.ui-table-resizable.ui-table-resizable-fit {
     font-size:11px !important;
 }

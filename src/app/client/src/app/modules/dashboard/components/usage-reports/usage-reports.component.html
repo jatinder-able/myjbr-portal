@@ -237,18 +237,39 @@
                     </div>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="trainingstats">
-                    <div class="twelve wide column" *ngIf="showTrainingstats && enrolledCourseData.length > 0">
-                        <p-chart type="doughnut" [data]="donutChartData" width="80vw" height="40vh"></p-chart>
+                    <div class="ui grid">
+                        <div class="six wide column" *ngIf="showTrainingstats && enrolledCourseData.length > 0">
+                            <p-chart type="doughnut" [data]="donutChartData" height="200px"></p-chart>
+                        </div>
+                        <div class="six wide column" *ngIf="showTrainingstats && enrolledCourseData.length > 0">
+                            <div class="ui two cards">
+                                <div class="card" *ngFor="let block of trainingDetailsBlock"
+                                    [class.active]="block.label === selectedStatus"
+                                    style="cursor: pointer;height: 85px;" (click)="filterEnrolledData(block.label)">
+                                    <div class="content center aligned">
+                                        <h2 class="description dashboardCardSubText" style="line-height: 20px;">
+                                            {{block.value}}</h2>
+                                        <div class="meta dashBoardCardText" style="font-size: 0.9em;">{{block.label}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="reset-button mt-15">
+                                <button type="button" class="mini ui basic button" (click)="filterEnrolledData('clear')"
+                                    style="font-size: 13px;font-weight: bold;">Clear</button>
+                            </div> -->
+                        </div>
                     </div>
                     <br>
-                    <div class="twelve wide column" *ngIf="showTrainingstats && enrolledCourseData.length > 0">
-                        <p-table #dt [value]="enrolledCourseData" [columns]="cols" [paginator]="true" [rows]="10"
-                            [resizableColumns]="true">
+                    <div class="twelve wide column" *ngIf="showTrainingstats && selectedEnrolledCourseData.length > 0">
+                        <p-table #dt [value]="selectedEnrolledCourseData" [columns]="cols" [paginator]="true"
+                            [rows]="10" [resizableColumns]="true">
                             <ng-template pTemplate="caption">
                                 <div class="ui small left icon input" style="float: left">
                                     <i class="search icon"></i>
                                     <input type="text" pInputText placeholder="Search"
-                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        style="width: 210px;">
                                 </div>
                                 <div class="ui-helper-clearfix">
                                     <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
@@ -257,7 +278,7 @@
                             </ng-template>
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th *ngFor="let col of columns" pResizableColumn>
+                                    <th *ngFor="let col of columns" pResizableColumn [style.width]="col.width">
                                         {{col.header}}
                                     </th>
                                 </tr>
@@ -268,11 +289,11 @@
                                         {{rowData[col.field]}}
                                         <img *ngIf="col.header === 'Certificate' && rowData.statusName == 'Completed'"
                                             src="{{'assets/images/certificate-badge.png' | cdnprefixurl}}"
-                                            style="height: 20px;margin-left: 40px;cursor: pointer;"
+                                            style="height: 20px;margin-left: 20px;cursor: pointer;"
                                             (click)="downloadCertificate(rowData.downloadUrl)">
                                         <img *ngIf="col.header === 'Certificate' && rowData.statusName != 'Completed'"
                                             src="{{'assets/images/certificate-badge-grey.png' | cdnprefixurl}}"
-                                            style="height: 20px;margin-left: 40px;cursor: not-allowed;">
+                                            style="height: 20px;margin-left: 20px;cursor: not-allowed;">
                                         <!-- <a href="{{rowData.downloadUrl}}" style="display: inline-flex"
                                             class="ui mini orange button" target="_blank"
                                             *ngIf="col.header === 'Certificate' && rowData.statusName == 'Completed'"><i
@@ -282,7 +303,7 @@
                             </ng-template>
                         </p-table>
                     </div>
-                    <div class="ui grid" *ngIf="!showTrainingstats">
+                    <div class="ui grid" *ngIf="!showTrainingstats || selectedEnrolledCourseData.length === 0">
                         <div class="one wide column"></div>
                         <div class="ten wide column">
                             <div class="ui two column centered grid no-result-container">

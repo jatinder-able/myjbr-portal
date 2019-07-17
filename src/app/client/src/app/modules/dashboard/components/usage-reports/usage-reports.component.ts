@@ -25,6 +25,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
  */
   adminDashboard: Array<string>;
   enrolledCourseData: any = [];
+  selectedEnrolledCourseData: any = [];
   selectedBatch: object;
   userProfile: IUserProfile;
   public unsubscribe = new Subject<void>();
@@ -41,6 +42,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   isTableDataLoaded = false;
   currentReport: any;
   slug: string;
+  selectedStatus: string = '';
   noResult: boolean;
   courseMentor: boolean = false;
   noResultMessage: INoResultMessage;
@@ -56,6 +58,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   userDashboardColumns: { field: string; header: string; }[];
   userDashboardData: any = [];
   userDetailsBlock: any = [];
+  trainingDetailsBlock: any = [];
   orgChartData: IEmployee;
   showTrainingstats: boolean = true;
   showTrainingdashboard: boolean = true;
@@ -129,6 +132,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
             obj.statusName = (obj.statusName != 'Completed' && (new Date(obj.batch.endDate) < new Date())) ? 'Expired' : obj.statusName;
             obj.downloadUrl = azureUrl + obj.courseName + '-' + self.userService.userid + '-' + obj.courseId + '.pdf';
           });
+          this.selectedEnrolledCourseData = _.cloneDeep(this.enrolledCourseData);
           this.initializeColumns();
           this.initializeDonutChart();
         }
@@ -147,8 +151,10 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     });
   }
   initializeDonutChart() {
+    this.trainingDetailsBlock = [];
+    let labelsArray = ['Completed', 'In-Progress', 'Not-Started', 'Expired'];
     this.donutChartData = {
-      labels: ['COMPLETED - ' + _.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, 'IN-PROGRESS - ' + _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, 'NOT-STARTED - ' + _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length, 'EXPIRED - ' + _.filter(this.enrolledCourseData, { statusName: 'Expired' }).length],
+      labels: ['COMPLETED', 'IN-PROGRESS', 'NOT-STARTED', 'EXPIRED'],
       datasets: [
         {
           data: [_.filter(this.enrolledCourseData, { statusName: 'Completed' }).length, _.filter(this.enrolledCourseData, { statusName: 'In-Progress' }).length, _.filter(this.enrolledCourseData, { statusName: 'Not-Started' }).length, _.filter(this.enrolledCourseData, { statusName: 'Expired' }).length],
@@ -166,18 +172,22 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           ]
         }]
     };
+    let self = this;
+    _.map(this.donutChartData.datasets[0].data, function (obj, index) {
+      self.trainingDetailsBlock.push({ 'label': labelsArray[index], 'value': obj });
+    });
   }
   initializeColumns() {
     this.cols = [
-      { field: 'batchName', header: 'Batch Name' },
-      { field: 'courseName', header: 'Course Name' },
-      { field: 'enrollmentType', header: 'Enrollment Type' },
-      { field: 'startDate', header: 'Batch Start Date' },
-      { field: 'enrollmentDate', header: 'Enrollment Date' },
-      { field: 'endDate', header: 'Target End Date' },
-      { field: 'completedOn', header: 'Completion Date' },
-      { field: 'statusName', header: 'Status' },
-      { field: 'certificate', header: 'Certificate' }
+      { field: 'batchName', header: 'Batch Name', width: '219px' },
+      { field: 'courseName', header: 'Course Name', width: '219px' },
+      { field: 'enrollmentType', header: 'Type', width: '81px' },
+      { field: 'startDate', header: 'Start Date', width: '90px' },
+      { field: 'enrollmentDate', header: 'Enrolled Date', width: '102px' },
+      { field: 'endDate', header: 'Target Date', width: '98px' },
+      { field: 'completedOn', header: 'Completion Date', width: '116px' },
+      { field: 'statusName', header: 'Status', width: '86px' },
+      { field: 'certificate', header: 'Certificate', width: '75px' }
     ]
   }
   initializeCourseDashboardColumns() {
@@ -406,6 +416,15 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
       { field: 'statusName', header: 'Status' },
       { field: 'lastLoginTime', header: 'LastLoginTime' }
     ]
+  }
+  filterEnrolledData(statusName) {
+    if (this.selectedStatus != statusName) {
+      this.selectedStatus = statusName;
+      this.selectedEnrolledCourseData = _.filter(_.cloneDeep(this.enrolledCourseData), { statusName: statusName });
+    } else {
+      this.selectedEnrolledCourseData = _.cloneDeep(this.enrolledCourseData);
+      this.selectedStatus = '';
+    }
   }
   populateCourseDashboardData(batch) {
     this.usageService.populateCourseDashboardData(_.get(batch, 'identifier')).subscribe(response => {

@@ -67,10 +67,12 @@
     <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
             <div class="ui four cards">
-                <div class="card" *ngFor="let block of polarChartData?.datasets[0].data;let i=index">
+                <div class="card" *ngFor="let block of polarChartData?.datasets[0].data;let i=index"
+                    [class.active]="polarChartData.labels[i] === selectedCategory" style="cursor: pointer;height: 85px;"
+                    (click)="filterCreationData(polarChartData.labels[i])">
                     <div class="content center aligned">
-                        <div class="meta dashBoardCardText">{{polarChartData.labels[i]}}</div>
-                        <h2 class="description dashboardCardSubText">{{block}}</h2>
+                        <h2 class="description dashboardCardSubText" style="line-height: 20px;">{{block}}</h2>
+                        <div class="meta dashBoardCardText" style="font-size: 0.9em;">{{polarChartData.labels[i]}}</div>
                     </div>
                 </div>
             </div>
@@ -78,17 +80,18 @@
     </div>
     <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
-            <p-chart type="polarArea" [data]="polarChartData" [options]="polarChartOptions"></p-chart>
+            <p-chart type="polarArea" [data]="polarChartData" [options]="polarChartOptions" height="300px"></p-chart>
         </div>
     </div>
-    <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
+    <div class="ui grid" *ngIf="!noResult && selectedTableData.length > 0">
         <div class="twelve wide column">
-            <p-table #dt [value]="tableData" [columns]="cols" [paginator]="true" [rows]="15" [resizableColumns]="true">
+            <p-table #dt [value]="selectedTableData" [columns]="cols" [paginator]="true" [rows]="15"
+                [resizableColumns]="true">
                 <ng-template pTemplate="caption">
                     <div class="ui small left icon input" style="float: left">
                         <i class="search icon"></i>
                         <input type="text" pInputText placeholder="Search"
-                            (input)="dt.filterGlobal($event.target.value, 'contains')">
+                            (input)="dt.filterGlobal($event.target.value, 'contains')" style="width: 210px;">
                     </div>
                     <div class="ui-helper-clearfix">
                         <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
@@ -97,7 +100,7 @@
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                        <th *ngFor="let col of columns" pResizableColumn>
+                        <th *ngFor="let col of columns" pResizableColumn [style.width]="col.width">
                             {{col.header}}
                         </th>
                     </tr>
@@ -112,7 +115,7 @@
             </p-table>
         </div>
     </div>
-    <div *ngIf="noResult">
+    <div *ngIf="noResult || selectedTableData.length === 0">
         <app-no-result [data]="noResultMessage"></app-no-result>
     </div>
 </div>
