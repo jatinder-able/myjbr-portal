@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@ang
 import { UsageService } from './../../services';
 import * as _ from 'lodash';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UserService } from '@sunbird/core';
+import { UserService, PermissionService } from '@sunbird/core';
 import { ToasterService, ResourceService, INoResultMessage, ConfigService } from '@sunbird/shared';
 import { UUID } from 'angular2-uuid';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,8 +37,10 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   noResultMessage: INoResultMessage;
   private activatedRoute: ActivatedRoute;
   telemetryImpression: IImpressionEventInput;
+  isOrgAdmin: boolean = false;
+  isCreator: boolean = false;
   constructor(private usageService: UsageService, private sanitizer: DomSanitizer, private configService: ConfigService,
-    public userService: UserService, private toasterService: ToasterService,
+    public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, public reportService: ReportService, private datePipe: DatePipe
   ) {
     this.activatedRoute = activatedRoute;
@@ -46,11 +48,16 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getContentCreationStaticsReport('14d');
+    //Check Org Admin Role
+    this.isOrgAdmin = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.headerDropdownRoles.adminDashboard);
+    //Check Creator Role
+    this.isCreator = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.headerDropdownRoles.myActivityRole);
   }
   getContentCreationStaticsReport(dateRange) {
     this.selectedDateRange = dateRange;
     this.toDate = new Date();
     this.fromDate = (dateRange === "14d") ? moment().subtract('14', 'days') : ((dateRange === "2m") ? moment().subtract('2', 'months') : moment().subtract('6', 'months'));
+    let createdByFilter = this.isOrgAdmin ? [] : [this.userService.userid];
     const data = {
       "request": {
         "query": "",
@@ -58,6 +65,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
           "status": [
             "Live"
           ],
+          "createdBy": createdByFilter,
           "createdOn": { ">=": this.datePipe.transform(this.fromDate, 'yyyy-MM-ddTHH:MM'), "<=": this.datePipe.transform(this.toDate, 'yyyy-MM-ddTHH:MM') }
         },
         "limit": "100",

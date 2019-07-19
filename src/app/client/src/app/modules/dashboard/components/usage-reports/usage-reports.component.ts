@@ -52,6 +52,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   telemetryInteractDownloadEdata: IInteractEventEdata;
   @ViewChild(TelemetryInteractDirective) telemetryInteractDirective;
   selectedDateRange: string;
+  selectedBatchRange: string;
   fromDate: any;
   toDate: any;
   interactObject: any;
@@ -63,6 +64,8 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   showTrainingstats: boolean = true;
   showTrainingdashboard: boolean = true;
   showUserDetailsReport: boolean = true;
+  isOrgAdmin: boolean = false;
+  isCreator: boolean = false;
   constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
     public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
@@ -94,12 +97,12 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     this.setTelemetryImpression();
     this.getEnrolledCourses();
     //Check Course Mentor Role
-    if (this.permissionService.checkRolesPermissions(['COURSE_MENTOR'])) {
-      this.courseMentor = true;
-    } else {
-      this.courseMentor = false;
-    }
-    this.getBatches();
+    this.courseMentor = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.workSpaceRole.courseBatchRoles);
+    //Check Org Admin Role
+    this.isOrgAdmin = this.permissionService.checkRolesPermissions(this.adminDashboard);
+    //Check Creator Role
+    this.isCreator = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.headerDropdownRoles.myActivityRole);
+    this.getBatches('14d');
     this.getUserDetailsReport('14d');
     this.getOrgDetails();
   }
@@ -276,9 +279,23 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     this.table.data = _.get(table, 'values') || _.get(data, _.get(table, 'valuesExpr'));
     this.isTableDataLoaded = true;
   }
-  getBatches() {
-    this.usageService.getBatches().subscribe(response => {
+  getBatches(dateRange) {
+    this.selectedBatchRange = dateRange;
+    let toDate = new Date();
+    let fromDate = (dateRange === "14d") ? moment().subtract('14', 'days') : ((dateRange === "2m") ? moment().subtract('2', 'months') : moment().subtract('6', 'months'));
+    const data = {
+      'request': {
+        'filters': {
+          'status': ['0', '1', '2'],
+          'createdBy': this.userService.userid,
+          "createdDate": { ">=": this.datePipe.transform(fromDate, 'yyyy-MM-ddTHH:MM'), "<=": this.datePipe.transform(toDate, 'yyyy-MM-ddTHH:MM') }
+        },
+        'sort_by': { 'createdDate': 'desc' }
+      }
+    };
+    this.usageService.getBatches(data).subscribe(response => {
       this.batchList = [];
+      this.courseDashboardData = [];
       if (_.get(response, 'responseCode') === 'OK') {
         if (response.result.response.content.length > 0) {
           this.batchList = response.result.response.content;
