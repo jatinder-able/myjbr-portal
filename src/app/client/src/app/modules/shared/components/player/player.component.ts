@@ -1,5 +1,5 @@
 import { ConfigService } from './../../services';
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, OnChanges, AfterViewChecked } from '@angular/core';
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 import {PlayerConfig} from './../../interfaces';
@@ -31,6 +31,9 @@ export class PlayerComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.showPlayer();
+  }
+  ngAfterViewChecked() {
+    $('#contentPlayer').contents().find("html").find("#download-btn").hide();
   }
   /**
    * Initializes player with given config and emits player telemetry events
