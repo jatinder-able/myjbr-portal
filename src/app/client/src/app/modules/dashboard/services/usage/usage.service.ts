@@ -70,18 +70,10 @@ export class UsageService {
   /**
  * To method calls the batch list API
  */
-  getBatches() {
+  getBatches(data) {
     const option = {
       url: this.config.urlConFig.URLS.BATCH.GET_BATCHS,
-      data: {
-        'request': {
-          'filters': {
-            'status': ['0', '1', '2'],
-            'createdBy': this.userid
-          },
-          'sort_by': { 'createdDate': 'desc' }
-        }
-      }
+      data: data
     };
     return this.learnerService.post(option);
   }

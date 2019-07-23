@@ -20,7 +20,7 @@
                         suiTabHeader="trainingstats">{{resourceService?.frmelmnts?.lbl?.trainingstats}}</a>
                     <a (click)="reportType('trainingdashboard')" class="item" suiTabHeader="trainingdashboard"
                         *ngIf="courseMentor">{{resourceService?.frmelmnts?.lbl?.trainingdashboard}}</a>
-                    <a (click)="reportType('staticsReport')" class="item" appPermission [permission]='adminDashboard'
+                    <a (click)="reportType('staticsReport')" class="item" *ngIf="isOrgAdmin || isCreator"
                         suiTabHeader="staticsReport">{{resourceService?.frmelmnts?.lnk?.staticsReport}}</a>
                     <a (click)="reportType('userDetailsReport');" class="item" appPermission
                         *ngIf="userProfile?.rootOrgAdmin" [permission]='adminDashboard'
@@ -147,7 +147,36 @@
                     <app-content-creation-statics></app-content-creation-statics>
                 </div>
                 <div class="ui bottom attached segment" suiTabContent="trainingdashboard">
-                    <div class="ui grid" *ngIf="batchList?.length > 0">
+                    <div class="ui grid stackable top aligned my-0">
+                        <div class="twelve wide tablet ten wide computer column mobile-p-0">
+                            <div class="ui grid pl-5">
+                                <div class="six wide column">
+                                    <div class="ui text menu float-ContentLeft my-0" style="min-height: 0;">
+                                        <span class="dashBoardMenuItem cursor-pointer active"
+                                            (click)="getBatches('14d')"
+                                            [ngClass]="{'active': selectedBatchRange === '14d' }" appTelemetryInteract
+                                            [telemetryInteractObject]="interactObject"
+                                            [telemetryInteractEdata]="{id:'14d',type:'click',pageid:'content-creation-dashboard'}">
+                                            {{resourceService?.frmelmnts?.lbl?.dashboardfourteendaysfilter}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="dashBoardMenuItem cursor-pointer" (click)="getBatches('2m')"
+                                            [ngClass]="{'active': selectedBatchRange === '2m' }" appTelemetryInteract
+                                            [telemetryInteractObject]="interactObject"
+                                            [telemetryInteractEdata]="{id:'2m',type:'click',pageid:'content-creation-dashboard'}">
+                                            {{resourceService?.frmelmnts?.lbl?.dashboardtwomonthsfilter}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="dashBoardMenuItem cursor-pointer" (click)="getBatches('6m')"
+                                            [ngClass]="{'active': selectedBatchRange === '6m' }" appTelemetryInteract
+                                            [telemetryInteractObject]="interactObject"
+                                            [telemetryInteractEdata]="{id:'6m',type:'click',pageid:'content-creation-dashboard'}">
+                                            {{resourceService?.frmelmnts?.lbl?.dashboardsixmonthsfilter}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid mt-0" *ngIf="batchList?.length > 0">
                         <div class="eight wide column">
                             <div class="field">
                                 <div class="mt-10" style="cursor: pointer">
