@@ -16,24 +16,35 @@
 .ui.menu {
   &.text {
     .item {
-      padding: 0.35714286em 0.86em;
-      color: $menuitem-color;
+      // padding: 0.35714286em 0.86em;
+      // color: $menuitem-color;
+      color:#a32020;
+      padding: 0;
+      margin-right: 36px;
+      line-height: 38px;
 
       &:hover,
       &:focus {
-        color: $primary-color;
-        outline: none;
+        //color: $primary-color;
+        //outline: none;
+        color:#ef5350;
+        padding: 0;
+        border-bottom:2px solid #ef5350 !important;
+        line-height: 36px !important;
       }
 
       &.active {
         // font-weight: bold;
-        color: #ffffff;
-        background-color: #eb8b00;
+        // color: #ffffff;
+        // background-color: #eb8b00;
+        color:#ef5350;
+        border-bottom:2px solid #ef5350 !important;
+        line-height: 36px !important;
 
-        &:hover,
-        &:focus {
-          opacity: 0.9;
-        }
+        // &:hover,
+        // &:focus {
+        //  opacity: 0.9;
+        // }
       }
     }
   }
@@ -54,4 +65,33 @@
   color: $primary-color !important;
   background-color: $white-color;
   border-top: 1px solid rgba(34,36,38, 0.15) !important;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  &.signin-btn {
+    font: 12px/16px Georgia!important;
+    color: #a32020;
+    background-color: #ffffff;
+    border: 2px solid #a32020;
+    &:hover {
+      color: #ffffff !important;
+      background-color: #a32020 !important;
+      border-color: #a32020 !important;
+    }
+  }
 }
