@@ -225,7 +225,7 @@
               <span>{{resourceService.frmelmnts.lbl.trainingAttended}}
                 ({{attendedTraining.length}})&#x200E;</span>
               <span style="margin-left: 40px;">Completion Date</span>
-              <span style="margin-right: 25px;">Certificate</span>
+              <span style="margin-right: 25px;" *ngIf="enableCertificateFeature === 'true'">Certificate</span>
             </th>
           </tr>
         </thead>
@@ -238,7 +238,8 @@
                   <span *ngIf="data.name && data.name.length > 35">...</span>
                 </span>
                 <span class="fs-1 color-4" *ngIf="data.completedOn">{{data.completedOn | date :'dd-MMM-yyyy' }}</span>
-                <span class="fs-1 color-4 cursor-pointer" *ngIf="data.completedOn" (click)="downloadCertificate(data)"
+                <span class="fs-1 color-4 cursor-pointer"
+                  *ngIf="data.completedOn && enableCertificateFeature === 'true'" (click)="downloadCertificate(data)"
                   style="margin-right: 35px;">
                   <img src="{{'assets/images/certificate-badge.png' | cdnprefixurl}}" style="height: 20px;">
                 </span>

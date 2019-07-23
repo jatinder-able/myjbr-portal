@@ -67,6 +67,7 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
   public unsubscribe = new Subject<void>();
   batchEndDate: any;
   showSuccessModal: boolean = false;
+  enableCertificateFeature:string;
   // showCertificateBtn: Boolean;
   constructor(private activatedRoute: ActivatedRoute, private courseConsumptionService: CourseConsumptionService,
     public resourceService: ResourceService, private router: Router, public permissionService: PermissionService,
@@ -80,6 +81,7 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
   }
 
   ngOnInit() {
+    this.enableCertificateFeature = (<HTMLInputElement>document.getElementById('enableCertificateFeature')).value;
     observableCombineLatest(this.activatedRoute.firstChild.params, this.activatedRoute.firstChild.queryParams,
       (params, queryParams) => {
         return { ...params, ...queryParams };
@@ -122,13 +124,17 @@ export class CourseConsumptionHeaderComponent implements OnInit, AfterViewInit, 
         this.progress = courseProgressData.progress ? Math.round(courseProgressData.progress) : 0;
         this.lastPlayedContentId = courseProgressData.lastPlayedContentId;
         if (this.batchId && this.progress === 100) {
-          this.showCertificateBtn = true;
+          if(this.enableCertificateFeature === 'true') {
+            this.showCertificateBtn = true;
+            this.downloadCertificate();
+          }
           this.showSuccessModal = true;
           this.showModal = true;
-          this.downloadCertificate();
           this.setTelemetryData();
         }
-        this.showCertificateBtn = (this.progress === 100);
+        if(this.enableCertificateFeature === 'true') {
+          this.showCertificateBtn = (this.progress === 100);
+        }
         if (!this.flaggedCourse && this.onPageLoadResume &&
           !this.contentId && this.enrolledBatchInfo.status > 0 && this.lastPlayedContentId) {
           this.onPageLoadResume = false;

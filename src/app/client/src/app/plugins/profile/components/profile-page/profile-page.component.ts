@@ -14,7 +14,6 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 import { IInteractEventInput, IImpressionEventInput, IInteractEventEdata, IInteractEventObject } from '@sunbird/telemetry';
 import { ActivatedRoute } from '@angular/router';
 import { CacheService } from 'ng2-cache-service';
-const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -29,7 +28,8 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
    * Admin Dashboard access roles
    */
   adminDashboard: Array<string>;
-
+  enableCertificateFeature: string;
+  azureUrl: string;
   @ViewChild('profileModal') profileModal;
   @ViewChild('slickModal') slickModal;
   /**
@@ -183,6 +183,8 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.azureUrl = (<HTMLInputElement>document.getElementById('certificateUrl')).value + (<HTMLInputElement>document.getElementById('certificateContainerName')).value + '/course_certificate/';
+    this.enableCertificateFeature = (<HTMLInputElement>document.getElementById('enableCertificateFeature')).value;
     this.adminDashboard = this.configService.rolesConfig.headerDropdownRoles.adminDashboard;
     this.getCustodianOrgUser().subscribe(custodianOrgUser => {
       this.isCustodianOrgUser = custodianOrgUser;
@@ -361,7 +363,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     }
   }
   downloadCertificate(data) {
-    let downloadUrl = azureUrl + data.courseName + '-' + (<HTMLInputElement>document.getElementById('userId')).value + '-' + data.courseId + '.pdf';
+    let downloadUrl = this.azureUrl + data.courseName + '-' + (<HTMLInputElement>document.getElementById('userId')).value + '-' + data.courseId + '.pdf';
     window.open(downloadUrl, '_blank');
   }
   updateProfile(data) {

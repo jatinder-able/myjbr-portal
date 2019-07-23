@@ -99,6 +99,9 @@ function getLocals(req, callback) {
   locals.googleCaptchaSiteKey = envHelper.sunbird_google_captcha_site_key
   locals.videoMaxSize = envHelper.sunbird_portal_video_max_size
   locals.reportsLocation = envHelper.sunbird_azure_report_container_name
+  locals.enableCertificateFeature = envHelper.ENABLE_CERTIFICATE_FEATURE
+  locals.certificateUrl = envHelper.AZURE_STORAGE_URL
+  locals.certificateContainerName = envHelper.CERTIFICATE_STORE_CONTAINER_NAME
   callback(null, locals)
 }
 

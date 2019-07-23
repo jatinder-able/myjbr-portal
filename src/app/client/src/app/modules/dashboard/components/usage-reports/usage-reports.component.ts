@@ -12,7 +12,6 @@ import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { IEmployee } from 'ng2-org-chart';
 import { Subject } from 'rxjs';
-const azureUrl = 'https://nuih.blob.core.windows.net/certificate/course_certificate/';
 @Component({
   selector: 'app-usage-reports',
   templateUrl: './usage-reports.component.html',
@@ -24,6 +23,8 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
  * Admin Dashboard access roles
  */
   adminDashboard: Array<string>;
+  azureUrl: string;
+  enableCertificateFeature: string;
   enrolledCourseData: any = [];
   selectedEnrolledCourseData: any = [];
   selectedBatch: object;
@@ -73,6 +74,8 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     this.activatedRoute = activatedRoute;
   }
   ngOnInit() {
+    this.azureUrl = (<HTMLInputElement>document.getElementById('certificateUrl')).value + (<HTMLInputElement>document.getElementById('certificateContainerName')).value + '/course_certificate/';
+    this.enableCertificateFeature = (<HTMLInputElement>document.getElementById('enableCertificateFeature')).value;
     this.userService.userData$.subscribe(userdata => {
       if (userdata && !userdata.err) {
         this.userProfile = userdata.userProfile;
@@ -133,7 +136,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
             obj.completedOn = self.datePipe.transform(obj.completedOn, 'dd-MMM-yyyy');
             obj.statusName = (obj.progress === 0) ? 'Not-Started' : ((obj.progress === obj.leafNodesCount || obj.progress > obj.leafNodesCount) ? 'Completed' : 'In-Progress');
             obj.statusName = (obj.statusName != 'Completed' && (new Date(obj.batch.endDate) < new Date())) ? 'Expired' : obj.statusName;
-            obj.downloadUrl = azureUrl + obj.courseName + '-' + self.userService.userid + '-' + obj.courseId + '.pdf';
+            obj.downloadUrl = self.azureUrl + obj.courseName + '-' + self.userService.userid + '-' + obj.courseId + '.pdf';
           });
           this.selectedEnrolledCourseData = _.cloneDeep(this.enrolledCourseData);
           this.initializeColumns();
@@ -190,8 +193,10 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
       { field: 'endDate', header: 'Target Date', width: '98px' },
       { field: 'completedOn', header: 'Completion Date', width: '116px' },
       { field: 'statusName', header: 'Status', width: '86px' },
-      { field: 'certificate', header: 'Certificate', width: '75px' }
-    ]
+    ];
+    if (this.enableCertificateFeature === 'true') {
+      this.cols.push({ field: 'certificate', header: 'Certificate', width: '75px' });
+    }
   }
   initializeCourseDashboardColumns() {
     this.courseDashboardColumns = [
