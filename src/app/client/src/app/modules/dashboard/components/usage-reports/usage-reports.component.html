@@ -39,15 +39,23 @@
                 <div class="ui bottom attached segment" suiTabContent="userDetailsReport">
                     <div class="ui grid">
                         <div class="twelve wide column" id="orgChartDataSection">
+                            <h5><b style="color: #b70303;">Org Structure</b></h5>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="twelve wide column" id="orgChartDataSection">
                             <ng2-org-chart [topEmployee]="orgChartData"></ng2-org-chart>
                         </div>
                     </div>
-                    <br>
+                    <br><br>
                     <div class="ui grid stackable top aligned my-0">
                         <div class="twelve wide tablet ten wide computer column mobile-p-0">
                             <div class="ui grid pl-5">
-                                <div class="six wide column" style="padding-bottom: 0;">
+                                <div class="twelve wide column" style="padding-bottom: 0;">
                                     <div class="ui text menu float-ContentLeft my-0" style="min-height: 0;">
+                                        <span class="dashBoardMenuItem cursor-pointer"
+                                            style="cursor: default !important;">USERS
+                                            CREATED IN</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="dashBoardMenuItem cursor-pointer active"
                                             (click)="getUserDetailsReport('14d')"
                                             [ngClass]="{'active': selectedDateRange === '14d' }" appTelemetryInteract
@@ -77,10 +85,14 @@
                     <div class="ui grid" *ngIf="showUserDetailsReport && userDashboardData.length > 0">
                         <div class="twelve wide column">
                             <div class="ui four cards">
-                                <div class="card" *ngFor="let block of userDetailsBlock">
+                                <div class="card" *ngFor="let block of userDetailsBlock"
+                                    [class.active]="block.label === selectedOrg" style="cursor: pointer;height: 85px;"
+                                    (click)="filterUserDashboardData(block.label)">
                                     <div class="content center aligned">
-                                        <div class="meta dashBoardCardText">{{block.label}}</div>
-                                        <h2 class="description dashboardCardSubText">{{block.value}}</h2>
+                                        <h2 class="description dashboardCardSubText" style="line-height: 20px;">
+                                            {{block.value}}</h2>
+                                        <div class="meta dashBoardCardText" style="font-size: 0.9em;">{{block.label}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -88,13 +100,14 @@
                     </div>
                     <div class="ui grid" *ngIf="showUserDetailsReport && userDashboardData.length > 0">
                         <div class="twelve wide column" style="padding-top: 0;">
-                            <p-table #dtUserDetails [value]="userDashboardData" [columns]="userDashboardColumns"
-                                [paginator]="true" [rows]="15" [resizableColumns]="true">
+                            <p-table #dtUserDetails [value]="selectedUserDashboardData" [columns]="userDashboardColumns"
+                                [paginator]="true" [rows]="15" [resizableColumns]="true" dataKey="id">
                                 <ng-template pTemplate="caption">
                                     <div class="ui small left icon input" style="float: left">
                                         <i class="search icon"></i>
                                         <input type="text" pInputText placeholder="Search"
-                                            (input)="dtUserDetails.filterGlobal($event.target.value, 'contains')">
+                                            (input)="dtUserDetails.filterGlobal($event.target.value, 'contains')"
+                                            style="width: 210px;">
                                     </div>
                                     <div class="ui-helper-clearfix">
                                         <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"
@@ -103,17 +116,29 @@
                                 </ng-template>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th *ngFor="let col of columns" pResizableColumn>
+                                        <th style="width: 3em"></th>
+                                        <th *ngFor="let col of columns" pResizableColumn [style.width]="col.width">
                                             {{col.header}}
                                         </th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                                     <tr>
+                                        <td>
+                                            <a href="#" [pRowToggler]="rowData">
+                                                <i
+                                                    [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                            </a>
+                                        </td>
                                         <td *ngFor="let col of columns" class="ui-resizable-column">
-                                            <span *ngIf="col.header != 'Organizations'">{{rowData[col.field]}}</span>
-                                            <span *ngIf="col.header === 'Organizations'">
-                                                <div *ngFor="let obj of rowData?.organisations;let i=index"
+                                            {{rowData[col.field]}}
+                                            <!-- <span *ngIf="col.header != 'Organizations'">{{rowData[col.field]}}</span> -->
+                                            <!-- <span *ngIf="col.header === 'Organizations'">
+                                                <span *ngFor="let obj of rowData?.organisations;let i=index">
+                                                    {{obj.orgName}}
+                                                    <i *ngIf="i != (rowData?.organisations.length -1)">,&nbsp;</i>
+                                                </span> -->
+                                            <!-- <div *ngFor="let obj of rowData?.organisations;let i=index"
                                                     style="padding-bottom:4px">
                                                     <span>
                                                         <b *ngIf="obj.orgName != undefined">{{(obj.orgName)}}</b><b
@@ -122,8 +147,26 @@
                                                     </span>
                                                     <span *ngIf="i != (rowData?.organisations.length -1)"
                                                         class="dashed-border"></span>
+                                                </div> -->
+                                            <!-- </span> -->
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td [attr.colspan]="columns.length + 1">
+                                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                                                <div class="ui-g-12 ui-md-12">
+                                                    <div class="ui-g">
+                                                        <div class="ui-g-12 mb-10"
+                                                            *ngFor="let orgDetail of rowData.organisations"
+                                                            style="font-size: 11px;">
+                                                            <b>{{orgDetail.orgName}}:</b> <span class="role-label"
+                                                                *ngFor="let role of orgDetail.roles">{{role}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </span>
+                                            </div>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -227,7 +270,8 @@
                                 <div class="ui small left icon input" style="float: left">
                                     <i class="search icon"></i>
                                     <input type="text" pInputText placeholder="Search"
-                                        (input)="dtCourseDashboard.filterGlobal($event.target.value, 'contains')">
+                                        (input)="dtCourseDashboard.filterGlobal($event.target.value, 'contains')"
+                                        style="width: 210px;">
                                 </div>
                                 <div class="ui-helper-clearfix">
                                     <button type="button" pButton icon="fa fa-file" iconPos="left" label="Export"

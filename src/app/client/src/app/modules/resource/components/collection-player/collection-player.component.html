@@ -119,7 +119,7 @@
         <app-collection-player-metadata *ngIf=!showPlayer [metaData]="collectionData"></app-collection-player-metadata>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="enableDiscussionFeature === 'true'">
       <div class="eight wide column">
         <app-discussion></app-discussion>
       </div>

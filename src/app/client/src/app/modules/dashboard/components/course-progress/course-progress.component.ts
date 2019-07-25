@@ -29,6 +29,7 @@ export class CourseProgressComponent implements OnInit, OnDestroy {
   public unsubscribe = new Subject<void>();
 
   interactObject: any;
+  enableDiscussionFeature:string;
   /**
 	 * This variable helps to show and hide page loader.
 	 */
@@ -381,6 +382,7 @@ changeDiscussions(){
   * course id and timeperiod
   */
   ngOnInit() {
+    this.enableDiscussionFeature = (<HTMLInputElement>document.getElementById('enableDiscussionFeature')).value;
     this.userDataSubscription = this.user.userData$.pipe(first()).subscribe(userdata => {
       if (userdata && !userdata.err) {
         this.userId = userdata.userProfile.userId;

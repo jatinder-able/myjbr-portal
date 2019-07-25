@@ -80,7 +80,7 @@ export class ContentPlayerComponent implements OnInit {
   createNoteData: INoteData;
 
   showExtContentMsg = false;
-
+  enableDiscussionFeature:string;
   public showRatingModal: Boolean = false;
 
   public feedbackModal: Boolean = false;
@@ -98,6 +98,7 @@ export class ContentPlayerComponent implements OnInit {
    * @memberof ContentPlayerComponent
    */
   ngOnInit() {
+    this.enableDiscussionFeature = (<HTMLInputElement>document.getElementById('enableDiscussionFeature')).value;
     this.activatedRoute.params.subscribe((params) => {
       this.contentId = params.contentId;
       this.contentStatus = params.contentStatus;

@@ -109,7 +109,7 @@
                                         <app-content-player-metadata [contentData]="contentData">
                                         </app-content-player-metadata>
                                     </div>
-                                    <div class="twelve wide column mt-20">
+                                    <div class="twelve wide column mt-20" *ngIf="enableDiscussionFeature === 'true'">
                                         <app-discussion></app-discussion>
                                     </div>
                                 </div>

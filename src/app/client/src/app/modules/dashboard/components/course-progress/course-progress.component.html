@@ -206,7 +206,7 @@
         </div>
       </div>
       <!--Discussion starts-->
-      <div *ngIf="optionChanged">
+      <div *ngIf="optionChanged && enableDiscussionFeature === 'true'">
       <app-discussion *ngIf="showDiscussion"></app-discussion>
       </div>
     </div>

@@ -96,6 +96,7 @@ export class CoursePlayerComponent implements OnInit, OnDestroy {
   public showExtContentMsg = false;
 
   show: Boolean = false;
+  enableDiscussionFeature:string;
   public feedbackModal: Boolean = false;
   public showRatingModal: Boolean = false;
   public telemetryFeedbackObject: IFeedbackObject;
@@ -122,6 +123,7 @@ export class CoursePlayerComponent implements OnInit, OnDestroy {
     this.collectionTreeOptions = this.configService.appConfig.collectionTreeOptions;
   }
   ngOnInit() {
+    this.enableDiscussionFeature = (<HTMLInputElement>document.getElementById('enableDiscussionFeature')).value;
     this.activatedRoute.params.pipe(first(),
       mergeMap(({courseId, batchId, courseStatus}) => {
         this.courseId = courseId;

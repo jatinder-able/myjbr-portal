@@ -91,6 +91,7 @@ export class CollectionPlayerComponent implements OnInit, OnDestroy {
   public collectionData: any;
 
   collectionTreeOptions: ICollectionTreeOptions;
+  enableDiscussionFeature:string;
   /**
    * contains link that can be shared
    */
@@ -117,6 +118,7 @@ export class CollectionPlayerComponent implements OnInit, OnDestroy {
     this.collectionTreeOptions = this.configService.appConfig.collectionTreeOptions;
   }
   ngOnInit() {
+    this.enableDiscussionFeature = (<HTMLInputElement>document.getElementById('enableDiscussionFeature')).value;
     this.getContent();
   }
 

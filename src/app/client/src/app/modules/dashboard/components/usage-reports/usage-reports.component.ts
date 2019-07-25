@@ -33,6 +33,9 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   cols: any = [];
   courseDashboardColumns: any = [];
   batchList: any = [];
+  orgList: any = [];
+  selectedUserDashboardData: any = [];
+  selectedOrg: string = '';
   courseDashboardData: any = [];
   barChartData: any;
   barChartOptions: any;
@@ -57,7 +60,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   fromDate: any;
   toDate: any;
   interactObject: any;
-  userDashboardColumns: { field: string; header: string; }[];
+  userDashboardColumns: { field: string; header: string, width: string; }[];
   userDashboardData: any = [];
   userDetailsBlock: any = [];
   trainingDetailsBlock: any = [];
@@ -327,9 +330,9 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     this.usageService.getOrgDetails(data).subscribe(response => {
       if (_.get(response, 'responseCode') === 'OK') {
         if (response.result.response.content.length > 0) {
-          let responseData = response.result.response.content;
-          let rootOrgs = _.filter(_.cloneDeep(responseData), { isRootOrg: true });
-          let subOrgs = _.filter(_.cloneDeep(responseData), { isRootOrg: false });
+          this.orgList = response.result.response.content;
+          let rootOrgs = _.filter(_.cloneDeep(this.orgList), { isRootOrg: true });
+          let subOrgs = _.filter(_.cloneDeep(this.orgList), { isRootOrg: false });
           let tempRootOrgs: any;
           let tempSubOrgs: any;
           let self = this;
@@ -376,16 +379,22 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
       if (_.get(response, 'responseCode') === 'OK') {
         if (response.result.response.content.length > 0) {
           var self = this;
-          _.map(response.result.response.content, function (parentObj) {
+          this.userDashboardData = response.result.response.content;
+          _.map(this.userDashboardData, function (parentObj) {
             parentObj.fullName = !_.isEmpty(parentObj.firstName) ? parentObj.firstName : '';
             parentObj.fullName += !_.isEmpty(parentObj.lastName) ? ' ' + parentObj.lastName : '';
             parentObj.createdDate = self.datePipe.transform(parentObj.createdDate, 'dd-MMM-yyyy');
             parentObj.statusName = (parentObj.status === 1) ? 'Active' : 'Inactive';
+            parentObj.organizationList = [];
             _.map(parentObj.organisations, function (childObj) {
               childObj.userRoles = _.join(childObj.roles, ' | ');
+              childObj.orgName = _.isEmpty(childObj.orgName) ? _.get(_.find(self.orgList, { identifier: childObj.organisationId }), 'orgName') : childObj.orgName;
+              parentObj.organizationList.push(childObj.orgName);
             });
+            parentObj.organizationArray = parentObj.organizationList;
+            parentObj.organizationList = _.toString(parentObj.organizationList);
           });
-          this.userDashboardData = response.result.response.content;
+          this.selectedUserDashboardData = _.cloneDeep(this.userDashboardData);
           this.initializeUserDetailsColumn();
           this.getUserDetailsBlock();
         }
@@ -431,12 +440,12 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   }
   initializeUserDetailsColumn() {
     this.userDashboardColumns = [
-      { field: 'fullName', header: 'Name' },
-      { field: 'id', header: 'User ID' },
-      { field: 'organisations', header: 'Organizations' },
-      { field: 'createdDate', header: 'CreationDate' },
-      { field: 'statusName', header: 'Status' },
-      { field: 'lastLoginTime', header: 'LastLoginTime' }
+      { field: 'fullName', header: 'Name', width: '175px' },
+      { field: 'id', header: 'User ID', width: '249px' },
+      { field: 'organizationList', header: 'Organizations', width: '311px' },
+      { field: 'createdDate', header: 'CreationDate', width: '92px' },
+      { field: 'statusName', header: 'Status', width: '52px' },
+      { field: 'lastLoginTime', header: 'LastLoginTime', width: '172px' }
     ]
   }
   filterEnrolledData(statusName) {
@@ -446,6 +455,25 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     } else {
       this.selectedEnrolledCourseData = _.cloneDeep(this.enrolledCourseData);
       this.selectedStatus = '';
+    }
+  }
+  filterUserDashboardData(orgName) {
+    if (this.selectedOrg != orgName) {
+      if (orgName != 'Total Users') {
+
+        this.selectedOrg = orgName;
+        this.selectedUserDashboardData = _.filter(_.cloneDeep(this.userDashboardData), function (obj) {
+          if (_.indexOf(obj.organizationArray, orgName) > -1) {
+            return obj;
+          }
+        });
+      } else {
+        this.selectedOrg = orgName;
+        this.selectedUserDashboardData = _.cloneDeep(this.userDashboardData);
+      }
+    } else {
+      this.selectedUserDashboardData = _.cloneDeep(this.userDashboardData);
+      this.selectedOrg = '';
     }
   }
   populateCourseDashboardData(batch) {

@@ -173,8 +173,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui section divider"></div>
-                <app-discussion></app-discussion>
+                <div *ngIf="enableDiscussionFeature === 'true'" class="ui section divider"></div>
+                <app-discussion *ngIf="enableDiscussionFeature === 'true'"></app-discussion>
                 <div class="two wide column"></div>
                 <div class="ui grid">
                     <div class="row">
