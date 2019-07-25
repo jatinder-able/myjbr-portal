@@ -2,7 +2,7 @@
 body {
   background: #F6F6F6;
   color: #444;
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
 }
 
 a {
@@ -29,7 +29,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-weight: 400;
   margin: 0 0 40px 0;
   padding: 0;
@@ -131,7 +131,7 @@ h6 {
   margin: 0;
   padding: 0;
   line-height: 1;
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-weight: 700;
 }
 
@@ -215,7 +215,7 @@ h6 {
 
 #intro .intro-content .btn-get-started,
 #intro .intro-content .btn-projects {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -361,7 +361,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192736', end
   text-decoration: none;
   display: inline-block;
   color: #555;
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-weight: 700;
   font-size: 14px;
   outline: none;
@@ -571,7 +571,7 @@ content: '';
   color: #0c2e8a;
   font-weight: 700;
   font-size: 26px;
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
       /*margin-top: 83px;*/
 }
 
@@ -876,7 +876,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 #call-to-action .cta-btn {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-weight: 700;
   font-size: 16px;
   letter-spacing: 1px;
@@ -1365,7 +1365,7 @@ button.btn.btn-outline-success.my-2.my-sm-0.search {
     display: inline-flex;
 }
 input.form-control.mr-sm-2 {
-    height: 24px;
+    height: 44px;
     border-radius: 0;
     border: 1px solid #F0AE4C;
 }
@@ -2218,7 +2218,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b35d462e', e
 
 #innovate-banner .innovate-content .btn-get-started,
 #innovate-banner .innovate-content .btn-projects {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -2347,7 +2347,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3032317', e
 
 #learn-banner .learn-content .btn-get-started,
 #learn-banner .learn-content .btn-projects {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -2490,7 +2490,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 
 #comming .comming-content .btn-get-started,
 #comming .comming-content .btn-projects {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif; 
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -2744,7 +2744,7 @@ ul.list-unstyled li {
   max-width: 100%;
 }
 .resource-meta {
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif;
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 12px;
   color: #666666;
   display: flex;
@@ -2797,14 +2797,14 @@ ul.list-unstyled li {
   border: 0;
   font-weight: bold;
   color: #a20303 !important;
-  font-family: "Helvetica_Neue_Web_Bold",Arial,Sans-Serif;
+  font-family: Arial,Sans-Serif;
 }
 .resource-creator {
   font-size: 1rem;
   height: 1.5em;
   margin-top: 0.5em;
   color: #cccccc;
-  font-family: "Helvetica_Neue_Web_Regular",Arial,Sans-Serif;
+  font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Malayalam", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Oriya", "Noto Nastaliq Urdu", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 .py-2 {
   padding-top: 2px !important;
@@ -2814,11 +2814,11 @@ ul.list-unstyled li {
   display: flex !important;
 }
 .flex-ai-center {
-  font-family: "ITC_Charter_Regular",Georgia,Serif;
+  
   align-items: center !important;
 }
 .pageSection-heading {
-  font-family: "ITC_Charter_Regular",Georgia,Serif;
+  
   font-size: 1.143rem !important;
   display: inline;
   margin-right: 5px !important;
@@ -2840,7 +2840,7 @@ ul.list-unstyled li {
   font-weight: 700;
   border: 0 solid transparent;
   transition: background .1s ease;
-  font-family: "ITC_Charter_Regular",Georgia,Serif;
+  
   letter-spacing: 0.2px;
   font-size: 12px;
   border-radius: 25px;
@@ -3179,3 +3179,17 @@ span.lesson-pin-last-updated.changeformat, i.fa.fa-history {
   padding-right: 10px;
 }
 /* Content Box Code Ends Here */
+
+/* New Search Bar Code Starts Here */
+.btn.btn-outline-secondary,.form-control.border-secondary.py-2 {
+  border:1px solid #a32020 !important;
+  /* background-color: #e1e1e1; */
+  height:32px;
+}
+.btn.btn-outline-secondary:hover {
+  background-color: #a32020 !important;
+}
+.form-control.border-secondary.py-2 {
+  width:450px;
+}
+/* New Search Bar Code Ends Here */

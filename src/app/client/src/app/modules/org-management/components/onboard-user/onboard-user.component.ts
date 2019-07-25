@@ -164,7 +164,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       phonenumber: ['', [Validators.required]],
       username: ['', null],
-      password: ['', null]
+      // password: ['', null]
     });
   }
   initializeAssignUserForm() {
@@ -192,7 +192,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
           "email": this.createUserForm.value.email,
           "firstName": this.createUserForm.value.firstName,
           "lastName": this.createUserForm.value.lastName,
-          "password": _.isEmpty(_.trim(this.createUserForm.value.password)) ? 'passw0rd' : this.createUserForm.value.password,
+          // "password": _.isEmpty(_.trim(this.createUserForm.value.password)) ? 'passw0rd' : this.createUserForm.value.password,
           "phone": this.createUserForm.value.phonenumber,
           "channel": this.userProfile.channel,
           "userName": this.createUserForm.value.username,
