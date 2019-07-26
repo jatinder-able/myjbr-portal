@@ -58,7 +58,7 @@ export class OrgManagementService {
  */
   public createUser(data): Observable<ServerResponse> {
     const httpOptions: RequestParam = {
-      url: this.configService.urlConFig.URLS.USER.SIGNUP,
+      url: this.configService.urlConFig.URLS.USER.CREATE_V2,
       data: data
     };
     return this.learnerService.post(httpOptions);
