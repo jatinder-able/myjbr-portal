@@ -9,6 +9,7 @@ import { UserService } from '@sunbird/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
+
 /**
  * This component helps to upload bulk users data (csv file)
  *
@@ -19,6 +20,8 @@ import * as _ from 'lodash';
   templateUrl: './user-upload.component.html'
 })
 export class UserUploadComponent implements OnInit, OnDestroy {
+  organizationsList: any = [];
+  userProfile: any;
   @ViewChild('inputbtn') inputbtn: ElementRef;
   @ViewChild('modal') modal;
   /**
@@ -86,6 +89,7 @@ export class UserUploadComponent implements OnInit, OnDestroy {
   telemetryInteractObject: IInteractEventObject;
   public unsubscribe$ = new Subject<void>();
   private uploadUserRefLink: string;
+  showOrgError: boolean = false;
   /**
 * Constructor to create injected service(s) object
 *
@@ -113,6 +117,12 @@ export class UserUploadComponent implements OnInit, OnDestroy {
  * also defines array of instructions to be displayed
  */
   ngOnInit() {
+    this.userService.userData$.subscribe(userdata => {
+      if (userdata && !userdata.err) {
+        this.userProfile = userdata.userProfile;
+      }
+    });
+    this.getOrgList();
     document.body.classList.add('no-scroll'); // This is a workaround  we need to remove it when library add support to remove body scroll
     this.activatedRoute.data.subscribe(data => {
       if (data.redirectUrl) {
@@ -124,16 +134,17 @@ export class UserUploadComponent implements OnInit, OnDestroy {
     this.uploadUserForm = this.sbFormBuilder.group({
       provider: ['', null],
       externalId: ['', null],
-      organisationId: ['', null]
+      organisationId: [this.userProfile.rootOrgId],
+      orgId: ['', null]
     });
     this.userUploadInstructions = [
-      { instructions: this.resourceService.frmelmnts.instn.t0070},
+      { instructions: this.resourceService.frmelmnts.instn.t0070 },
       {
         instructions: this.resourceService.frmelmnts.instn.t0071,
         subinstructions: [
           { instructions: this.resourceService.frmelmnts.instn.t0072 },
           { instructions: this.resourceService.frmelmnts.instn.t0073 },
-          { instructions: this.resourceService.frmelmnts.instn.t0074 }
+          // { instructions: this.resourceService.frmelmnts.instn.t0074 }
         ]
       }];
     this.showLoader = false;
@@ -165,12 +176,37 @@ export class UserUploadComponent implements OnInit, OnDestroy {
   public downloadSampleCSV() {
     const options = {
       fieldSeparator: ',',
-      quoteStrings: '"',
+      // quoteStrings: '"',
       decimalseparator: '.',
       showLabels: true,
-      useBom: false
+      useBom: false,
+      headers: ['firstName', 'phone', 'email', 'orgId', 'userType', 'roles'],
     };
-    const csv = new Angular2Csv(this.config.appConfig.ADMIN_UPLOAD.SAMPLE_USER_CSV, 'Sample_Users', options);
+    const csvData = [{
+      'firstName': '',
+      'phone': '',
+      'email': '',
+      'orgId': '0127667799398154241',
+      'userType': '',
+      'roles': ''
+    }];
+    if (!_.isEmpty(this.uploadUserForm.value.orgId)) {
+      const csv = new Angular2Csv(csvData, 'Sample_Users', options);
+    } else {
+      this.showOrgError = true;
+    }
+  }
+  validateOrg() {
+    if (!_.isEmpty(this.uploadUserForm.value.orgId)) {
+      this.showOrgError = false;
+    }
+  }
+  getOrgList() {
+    this.organizationsList = _.filter(_.reject(this.userProfile.organisations, { 'organisationId': this.userProfile.rootOrgId }), function (obj) {
+      if (_.indexOf(_.get(obj, 'roles'), 'ORG_ADMIN') > -1) {
+        return obj;
+      }
+    });
   }
   /**
   * This method helps to call uploadOrg method to upload a csv file
@@ -200,19 +236,19 @@ export class UserUploadComponent implements OnInit, OnDestroy {
       const fd = formData;
       this.fileName = file[0].name;
       this.orgManagementService.bulkUserUpload(fd).pipe(
-      takeUntil(this.unsubscribe$))
-      .subscribe(
-        (apiResponse: ServerResponse) => {
-          this.showLoader = false;
-          this.processId = apiResponse.result.processId;
-          this.toasterService.success(this.resourceService.messages.smsg.m0030);
-        },
-        err => {
-          this.showLoader = false;
-          const errorMsg =  _.get(err, 'error.params.errmsg') ? _.get(err, 'error.params.errmsg').split(/\../).join('.<br/>') :
-           this.resourceService.messages.fmsg.m0051;
-          this.toasterService.error(errorMsg);
-        });
+        takeUntil(this.unsubscribe$))
+        .subscribe(
+          (apiResponse: ServerResponse) => {
+            this.showLoader = false;
+            this.processId = apiResponse.result.processId;
+            this.toasterService.success(this.resourceService.messages.smsg.m0030);
+          },
+          err => {
+            this.showLoader = false;
+            const errorMsg = _.get(err, 'error.params.errmsg') ? _.get(err, 'error.params.errmsg').split(/\../).join('.<br/>') :
+              this.resourceService.messages.fmsg.m0051;
+            this.toasterService.error(errorMsg);
+          });
     } else if (file[0] && !(file[0].name.match(/.(csv)$/i))) {
       this.showLoader = false;
       this.toasterService.error(this.resourceService.messages.stmsg.m0080);

@@ -1,22 +1,25 @@
 <div>
-  <div class="twelve wide column pt-0 pb-15">
+  <div class="twelve wide column pt-0 pb-15 menu-label mb-15">
     <!-- <a class="ui cursor-pointer m-responsive-p-header-fl" routerLink="/orgUserManagement/bulkUpload/organizationUpload"> -->
     <a class="ui cursor-pointer m-responsive-p-header-fl">
       {{resourceService?.frmelmnts?.instn?.t0015}}
     </a>
   </div>
-  <div class="twelve wide column pt-0 pb-15">
-    <a class="ui cursor-pointer m-responsive-p-header-fl" routerLink="/orgUserManagement/bulkUpload/userUpload">
+  <div class="twelve wide column pt-0 pb-15 menu-label mb-15" [ngClass]="{'active': selectedMenu === 'menu2' }"
+    (click)="chooseMenu('menu2','/orgUserManagement/bulkUpload/userUpload')">
+    <a class="ui cursor-pointer m-responsive-p-header-fl">
       {{resourceService?.frmelmnts?.instn?.t0016}}
     </a>
   </div>
-  <div class="twelve wide column pt-0 pb-15">
-    <a class="ui cursor-pointer m-responsive-p-header-fl" routerLink="/orgUserManagement/bulkUpload/checkStatus">
+  <div class="twelve wide column pt-0 pb-15 menu-label mb-15" [ngClass]="{'active': selectedMenu === 'menu3' }"
+    (click)="chooseMenu('menu3','/orgUserManagement/bulkUpload/checkStatus')">
+    <a class="ui cursor-pointer m-responsive-p-header-fl">
       {{resourceService?.frmelmnts?.lbl?.chkuploadsts}}
     </a>
   </div>
-  <div class="twelve wide column pt-0 pb-15">
-    <a class="ui cursor-pointer m-responsive-p-header-fl" routerLink="/orgUserManagement/bulkUpload/onboardUser">
+  <div class="twelve wide column pt-0 pb-15 menu-label mb-15" [ngClass]="{'active': selectedMenu === 'menu4' }"
+    (click)="chooseMenu('menu4','/orgUserManagement/bulkUpload/onboardUser')">
+    <a class="ui cursor-pointer m-responsive-p-header-fl">
       {{resourceService?.frmelmnts?.lbl?.onboardUser}}
     </a>
   </div>

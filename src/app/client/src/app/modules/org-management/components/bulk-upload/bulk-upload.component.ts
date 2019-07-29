@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ResourceService, ToasterService, ConfigService } from '@sunbird/shared';
 import { PermissionService } from '@sunbird/core';
+import { Router } from '@angular/router';
 /**
 * This component displays the upload links and status check link which is used to upload csv file
 *  and check the status of uploaded file
 */
 @Component({
   selector: 'app-bulk-upload',
-  templateUrl: './bulk-upload.component.html'
+  templateUrl: './bulk-upload.component.html',
+  styleUrls: ['./bulk-upload.component.scss'],
 })
 export class BulkUploadComponent implements OnInit {
+  selectedMenu: string;
   /**
  * reference of permissionService service.
  */
@@ -33,7 +36,7 @@ export class BulkUploadComponent implements OnInit {
  *
  * @param {ResourceService} resourceService To call resource service which helps to use language constant
  */
-  constructor(permissionService: PermissionService, config: ConfigService, resourceService: ResourceService) {
+  constructor(permissionService: PermissionService, config: ConfigService, resourceService: ResourceService, public router: Router) {
     this.resourceService = resourceService;
     this.config = config;
     this.permissionService = permissionService;
@@ -43,5 +46,9 @@ export class BulkUploadComponent implements OnInit {
  */
   ngOnInit() {
     this.admin = this.config.rolesConfig.headerDropdownRoles.adminDashboard;
+  }
+  chooseMenu(selectedMenu, url) {
+    this.selectedMenu = selectedMenu;
+    this.router.navigate([url]);
   }
 }
