@@ -8,16 +8,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Contact | Able Guide</title>
+  <title>Architecture | Able Guide</title>
 
-  <meta name="description" content="Get in touch with the Markdown Guide's maintainer.">
+  <meta name="description" content="An overview of next-generation, societal learning platform.">
   <meta content="Jayand Bharati and contributors" name=author>
   <meta name="keywords" content="Able, Able language, Able syntax, Able guide, Able cheatsheet, Able help, Able tutorial">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   
-  <base href="https://pwcdemoinstance.ddns.net/support/docs/" >
+  <base href="/" >
   
 
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 
 </head>
 
-  <body data-spy="scroll" data-target="#toc" data-offset="70">
+  <body data-spy="scroll" data-target="#toc">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mdg-nav">
   <div class="container">
     <a class="navbar-brand" href="/" style="margin-top: 2px; margin-bottom: 3px">
@@ -47,7 +47,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="margin-top: 2px">
       <div class="navbar-nav">
-        <a class="nav-item nav-link " href="architecture/">Architecture</a>
+        <a class="nav-item nav-link active" href="architecture/">Architecture</a>
         
       </div>
     </div>
@@ -58,34 +58,27 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1 class="no-anchor" data-toc-skip>Contact</h1>
-        <p>Get in touch with the Markdown Guide's maintainer.</p>
+        <h1 class="no-anchor" data-toc-skip>Architecture</h1>
+        <p>An overview of next-generation, societal learning platform.</p>
       </div>
     </div>
     <div class="container">
       <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12 col-sm-9">
-          <form name="contact" method="POST" netlify="">
-  <div class="form-group">
-    <label for="email"><h5 class="no-anchor">Email address</h5></label>
-    <input type="email" class="form-control form-control-lg" name="email" id="email" aria-describedby="emailHelp" />
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="message"><h5 class="no-anchor">Message</h5></label>
-    <textarea class="form-control form-control-lg" name="message" id="message" rows="3" style="height:200px;"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <div class="col-xs-12 col-sm-12 col-md-9">
+          <h2 id="our-architecture">Our Architecture</h2>
+
+<p>Able is a next-generation, societal learning platform built for cloud/mobile native environments and meant to address teaching and learning use cases.It is architected to enhance on scalibility and extensibility.Multiple organizations can exist independently as tenants on the platform and users of these organizations can access the platform via mobile devices, tablets, laptops and desktops.</p>
+
+<div style="text-align:center; margin:30px 0">
+  <img src="assets/images/arch_overview.png" class="img-fluid" alt="Able Architecture" />
+</div>
+
+<p>The platform is developed based on specific architectural design principles that ensures openness, interoperability and plug and play options. In addition, the architecture allows for contributions and shared access to common components such as frameworks, models and content.</p>
+
 
         </div>
-        <div class="col-xs-6 col-sm-3 hidden-xs" id="sidebar">
-          <div class="card" style="margin-top: 30px">
-            <h6 class="card-header no-anchor" data-toc-skip>Stay Informed</h6>
-            <div class="card-body">
-              <p class="card-text" style="font-size: 15px; font-weight: 400"><a href="https://tinyletter.com/markdownguide">Subscribe via email</a> to get priority notifications about the <em> Guide</em>.</p>
-            </div>
-          </div>
+        <div class="col-md-3 d-none d-md-block" id="sidebar">
+          <nav id="toc" class="sticky-top" data-toggle="toc" style="z-index:1"></nav>
         </div>
       </div>
     </div>

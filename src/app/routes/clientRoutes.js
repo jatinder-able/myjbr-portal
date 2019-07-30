@@ -27,8 +27,6 @@ module.exports = (app, keycloak) => {
     app.use(express.static(path.join(__dirname, '../tenant', defaultTenant)))
   }
 
-  app.use(express.static(path.join(__dirname, '../support', 'docs')))
-
   app.get(['/dist/*.js', '/dist/*.css', '/dist/*.ttf', '/dist/*.woff2', '/dist/*.woff', '/dist/*.eot', '/dist/*.svg'],
     compression(), (req, res, next) => {
       if (process.env.sunbird_environment.toLowerCase() !== 'local') {
