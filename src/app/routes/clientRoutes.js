@@ -47,7 +47,7 @@ module.exports = (app, keycloak) => {
   app.all(['/', '/get', '/get/dial/:dialCode', '/explore',
     '/explore/*', '/:slug/explore', '/:slug/explore/*', '/explore-course',
     '/explore-course/*', '/:slug/explore-course', '/:slug/explore-course/*',
-    '/:slug/signup', '/signup', '/:slug/sign-in/*', '/sign-in/*','/nuis','/lms','/innovate','/smartgov','/iudx','/aboutus','/comingsoon'], indexPage)
+    '/:slug/signup', '/signup', '/:slug/sign-in/*', '/sign-in/*','/nuis','/lms','/innovate','/smartgov','/iudx','/aboutus','/comingsoon','/support', '/support/*'], indexPage)
 
   app.all('/:slug/get', (req, res) => res.redirect('/get'))
 
