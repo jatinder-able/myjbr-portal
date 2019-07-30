@@ -27,6 +27,8 @@ module.exports = (app, keycloak) => {
     app.use(express.static(path.join(__dirname, '../tenant', defaultTenant)))
   }
 
+  app.use(express.static(path.join(__dirname, '../support', 'docs')))
+
   app.get(['/dist/*.js', '/dist/*.css', '/dist/*.ttf', '/dist/*.woff2', '/dist/*.woff', '/dist/*.eot', '/dist/*.svg'],
     compression(), (req, res, next) => {
       if (process.env.sunbird_environment.toLowerCase() !== 'local') {
@@ -47,7 +49,7 @@ module.exports = (app, keycloak) => {
   app.all(['/', '/get', '/get/dial/:dialCode', '/explore',
     '/explore/*', '/:slug/explore', '/:slug/explore/*', '/explore-course',
     '/explore-course/*', '/:slug/explore-course', '/:slug/explore-course/*',
-    '/:slug/signup', '/signup', '/:slug/sign-in/*', '/sign-in/*','/nuis','/lms','/innovate','/smartgov','/iudx','/aboutus','/comingsoon','/support', '/support/*'], indexPage)
+    '/:slug/signup', '/signup', '/:slug/sign-in/*', '/sign-in/*','/nuis','/lms','/innovate','/smartgov','/iudx','/aboutus','/comingsoon'], indexPage)
 
   app.all('/:slug/get', (req, res) => res.redirect('/get'))
 
