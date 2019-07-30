@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:4000/about/</loc>
+<lastmod>2019-07-29T16:28:09+05:30</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/architecture/</loc>
+<lastmod>2019-07-29T18:28:14+05:30</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/contact/</loc>
+<lastmod>2019-07-29T16:28:09+05:30</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+<lastmod>2019-07-30T12:32:18+05:30</lastmod>
+</url>
+</urlset>
