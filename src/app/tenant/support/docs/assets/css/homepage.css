@@ -110,3 +110,21 @@ h1, h2, h3, h4, h5, h6 {
   color: #99979c;
   background-color: #dbdbdb;
 }
+
+@media (min-width: 768px) {
+  .position-right {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .position-right {
+    margin-left: 21%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .position-right {
+    margin-left: 33%;
+  }
+}

@@ -117,6 +117,24 @@ nav[data-toggle='toc'] .nav > .active:focus > a {
   }
 }
 
+@media (min-width: 768px) {
+  .position-right {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .position-right {
+    margin-left: 21%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .position-right {
+    margin-left: 33%;
+  }
+}
+
 .footnotes {
   margin-top: 40px;
   padding-top: 20px;
