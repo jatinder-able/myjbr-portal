@@ -83,8 +83,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
       if (params === 'success') {
         this.allRoles = this.permissionService.allRoles;
       }
+      let rolesArray = ["COURSE_ADMIN", "COURSE_MENTOR", "CONTENT_REVIEWER", "COURSE_CREATOR", "ANNOUNCEMENT_SENDER", "CONTENT_CREATOR", "PUBLIC"];
       this.allRoles = _.filter(this.allRoles, (role) => {
-        return role.role !== 'ORG_ADMIN' && role.role !== 'SYSTEM_ADMINISTRATION' && role.role !== 'ADMIN';
+        return _.indexOf(rolesArray, role.role) > -1;
       });
     });
     _.remove(this.allRoles, { role: 'PUBLIC' });
@@ -101,7 +102,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
         const subOrgDetails = _.filter(this.userDetails.organisations, (org) => {
           return org.organisationId !== this.userDetails.rootOrgId;
         });
-        if (!_.isEmpty(rootOrgDetails)) {this.selectedOrgUserRoles = rootOrgDetails[0].roles; }
+        if (!_.isEmpty(rootOrgDetails)) { this.selectedOrgUserRoles = rootOrgDetails[0].roles; }
         if (!_.isEmpty(subOrgDetails)) {
           const orgs = _.sortBy(subOrgDetails, ['orgjoindate']);
           this.selectedSchoolId = orgs[0].organisationId;
@@ -237,9 +238,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
     // create school and roles data
     const roles = !_.isEmpty(this.userDetailsForm.value.role) ? this.userDetailsForm.value.role : ['PUBLIC'];
     const orgArray = [];
-    orgArray.push({organisationId: this.userDetails.rootOrgId, roles: roles});
+    orgArray.push({ organisationId: this.userDetails.rootOrgId, roles: roles });
     if (this.userDetailsForm.value.school) {
-      orgArray.push({organisationId: this.userDetailsForm.value.school, roles: roles});
+      orgArray.push({ organisationId: this.userDetailsForm.value.school, roles: roles });
     }
 
     // create location data
@@ -249,16 +250,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
     const data = { userId: this.userId, locationCodes: this.locationCodes, organisations: orgArray };
     this.profileService.updatePrivateProfile(data)
-    .subscribe(
-      (apiResponse: ServerResponse) => {
-        this.toasterService.success(this.resourceService.messages.smsg.m0049);
-        this.redirect();
-      },
-      err => {
-        this.toasterService.error(this.resourceService.messages.emsg.m0020);
-        this.redirect();
-      }
-    );
+      .subscribe(
+        (apiResponse: ServerResponse) => {
+          this.toasterService.success(this.resourceService.messages.smsg.m0049);
+          this.redirect();
+        },
+        err => {
+          this.toasterService.error(this.resourceService.messages.emsg.m0020);
+          this.redirect();
+        }
+      );
   }
 
   redirect(): void {

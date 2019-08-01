@@ -1,5 +1,5 @@
 
-import {combineLatest as observableCombineLatest,  Observable } from 'rxjs';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
 import { ServerResponse, PaginationService, ResourceService, ConfigService, ToasterService, INoResultMessage } from '@sunbird/shared';
 import { SearchService, UserService, PermissionService } from '@sunbird/core';
 import { Component, OnInit, NgZone } from '@angular/core';
@@ -334,6 +334,26 @@ export class UserSearchComponent implements OnInit {
         }
       });
     });
+  }
+  blockUnblockUser(userId, action) {
+    let url = (action === 'block') ? this.config.urlConFig.URLS.ADMIN.DELETE_USER : this.config.urlConFig.URLS.ADMIN.UNBLOCK_USER;
+    const option = {
+      userId: userId,
+      url: url
+    };
+    let successMsg = (action === 'block') ? "User blocked successfully" : "User unblocked successfully";
+    this.userSearchService.blockUnblockUser(option).subscribe(
+      (apiResponse: ServerResponse) => {
+        this.toasterService.success(successMsg);
+        this.showLoader = true;
+        setTimeout(() => {
+          this.populateUserSearch();
+        }, 1000);
+      },
+      err => {
+        this.toasterService.error(this.resourceService.messages.emsg.m0005);
+      }
+    );
   }
   setInteractEventData() {
     this.closeIntractEdata = {

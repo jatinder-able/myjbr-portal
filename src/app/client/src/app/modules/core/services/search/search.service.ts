@@ -184,7 +184,8 @@ export class SearchService {
           limit: requestParam.limit,
           offset: (requestParam.pageNumber - 1) * requestParam.limit,
           query: requestParam.query,
-          softConstraints: { badgeAssertions: 1 }
+          softConstraints: { badgeAssertions: 1 },
+          sort_by: {updatedDate: "desc"}
         }
       }
     };

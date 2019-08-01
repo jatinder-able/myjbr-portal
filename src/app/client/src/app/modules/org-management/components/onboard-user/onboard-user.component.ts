@@ -151,7 +151,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       if (params === 'success') {
         this.allRoles = this.permissionService.allRoles;
       }
-      let rolesArray = ["COURSE_ADMIN", "COURSE_MENTOR", "CONTENT_REVIEWER", "COURSE_CREATOR", "ANNOUNCEMENT_SENDER", "CONTENT_CREATOR", "PUBLIC"]
+      let rolesArray = ["COURSE_ADMIN", "COURSE_MENTOR", "CONTENT_REVIEWER", "COURSE_CREATOR", "ANNOUNCEMENT_SENDER", "CONTENT_CREATOR", "PUBLIC"];
       this.allRoles = _.filter(this.allRoles, (role) => {
         return _.indexOf(rolesArray, role.role) > -1;
       });
@@ -164,6 +164,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       phonenumber: ['', [Validators.required]],
       username: ['', null],
+      organisationId: ['', null]
       // password: ['', null]
     });
   }
@@ -187,7 +188,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
     if (this.createUserForm.invalid) {
       return;
     } else {
-      const data = {
+      let data = {
         "request": {
           "email": this.createUserForm.value.email,
           "firstName": this.createUserForm.value.firstName,
@@ -199,6 +200,9 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
           "phoneVerified": true,
           "emailVerified": true
         }
+      }
+      if (!_.isEmpty(this.createUserForm.value.organisationId)) {
+        _.assign(data.request, { "organisationId": this.createUserForm.value.organisationId });
       }
       this.orgManagementService.createUser(data).subscribe(response => {
         if (_.get(response, 'responseCode') === 'OK') {

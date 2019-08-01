@@ -66,6 +66,19 @@
                     <input formControlName="username" type="text" placeholder="User Name">
                   </div>
                 </div>
+                <div class="six wide column">
+                  <div class="field">
+                    <label>Member Organization</label>
+                    <div class="field">
+                      <sui-select [isSearchable]="false" class="selection" formControlName="organisationId"
+                        [options]="organizationsList" labelField="orgName" valueField="organisationId"
+                        name="organisationId" placeholder="Select Organization">
+                        <sui-select-option *ngFor="let orgDetail of organizationsList" [value]="orgDetail">
+                        </sui-select-option>
+                      </sui-select>
+                    </div>
+                  </div>
+                </div>
                 <!-- <div class="six wide column">
                   <div class="field">
                     <label>{{resourceService?.frmelmnts?.lbl?.password}}</label>

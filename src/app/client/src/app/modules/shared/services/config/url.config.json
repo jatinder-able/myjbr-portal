@@ -121,6 +121,7 @@
         "STATUS": "data/v1/upload/status"
       },
       "DELETE_USER": "user/v1/block",
+      "UNBLOCK_USER": "user/v1/unblock",
       "UPDATE_USER_ORG_ROLES": "user/v1/role/assign"
     },
     "BADGE": {

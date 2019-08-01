@@ -339,13 +339,15 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
           _.map(rootOrgs, function (parentObj, parentIndex) {
             tempRootOrgs = {};
             tempRootOrgs.name = _.get(parentObj, 'orgName');
-            tempRootOrgs.designation = '(' + _.get(parentObj, 'identifier') + ')';
+            tempRootOrgs.designation = '';
+            // tempRootOrgs.designation = '(' + _.get(parentObj, 'identifier') + ')';
             tempRootOrgs.img = "";
             tempRootOrgs.subordinates = [];
             _.map(_.filter(_.cloneDeep(subOrgs), { rootOrgId: _.get(parentObj, 'rootOrgId') }), function (childObj) {
               tempSubOrgs = {};
               tempSubOrgs.name = _.get(childObj, 'orgName');
-              tempSubOrgs.designation = '(' + _.get(childObj, 'identifier') + ')';
+              tempSubOrgs.designation = '';
+              // tempSubOrgs.designation = '(' + _.get(childObj, 'identifier') + ')';
               tempSubOrgs.img = "";
               tempSubOrgs.subordinates = [];
               tempRootOrgs.subordinates.push(tempSubOrgs);

@@ -1,5 +1,5 @@
 
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable, EventEmitter } from '@angular/core';
 import { ServerResponse, ConfigService } from '@sunbird/shared';
 import { LearnerService } from '@sunbird/core';
@@ -23,9 +23,9 @@ export class UserSearchService {
 
   userDetailsObject: any;
 
-    /**
-   * To listen event
-   */
+  /**
+ * To listen event
+ */
   userDeleteEvent = new EventEmitter();
 
 
@@ -35,7 +35,7 @@ export class UserSearchService {
   public config: ConfigService;
 
   constructor(private learnerService: LearnerService,
-  config: ConfigService) {
+    config: ConfigService) {
     this.config = config;
   }
 
@@ -55,16 +55,29 @@ export class UserSearchService {
     }));
   }
 
+  blockUnblockUser(requestParam) {
+    const option = {
+      url: requestParam.url,
+      data: {
+        'request': {
+          'userId': requestParam.userId
+        }
+      }
+    };
+    return this.learnerService.post(option);
+  }
+
+
   updateRoles(requestParam) {
     const option = {
       url: this.config.urlConFig.URLS.ADMIN.UPDATE_USER_ORG_ROLES,
       data: {
-          'request': {
-            'userId': requestParam.userId,
-            'organisationId': requestParam.orgId,
-            'roles': requestParam.roles
-          }
+        'request': {
+          'userId': requestParam.userId,
+          'organisationId': requestParam.orgId,
+          'roles': requestParam.roles
         }
+      }
     };
 
     return this.learnerService.post(option);

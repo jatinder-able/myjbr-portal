@@ -5,7 +5,7 @@
       <div>
         <div class=" ui clearing segment content-player-header search-content-header" *ngIf="!showLoader && !noResult">
           <div class="ui left floated header  ">
-            <p class="serch-allresult">{{resourceService.frmelmnts?.lbl?.showingResults}} 
+            <p class="serch-allresult">{{resourceService.frmelmnts?.lbl?.showingResults}}
               <span class="lower-case" *ngIf="this.queryParams.key">
                 "{{resourceService.frmelmnts?.lbl?.forSearch  | interpolate:'{searchString}':this.queryParams?.key}}"
               </span>
@@ -17,19 +17,23 @@
           </h5> -->
         </div>
 
-        <div class=" ui clearing segment" *ngIf="!showLoader && !noResult && config.appConfig.SEARCH.USER.DOWNLOAD_BUTTON_VISIBILITY === 'TRUE'">
+        <div class=" ui clearing segment"
+          *ngIf="!showLoader && !noResult && config.appConfig.SEARCH.USER.DOWNLOAD_BUTTON_VISIBILITY === 'TRUE'">
           <div class="ui right floated primary button" (click)="downloadUser();">
             {{resourceService.frmelmnts?.btn?.download}}
           </div>
         </div>
 
         <div>
-          <div *ngIf="!showLoader && !noResult" in-view-container (inview)="inview($event)" [throttle]="[1000]" [trigger]="searchList">
-            <div in-view-item [id]="i" [data]="user" class="ui segment mb-20" *ngFor="let user of searchList;let i = index;">
+          <div *ngIf="!showLoader && !noResult" in-view-container (inview)="inview($event)" [throttle]="[1000]"
+            [trigger]="searchList">
+            <div in-view-item [id]="i" [data]="user" class="ui segment mb-20"
+              *ngFor="let user of searchList;let i = index;">
               <div class="ui items">
                 <div class="item">
                   <div class="ui tiny image userSearchImage">
-                    <ngx-avatar class="my-avatar" [style]="customStyle" [size]="80" initialsSize="1" [textSizeRatio]="2" name="{{user.firstName}} ">
+                    <ngx-avatar class="my-avatar" [style]="customStyle" [size]="80" initialsSize="1" [textSizeRatio]="2"
+                      name="{{user.firstName}} ">
                     </ngx-avatar>
                   </div>
                   <div class="content ">
@@ -39,18 +43,42 @@
                     <div class="header mb-5" *ngIf="user.status===1">{{user.firstName}} &nbsp;{{user.lastName}}</div>
                     <div class="header mb-5" *ngIf="user.status!==1">{{user.firstName}} &nbsp;{{user.lastName}}</div>
 
-                    <a *ngIf="user.status===1 && user.isEditableProfile" class="right-float">
-                      <!-- update user roles -->
-                      <span appTelemetryInteract [telemetryInteractEdata]="userEditIntractEdata" [telemetryInteractObject]="{id:user.id,type:'user',ver:'1.0'}"
+                    <!-- <a *ngIf="user.isEditableProfile" class="right-float"> -->
+                    <!-- update user roles -->
+                    <!-- <span appTelemetryInteract [telemetryInteractEdata]="userEditIntractEdata" [telemetryInteractObject]="{id:user.id,type:'user',ver:'1.0'}"
                         class="remove-outline mx-10" [queryParams]="queryParams" [routerLink]="['edit/' + user.id]" (click)="user.status===1 && userSearchService.userDetailsObject=user">
                         <span class="sunbird-portal-icon edit-user-icon mx-10"></span>
+                      </span> -->
+                    <span *ngIf="user.isEditableProfile" class="ui pointing dropdown right-float" suiDropdown
+                      autoClose="itemClick">
+                      <i class="sunbird-portal-icon edit-user-icon"></i>
+                      <span class="menu" suiDropdownMenu>
+                        <span class="item" appTelemetryInteract [telemetryInteractEdata]="userEditIntractEdata"
+                          [telemetryInteractObject]="{id:user.id,type:'user',ver:'1.0'}"
+                          [routerLink]="['edit/' + user.id]" [queryParams]="queryParams"
+                          (click)="user.status===1 && userSearchService.userDetailsObject=user" *ngIf="user.status===1">
+                          <i class="edit icon"></i> Edit
+                        </span>
+                        <span class="item" *ngIf="user.status===1" (click)="blockUnblockUser(user.id,'block')">
+                          <i class="user times icon"></i> Block</span>
+                        <span class="item" *ngIf="user.status===0" (click)="blockUnblockUser(user.id,'unblock')">
+                          <i class="user plus icon"></i> Unblock</span>
                       </span>
-                      <!-- delete user -->
-                      <!-- <span appTelemetryInteract [telemetryInteractEdata]="userDeleteIntractEdata" [telemetryInteractObject]="{id:user.id,type:'user',ver:'1.0'}"
+                    </span>
+                    <!-- <div class="ui icon bottom right pointing dropdown button">
+                            <span class="sunbird-portal-icon edit-user-icon mx-10"></span>
+                            <div class="menu">
+                              <div class="item"><i class="edit icon"></i> Edit</div>
+                              <div class="item"><i class="user times icon"></i> Block</div>
+                              <div class="item"><i class="user plus icon"></i> Unblock</div>
+                            </div>
+                        </div> -->
+                    <!-- delete user -->
+                    <!-- <span appTelemetryInteract [telemetryInteractEdata]="userDeleteIntractEdata" [telemetryInteractObject]="{id:user.id,type:'user',ver:'1.0'}"
                         class="remove-outline mx-5">
                         <i class="trash outline large icon remove-outline" [queryParams]="queryParams" [routerLink]="['delete/' + user.id]" (click)="userSearchService.userDetailsObject=user"></i>
                       </span> -->
-                    </a>
+                    <!-- </a> -->
 
                     <!-- organization Name -->
                     <div class="meta">
@@ -63,15 +91,16 @@
                     </div>
 
                     <div class="extra ">
-                      <!-- <div class="ui label " *ngIf="user.status===0">{{resourceService?.frmelmnts?.lbl?.inactive}}</div>
-                          <div class="ui label " *ngIf="user.status===1">{{resourceService?.frmelmnts?.lbl?.active}}</div>
-                          <div class="ui label " *ngIf="user.status===2">{{resourceService?.frmelmnts?.lbl?.blocked}}</div>
-                          <div class="ui label " *ngIf="user.status===3">{{resourceService?.frmelmnts?.lbl?.retired}}</div> -->
+                      <div class="ui label " *ngIf="user.status===0">{{resourceService?.frmelmnts?.lbl?.inactive}}</div>
+                      <div class="ui label " *ngIf="user.status===1">{{resourceService?.frmelmnts?.lbl?.active}}</div>
+                      <div class="ui label " *ngIf="user.status===2">{{resourceService?.frmelmnts?.lbl?.blocked}}</div>
+                      <div class="ui label " *ngIf="user.status===3">{{resourceService?.frmelmnts?.lbl?.retired}}</div>
 
                       <!-- updated code as per new design -->
 
                       <div class="ui horizontal bulleted list">
-                        <span class="item" *ngIf="user.block"><span class="sunbird-portal-icon location-outline-icon"></span>&nbsp;{{user.block.name | titlecase}}</span>
+                        <span class="item" *ngIf="user.block"><span
+                            class="sunbird-portal-icon location-outline-icon"></span>&nbsp;{{user.block.name | titlecase}}</span>
                         <span class="item" *ngIf="user.district">{{user.district.name | titlecase}}</span>
 
                       </div>
@@ -99,13 +128,18 @@
       </div>
       <div class="ui grid mt-20">
         <div class="twelve wide column pt-0">
-          <div class="pb-10" *ngIf="searchList && totalCount > config.appConfig.SEARCH.PAGE_LIMIT && !showLoader && !noResult">
+          <div class="pb-10"
+            *ngIf="searchList && totalCount > config.appConfig.SEARCH.PAGE_LIMIT && !showLoader && !noResult">
             <div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages.length">
               <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(1) ">First</a>
-              <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
-              <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}" (click)="navigateToPage(page)" class="item">{{page}}</a>
-              <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
-              <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
+              <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
+                (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
+              <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}"
+                (click)="navigateToPage(page)" class="item">{{page}}</a>
+              <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
+                (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
+              <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.totalPages)"
+                class="item ">Last</a>
             </div>
           </div>
         </div>
