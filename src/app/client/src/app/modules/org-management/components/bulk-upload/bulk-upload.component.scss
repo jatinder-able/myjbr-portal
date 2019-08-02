@@ -1,20 +1,25 @@
 .menu-label {
+    height: 83px;
+    margin-right: 100px;
     border-radius: 5px;
-    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 0px #d4d4d5;
+    box-shadow: 0px 0px 12px 0 #d4d4d5, 0 0 0 0px #d4d4d5;
     webkit-box-shadow: 2px 3px 10px 0px rgba(0, 0, 0, 0.26) !important;
-    padding: 10px 17px !important;
+    padding: 20px 17px !important;
     cursor: pointer;
     font-weight: bold;
     a {
-        color: #a32020;
+        color: #a20303;
+        margin-left: 15px;
+        position: absolute;
+        margin-top: 12px;
     }
     &.active {
         // border-left: 5px solid #fe7a51 !important;
     }
     &:hover {
-        background-color: #a20303;
+        background-color: #e1e1e1;
         a {
-            color: #ffffff;
+            color: #a20303;
         }
     }
 }

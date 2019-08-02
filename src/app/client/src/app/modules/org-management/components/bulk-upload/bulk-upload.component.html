@@ -1,7 +1,7 @@
-<div>
-  <div class="twelve wide column pt-0 pb-15 menu-label mb-15">
-    <!-- <a class="ui cursor-pointer m-responsive-p-header-fl" routerLink="/orgUserManagement/bulkUpload/organizationUpload"> -->
-    <a class="ui cursor-pointer m-responsive-p-header-fl">
+<!-- <div>
+  <div class="twelve wide column pt-0 pb-15 menu-label mb-15"> -->
+<!-- <a class="ui cursor-pointer m-responsive-p-header-fl" routerLink="/orgUserManagement/bulkUpload/organizationUpload"> -->
+<!-- <a class="ui cursor-pointer m-responsive-p-header-fl">
       {{resourceService?.frmelmnts?.instn?.t0015}}
     </a>
   </div>
@@ -22,5 +22,35 @@
     <a class="ui cursor-pointer m-responsive-p-header-fl">
       {{resourceService?.frmelmnts?.lbl?.onboardUser}}
     </a>
+  </div>
+</div> -->
+<div class="ui two column centered grid" style="margin-top:125px;">
+  <div class="five column centered row">
+    <div class="column menu-label">
+      <img src="{{'assets/images/Upload_org.png' | cdnprefixurl}}">
+      <a class="ui cursor-pointer m-responsive-p-header-fl">
+        {{resourceService?.frmelmnts?.instn?.t0015}}
+      </a>
+    </div>
+    <div class="column menu-label" (click)="chooseMenu('menu2','/orgUserManagement/bulkUpload/userUpload')">
+      <img src="{{'assets/images/Upload_users.png' | cdnprefixurl}}">
+      <a class="ui cursor-pointer m-responsive-p-header-fl">
+        {{resourceService?.frmelmnts?.instn?.t0016}}
+      </a>
+    </div>
+  </div>
+  <div class="five column centered row">
+    <div class="column menu-label" (click)="chooseMenu('menu3','/orgUserManagement/bulkUpload/checkStatus')">
+      <img src="{{'assets/images/Check_upload_status.png' | cdnprefixurl}}">
+      <a class="ui cursor-pointer m-responsive-p-header-fl">
+        {{resourceService?.frmelmnts?.lbl?.chkuploadsts}}
+      </a>
+    </div>
+    <div class="column menu-label" (click)="chooseMenu('menu4','/orgUserManagement/bulkUpload/onboardUser')">
+      <img src="{{'assets/images/Onboard_user.png' | cdnprefixurl}}">
+      <a class="ui cursor-pointer m-responsive-p-header-fl">
+        {{resourceService?.frmelmnts?.lbl?.onboardUser}}
+      </a>
+    </div>
   </div>
 </div>

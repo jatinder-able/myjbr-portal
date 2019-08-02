@@ -19,7 +19,7 @@
             min-height: 100px;
             padding: $sb-modal-content-padding;
             overflow-y: auto;
-            &.onboard-user-modal {
+            &.onboard-user-modal,&.edit-user-modal {
                 overflow-y: visible !important;
             }
         }
