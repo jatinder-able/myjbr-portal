@@ -38,12 +38,13 @@ export class UpdateUserDetailsComponent implements OnInit, OnDestroy {
 
   initializeFormFields() {
     this.userDetailsForm = this.sbFormBuilder.group({
-      name: new FormControl(this.userProfile.firstName, [Validators.required]),
+      firstName: new FormControl(this.userProfile.firstName, [Validators.required]),
+      lastName: new FormControl(this.userProfile.lastName, [Validators.required]),
       state: new FormControl(null),
       district: new FormControl(null)
     }, {
         validator: (formControl) => {
-          const nameCtrl = formControl.controls.name;
+          const nameCtrl = formControl.controls.firstName;
           if (_.trim(nameCtrl.value) === '') { nameCtrl.setErrors({ required: true }); }
           return null;
         }
@@ -126,7 +127,9 @@ export class UpdateUserDetailsComponent implements OnInit, OnDestroy {
     const locationCodes = [];
     if (this.userDetailsForm.value.state) { locationCodes.push(this.userDetailsForm.value.state); }
     if (this.userDetailsForm.value.district) { locationCodes.push(this.userDetailsForm.value.district); }
-    const data = { firstName: _.trim(this.userDetailsForm.value.name), locationCodes: locationCodes };
+    // #MyJBR change: Commented unwanted payload
+    // const data = { firstName: _.trim(this.userDetailsForm.value.firstName), lastName: _.trim(this.userDetailsForm.value.lastName), locationCodes: locationCodes };
+    const data = { firstName: _.trim(this.userDetailsForm.value.firstName), lastName: _.trim(this.userDetailsForm.value.lastName)};
     this.updateProfile(data);
   }
 

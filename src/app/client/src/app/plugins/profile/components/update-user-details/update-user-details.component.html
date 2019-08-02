@@ -17,15 +17,24 @@
   <!--Content-->
   <div class="sb-modal-content">
     <form class="ui form" [formGroup]="userDetailsForm">
-        <label class="ui basic blue error label p-0" *ngIf="userDetailsForm.controls.name.touched && userDetailsForm.controls['name'].errors && userDetailsForm.controls['name'].errors.required">{{resourceService?.frmelmnts?.lbl?.nameRequired}}</label>
-        <label class="ui basic blue error label p-0" *ngIf="userDetailsForm.controls.name.touched && userDetailsForm.controls['name'].errors && userDetailsForm.controls['name'].errors.pattern">{{resourceService?.frmelmnts?.lbl?.enterValidName}}</label>
       <div class="required field">
-        <label *ngIf="!(userDetailsForm.controls.name.touched && userDetailsForm.controls['name'].errors)">{{resourceService?.frmelmnts?.lbl?.name}}:</label>
+        <label *ngIf="!(userDetailsForm?.controls.firstName.touched && userDetailsForm?.controls['firstName'].errors)">{{resourceService?.frmelmnts?.lbl?.firstName}}:</label>
         <div class="field">
-          <input formControlName="name" type="text" name="name" placeholder="{{resourceService.frmelmnts.lbl.fullName}}">
+          <input formControlName="firstName" type="text" name="firstName" placeholder="{{resourceService?.frmelmnts?.lbl?.firstName}}">
         </div>
+        <label class="ui basic blue error label p-0" *ngIf="userDetailsForm?.controls.firstName.touched && userDetailsForm?.controls['firstName'].errors && userDetailsForm?.controls['firstName'].errors.required">{{resourceService?.frmelmnts?.lbl?.firstNameRequired}}</label>
+        <label class="ui basic blue error label p-0" *ngIf="userDetailsForm?.controls.firstName.touched && userDetailsForm?.controls['firstName'].errors && userDetailsForm?.controls['firstName'].errors.pattern">{{resourceService?.frmelmnts?.lbl?.enterValidName}}</label>
       </div>
-      <div class="field">
+      <div class="required field">
+        <label *ngIf="!(userDetailsForm?.controls.lastName.touched && userDetailsForm?.controls['lastName'].errors)">{{resourceService?.frmelmnts?.lbl?.lastName}}:</label>
+        <div class="field">
+          <input formControlName="lastName" type="text" name="lastName" placeholder="{{resourceService?.frmelmnts?.lbl?.lastName}}">
+        </div>
+        <label class="ui basic blue error label p-0" *ngIf="userDetailsForm?.controls.lastName.touched && userDetailsForm?.controls['lastName'].errors && userDetailsForm?.controls['lastName'].errors.required">{{resourceService?.frmelmnts?.lbl?.lastNameRequired}}</label>
+        <label class="ui basic blue error label p-0" *ngIf="userDetailsForm?.controls.lastName.touched && userDetailsForm?.controls['lastName'].errors && userDetailsForm?.controls['lastName'].errors.pattern">{{resourceService?.frmelmnts?.lbl?.enterValidName}}</label>
+      </div>
+      <!-- #MyJBR change: District and State Fields are commented -->
+      <!-- <div class="field">
         <label>{{resourceService?.frmelmnts?.lbl?.state}}:</label>
         <div class="field">
           <sui-select [isSearchable]="true" class="selection" formControlName="state" [options]="allStates" labelField="name" valueField="code"
@@ -48,7 +57,7 @@
             <sui-select-option *ngFor="let district of districtDiv.filteredOptions | slice:0:100" [value]="district"></sui-select-option>
           </sui-select>
         </div>
-      </div>
+      </div> -->
     </form>
   </div>
   <!--/Content-->

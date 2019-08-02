@@ -30,7 +30,7 @@
 
     <!-- add state and district -->
     <div class="ui container relative" *ngIf="isCustodianOrgUser">
-      <div class="mb-0 d-flex flex-jc-center m-responsive-flex-dc m-responsive-mt-15">
+      <!-- <div class="mb-0 d-flex flex-jc-center m-responsive-flex-dc m-responsive-mt-15">
         <div class="fs-1-16 text-ac">{{resourceService.frmelmnts.lbl.district}} :</div>
         <div class="fs-1-16 ml-5 font-w-bold text-ac" [ngClass]="{'text-warm-grey': !district}">
           {{district || resourceService.frmelmnts.lbl.addDistrict}} </div>
@@ -39,7 +39,7 @@
         <div class="fs-1-16 text-ac">{{resourceService.frmelmnts.lbl.state}} :</div>
         <div class="fs-1-16 ml-5 font-w-bold text-ac" [ngClass]="{'text-warm-grey': !state}">
           {{state || resourceService.frmelmnts.lbl.addState}}</div>
-      </div>
+      </div> -->
       <button appTelemetryInteract [telemetryInteractObject]="telemetryInteractObject"
         [telemetryInteractEdata]="editProfileInteractEdata"
         class="sb-btn sb-btn-primary sb-btn-xs right-aligned-button right-0 bottom-5 absolute computer only"
