@@ -387,6 +387,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
             parentObj.fullName += !_.isEmpty(parentObj.lastName) ? ' ' + parentObj.lastName : '';
             parentObj.createdDate = self.datePipe.transform(parentObj.createdDate, 'dd-MMM-yyyy');
             parentObj.statusName = (parentObj.status === 1) ? 'Active' : 'Inactive';
+            parentObj.lastLoginTime = !_.isEmpty(parentObj.lastLoginTime) ? self.datePipe.transform(new Date(_.toNumber(parentObj.lastLoginTime)), 'dd-MMM-yyyy hh:mm:ss') : '';
             parentObj.organizationList = [];
             _.map(parentObj.organisations, function (childObj) {
               childObj.userRoles = _.join(childObj.roles, ' | ');
