@@ -212,6 +212,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       phonenumber: ['', [Validators.required]],
       username: ['', null],
+      externalId: ['', null],
       organisationId: ['', null]
       // password: ['', null]
     });
@@ -245,6 +246,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
           "phone": this.createUserForm.value.phonenumber,
           "channel": this.userProfile.channel,
           "userName": this.createUserForm.value.username,
+          "externalId": this.createUserForm.value.externalId,
           "phoneVerified": true,
           "emailVerified": true
         }
