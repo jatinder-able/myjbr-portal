@@ -1,25 +1,34 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ResourceService, ToasterService, ServerResponse, ConfigService } from '@sunbird/shared';
 import { OrgManagementService } from '../../services/org-management/org-management.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IInteractEventInput, IImpressionEventInput, IInteractEventEdata, IInteractEventObject } from '@sunbird/telemetry';
-import { UserService, RolesAndPermissions, PermissionService } from '@sunbird/core';
+import { UserService, RolesAndPermissions, PermissionService, SearchService } from '@sunbird/core';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-onboard-user',
   templateUrl: './onboard-user.component.html',
   styleUrls: ['./onboard-user.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OnBoardUserComponent implements OnInit, OnDestroy {
+  searchService: SearchService;
   @ViewChild('modal') modal;
   @ViewChild('tabSection') tabSection;
   allRoles: Array<RolesAndPermissions>;
   selectedTab: string;
   userProfile: any;
   userId: any;
+  useridReadonly: boolean = false;
   organizationsList: any = [];
+  filteredUsers: any = [];
+  /**
+ * Current page number of inbox list
+ */
+  pageNumber = 1;
   /**
 * reference for ActivatedRoute
 */
@@ -61,6 +70,10 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
  */
   private toasterService: ToasterService;
   /**
+ * Contains page limit of outbox list
+ */
+  pageLimit: number;
+  /**
 * Contains redirect url
 */
   redirectUrl: string;
@@ -84,11 +97,13 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
 *
 * Default method of DetailsComponent class
 *
+* @param {SearchService} searchService Reference of SearchService
 * @param {ResourceService} resourceService To call resource service which helps to use language constant
 */
-  constructor(orgManagementService: OrgManagementService, config: ConfigService,
+  constructor(searchService: SearchService, orgManagementService: OrgManagementService, config: ConfigService,
     formBuilder: FormBuilder, toasterService: ToasterService, private router: Router,
-    resourceService: ResourceService, activatedRoute: ActivatedRoute, public userService: UserService, private permissionService: PermissionService) {
+    resourceService: ResourceService, activatedRoute: ActivatedRoute, public userService: UserService, private permissionService: PermissionService, public datePipe: DatePipe) {
+    this.searchService = searchService;
     this.resourceService = resourceService;
     this.createUserFormBuilder = formBuilder;
     this.assignUserFormBuilder = formBuilder;
@@ -156,6 +171,39 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
         return _.indexOf(rolesArray, role.role) > -1;
       });
     });
+  }
+  searchUsers(query) {
+    if (!_.isEmpty(_.trim(query))) {
+      let self = this;
+      $(".ui-autocomplete-loader").show();
+      this.pageLimit = this.config.appConfig.SEARCH.PAGE_LIMIT;
+      const searchParams = {
+        filters: {
+          'rootOrgId': this.userProfile.rootOrgId,
+        },
+        limit: this.pageLimit,
+        pageNumber: this.pageNumber,
+        query: query
+      };
+      this.searchService.userSearch(searchParams).subscribe(
+        (apiResponse: ServerResponse) => {
+          $(".ui-autocomplete-loader").hide();
+          // if (apiResponse.result.response.count && apiResponse.result.response.content.length > 0) {
+          this.filteredUsers = apiResponse.result.response.content;
+          _.map(this.filteredUsers, function (obj) {
+            obj.fullName = _.replace(obj.firstName, null, '') + ' ' + _.replace(obj.lastName, null, '') + ' -- Created On (' + self.datePipe.transform(obj.createdDate, 'dd/MMM/yyyy') + ')';
+          });
+          // }
+        },
+        err => {
+          $(".ui-autocomplete-loader").hide();
+          this.toasterService.error(this.resourceService.messages.emsg.m0005);
+        }
+      );
+    } else {
+      this.toasterService.error("Please enter a valid user");
+      this.assignUserForm.reset();
+    }
   }
   initializeCreateUserForm() {
     this.createUserForm = this.createUserFormBuilder.group({
@@ -226,6 +274,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
     if (this.assignUserForm.invalid) {
       return;
     } else {
+      this.assignUserForm.value.userId = _.cloneDeep(this.assignUserForm.value).userId.id;
       const data = {
         "request": this.assignUserForm.value
       }

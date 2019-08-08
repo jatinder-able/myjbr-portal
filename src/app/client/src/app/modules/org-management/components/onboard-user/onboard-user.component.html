@@ -94,10 +94,19 @@
               <div class="ui grid">
                 <div class="six wide column">
                   <div class="required field" [ngClass]="{ 'error': afSubmitted && af.userId.errors }">
-                    <label>{{resourceService?.frmelmnts?.lbl?.userId}}</label>
-                    <input type="text" formControlName="userId" placeholder="User Id" autofocus>
+                    <label>User</label>
+                    <p-autoComplete formControlName="userId" [suggestions]="filteredUsers" [size]="55" appendTo="body"
+                      (keyup.enter)="searchUsers(userIdSuggestions.inputEL.nativeElement.value)" field="fullName"
+                      placeholder="Search Users" [minLength]="1" (onSelect)="useridReadonly=true;"
+                      [readonly]="useridReadonly" #userIdSuggestions>
+                    </p-autoComplete>
+                    <i class="pi pi-search search-users"
+                      (click)="searchUsers(userIdSuggestions.inputEL.nativeElement.value)"></i>
+                    <i *ngIf="useridReadonly" class="pi pi-times clear-userid"
+                      (click)="useridReadonly = false;assignUserForm.reset();"></i>
+                    <!-- <input type="text" formControlName="userId" placeholder="User Id" autofocus> -->
                     <div *ngIf="afSubmitted && af.userId.errors">
-                      <label *ngIf="af.userId.errors.required">User Id is required</label>
+                      <label *ngIf="af.userId.errors.required">User is required</label>
                     </div>
                   </div>
                 </div>

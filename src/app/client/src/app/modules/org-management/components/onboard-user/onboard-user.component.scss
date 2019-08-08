@@ -6,3 +6,31 @@
     margin-right: 50%;
     color: #43a047;
 }
+.ui-autocomplete-loader {
+    display: none;
+}
+.clear-userid {
+    float: right;
+    margin-top: 15px;
+    position: absolute;
+    margin-left: -50px;
+    color: #F44336;
+    cursor: pointer;
+}
+.ui-autocomplete-loader {
+    float: right;
+    margin-top: -5px;
+    position: absolute;
+    right: 1.7em;
+}
+.search-users {
+    float: right;
+    margin-top: 15px;
+    position: absolute;
+    margin-left: -23px;
+    cursor: pointer;
+}
+body p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext {
+    border: none;
+    border-bottom: 1px solid #333333;
+}
