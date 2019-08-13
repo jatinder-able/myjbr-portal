@@ -8,6 +8,7 @@ import { UserService, RolesAndPermissions, PermissionService, SearchService } fr
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
+import { ExternalIdsModal } from './onboard-user.modal';
 @Component({
   selector: 'app-onboard-user',
   templateUrl: './onboard-user.component.html',
@@ -15,11 +16,16 @@ import { DatePipe } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class OnBoardUserComponent implements OnInit, OnDestroy {
-  searchService: SearchService;
   @ViewChild('modal') modal;
   @ViewChild('tabSection') tabSection;
+  externalIdsModal: ExternalIdsModal;
+  currentExternalIdIndex: number;
+  showConfirmationModal: boolean = false;
+  externalIdList = new Array<ExternalIdsModal>();
+  searchService: SearchService;
   allRoles: Array<RolesAndPermissions>;
   selectedTab: string;
+  externalIdEdit: boolean = false;
   userProfile: any;
   userId: any;
   useridReadonly: boolean = false;
@@ -111,6 +117,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
     this.toasterService = toasterService;
     this.config = config;
     this.activatedRoute = activatedRoute;
+    this.externalIdsModal = new ExternalIdsModal();
     try {
       this.uploadUserRefLink = (<HTMLInputElement>document.getElementById('userUploadRefLink')).value;
     } catch (error) {
@@ -154,6 +161,32 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
     this.setInteractEventData();
     this.selectedTab = 'assignUser';
   }
+  externalIdsCrud(action, index) {
+    action === "add" ?
+      (this.externalIdEdit === false ?
+        (!_.isEqual(this.externalIdsModal, new ExternalIdsModal()) ?
+          (this.externalIdList.push(this.externalIdsModal),
+            this.externalIdsModal = new ExternalIdsModal())
+          : this.toasterService.error("Please enter the external id details"))
+        : (_.assign(this.externalIdList[this.currentExternalIdIndex], this.externalIdsModal),
+          this.externalIdsModal = new ExternalIdsModal(),
+          this.externalIdEdit = false))
+      : action === "clear" ?
+        (this.externalIdEdit === false ?
+          (this.externalIdsModal = new ExternalIdsModal())
+          : (this.externalIdEdit = false,
+            this.externalIdsModal = new ExternalIdsModal()))
+        : action === 'edit' ?
+          (this.externalIdEdit = true,
+            this.externalIdsModal = _.cloneDeep(this.externalIdList[index]),
+            this.currentExternalIdIndex = index)
+          : action === "confirm" ?
+            (this.showConfirmationModal = true,
+              this.currentExternalIdIndex = index)
+            : action === "delete" ?
+              (this.externalIdList.splice(this.currentExternalIdIndex, 1))
+              : false;
+  }
   getOrgList() {
     this.organizationsList = _.filter(_.reject(this.userProfile.organisations, { 'organisationId': this.userProfile.rootOrgId }), function (obj) {
       if (_.indexOf(_.get(obj, 'roles'), 'ORG_ADMIN') > -1) {
@@ -188,6 +221,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
       this.searchService.userSearch(searchParams).subscribe(
         (apiResponse: ServerResponse) => {
           $(".ui-autocomplete-loader").hide();
+          this.useridReadonly = false;
           // if (apiResponse.result.response.count && apiResponse.result.response.content.length > 0) {
           this.filteredUsers = apiResponse.result.response.content;
           _.map(this.filteredUsers, function (obj) {
@@ -197,6 +231,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
         },
         err => {
           $(".ui-autocomplete-loader").hide();
+          this.useridReadonly = false;
           this.toasterService.error(this.resourceService.messages.emsg.m0005);
         }
       );
@@ -246,7 +281,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
           "phone": this.createUserForm.value.phonenumber,
           "channel": this.userProfile.channel,
           "userName": this.createUserForm.value.username,
-          "externalId": this.createUserForm.value.externalId,
+          "externalIds": this.externalIdList,
           "phoneVerified": true,
           "emailVerified": true
         }
@@ -258,6 +293,7 @@ export class OnBoardUserComponent implements OnInit, OnDestroy {
         if (_.get(response, 'responseCode') === 'OK') {
           this.initializeCreateUserForm();
           this.cfSubmitted = false;
+          this.externalIdList = [];
           this.createdUserId = response.result.userId;
         } else {
           this.toasterService.error(this.resourceService.messages.emsg.m0005);
