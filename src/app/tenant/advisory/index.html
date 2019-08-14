@@ -90,7 +90,8 @@
                     </form> -->
               </li>
               <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="/explore/1">Explore</a> </li>
-              <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="https://pwcdemoinstance.ddns.net/support/docs/">Support</a> </li>
+              <li class="nav-item"> <a class="nav-link js-scroll-trigger"
+                  href="https://pwcdemoinstance.ddns.net/support/docs/">Support</a> </li>
               <!-- <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="/explore-course">Explore Courses</a> -->
               </li>
               <li class="nav-item"> <a class="btn btn-primary" href="/learn">Sign In</a></li>
@@ -882,10 +883,11 @@
       return moment(local).fromNow();
     }
     $(function () {
+      var tenantName = !_.isEmpty(_.replace(_.replace(window.location.pathname, '/', ''), '/', '')) ? _.capitalize(_.replace(_.replace(window.location.pathname, '/', ''), '/', '')) : 'Advisory';
       $.ajax({
         url: window.location.origin + '/api/data/v1/page/assemble?orgdetails=orgName,email',
         type: "POST",
-        data: '{"request":{"source":"web","name":"Course","filters":{},"limit": 20,"sort_by":{"lastUpdatedOn":"desc"},"mode":"soft"}}',
+        data: '{"request":{"source":"web","name":"Course","filters":{"organisation":"' + tenantName + '"},"limit": 20,"sort_by":{"lastUpdatedOn":"desc"},"mode":"soft"}}',
         processData: false,
         contentType: 'application/json',
         success: function (response) {
