@@ -111,6 +111,7 @@ export class UserService {
       localStorage.setItem("isLogged",'true');
     } catch (error) {
       this._authenticated = false;
+      localStorage.setItem('currentUser',null);
       localStorage.setItem("isLogged",'false');
       this._anonymousSid = UUID.UUID();
     }
@@ -185,6 +186,10 @@ export class UserService {
     const profileData = res.result.response;
     const orgRoleMap = {};
     const hashTagIds = [];
+    //Set Current Logged in User name into local storage
+    if(this._authenticated) {
+      localStorage.setItem("currentUser",profileData.firstName+' '+profileData.lastName);
+    }
     this._channel = _.get(profileData, 'rootOrg.hashTagId');
     profileData.skills = _.get(profileData, 'skills' ) || [];
     hashTagIds.push(this._channel);
