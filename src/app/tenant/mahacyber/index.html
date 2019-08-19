@@ -883,7 +883,7 @@
       return moment(local).fromNow();
     }
     $(function () {
-      var tenantName = !_.isEmpty(_.replace(_.replace(window.location.pathname, '/', ''), '/', '')) ? _.capitalize(_.replace(_.replace(window.location.pathname, '/', ''), '/', '')) : 'Advisory';
+      var tenantName = !_.isEmpty(_.replace(_.replace(window.location.pathname, '/', ''), '/', '')) ? _.capitalize(_.replace(_.replace(window.location.pathname, '/', ''), '/', '')) : 'mahacyber';
       $.ajax({
         url: window.location.origin + '/api/data/v1/page/assemble?orgdetails=orgName,email',
         type: "POST",
