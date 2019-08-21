@@ -27,6 +27,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PermissionDirective } from './directives';
 //Imported Org Charts Modules
 import { OrgChartModule } from 'ng2-org-chart';
+// Import Slick Library
+import { SlickModule } from 'ngx-slick';
 @NgModule({
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { OrgChartModule } from 'ng2-org-chart';
     TableModule,
     ChartModule,
     DropdownModule,
-    OrgChartModule
+    OrgChartModule,
+    SlickModule
   ],
   declarations: [CourseConsumptionComponent, OrganisationComponent, CourseProgressComponent, UsageReportsComponent, ContentCreationStaticsComponent, PermissionDirective],
   exports: [CourseProgressComponent, PermissionDirective],

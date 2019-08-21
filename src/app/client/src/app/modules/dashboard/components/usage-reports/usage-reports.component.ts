@@ -70,6 +70,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   showUserDetailsReport: boolean = true;
   isOrgAdmin: boolean = false;
   isCreator: boolean = false;
+  slideConfig: any;
   constructor(public configService: ConfigService, private usageService: UsageService, private sanitizer: DomSanitizer,
     public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, private datePipe: DatePipe
@@ -77,6 +78,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     this.activatedRoute = activatedRoute;
   }
   ngOnInit() {
+    this.slideConfig = this.configService.appConfig.CoursePageSection.slideConfig;
     this.azureUrl = (<HTMLInputElement>document.getElementById('certificateUrl')).value + (<HTMLInputElement>document.getElementById('certificateContainerName')).value + '/course_certificate/';
     this.enableCertificateFeature = (<HTMLInputElement>document.getElementById('enableCertificateFeature')).value;
     this.userService.userData$.subscribe(userdata => {
@@ -109,7 +111,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
     //Check Creator Role
     this.isCreator = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.headerDropdownRoles.myActivityRole);
     this.getBatches('14d');
-    this.getUserDetailsReport('14d');
+    // this.getUserDetailsReport('14d');
     this.getOrgDetails();
   }
   setTelemetryInteractObject(val) {

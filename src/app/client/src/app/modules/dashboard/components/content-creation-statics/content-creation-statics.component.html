@@ -65,6 +65,21 @@
         </div>
     </form>
     <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
+        <div class="userDetailsBlockSection">
+            <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig">
+                <div ngxSlickItem class="userDetailsBlockCard mt-20 mb-20 ml-20"
+                    *ngFor="let block of polarChartData?.datasets[0].data;let i=index"
+                    [class.active]="polarChartData.labels[i] === selectedCategory"
+                    (click)="filterCreationData(polarChartData.labels[i])">
+                    <div class="content center aligned">
+                        <h2 class="description dashboardCardSubText">{{block}}</h2>
+                        <div class="meta dashBoardCardText">{{polarChartData.labels[i]}}</div>
+                    </div>
+                </div>
+            </ngx-slick>
+        </div>
+    </div>
+    <!-- <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
             <div class="ui four cards">
                 <div class="card" *ngFor="let block of polarChartData?.datasets[0].data;let i=index"
@@ -77,7 +92,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="ui grid" *ngIf="!noResult && tableData.length > 0">
         <div class="twelve wide column">
             <p-chart type="polarArea" [data]="polarChartData" [options]="polarChartOptions" height="300px"></p-chart>

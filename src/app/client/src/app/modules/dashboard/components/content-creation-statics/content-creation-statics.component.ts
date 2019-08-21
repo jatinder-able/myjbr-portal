@@ -39,6 +39,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   telemetryImpression: IImpressionEventInput;
   isOrgAdmin: boolean = false;
   isCreator: boolean = false;
+  slideConfig: any;
   constructor(private usageService: UsageService, private sanitizer: DomSanitizer, private configService: ConfigService,
     public userService: UserService, public permissionService: PermissionService, private toasterService: ToasterService,
     public resourceService: ResourceService, activatedRoute: ActivatedRoute, private router: Router, public reportService: ReportService, private datePipe: DatePipe
@@ -47,6 +48,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.slideConfig = this.configService.appConfig.CoursePageSection.slideConfig;
     this.getContentCreationStaticsReport('14d');
     //Check Org Admin Role
     this.isOrgAdmin = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.headerDropdownRoles.adminDashboard);

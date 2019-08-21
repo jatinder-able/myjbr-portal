@@ -1,3 +1,57 @@
+.userDetailsBlockSection {
+    width: 100%;
+    .userDetailsBlockCard {
+        width: calc(25% - 1.5em);
+        margin-left: .75em;
+        margin-right: .75em;
+        cursor: pointer;
+        height: 85px;
+        font-size: 1em;
+        display: flex;
+        margin: .875em .5em;
+        -webkit-box-shadow: 2px 3px 10px 0px rgba(0, 0, 0, 0.26) !important;
+        max-width: 100%;
+        flex-direction: column;
+        min-height: 0;
+        background: #fff;
+        padding: 0;
+        border: none;
+        border-radius: .28571429rem;
+        &.active {
+            border-bottom: 5px solid #fe7a51 !important;
+            -webkit-box-shadow: inset 2px 3px 10px 0px rgba(0, 0, 0, 0.26) !important;
+            .dashboardCardSubText,.dashBoardCardText {
+                color:#fe7a51 !important;
+            }
+        }
+        .content {
+            text-align: center;
+            padding-right: 3px;
+            border: none;
+            background: 0 0;
+            margin: 0;
+            padding: 1em 1em;
+            box-shadow: none;
+            font-size: 1em;
+            border-radius: .28571429rem!important;
+            .dashboardCardSubText {
+                font-weight: 500;
+                font-size: 1.6em;
+                color: #333333;
+                clear: both;
+                line-height: 20px;
+                margin-top: 0;
+                font-family: inherit;
+            }
+            .dashBoardCardText {
+                font-size: 0.9em;
+                font-weight: 500;
+                color: #7c7b7b;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
 .reset-button {
     float: right;
 }
