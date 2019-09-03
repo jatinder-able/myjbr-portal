@@ -56,6 +56,7 @@ export class ContentCreationStaticsComponent implements OnInit, OnDestroy {
     this.isCreator = this.permissionService.checkRolesPermissions(this.configService.rolesConfig.headerDropdownRoles.myActivityRole);
   }
   getContentCreationStaticsReport(dateRange) {
+    this.polarChartData = null;
     this.selectedDateRange = dateRange;
     this.toDate = new Date();
     this.fromDate = (dateRange === "14d") ? moment().subtract('14', 'days') : ((dateRange === "2m") ? moment().subtract('2', 'months') : moment().subtract('6', 'months'));

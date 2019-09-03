@@ -20,7 +20,8 @@
                         suiTabHeader="trainingstats">{{resourceService?.frmelmnts?.lbl?.trainingstats}}</a>
                     <a (click)="reportType('trainingdashboard')" class="item" suiTabHeader="trainingdashboard"
                         *ngIf="courseMentor">{{resourceService?.frmelmnts?.lbl?.trainingdashboard}}</a>
-                    <a (click)="reportType('staticsReport')" class="item" *ngIf="isOrgAdmin || isCreator"
+                    <a (click)="reportType('staticsReport');contentCreationStaticsComponent?.getContentCreationStaticsReport('14d');"
+                        class="item" *ngIf="isOrgAdmin || isCreator"
                         suiTabHeader="staticsReport">{{resourceService?.frmelmnts?.lnk?.staticsReport}}</a>
                     <a (click)="reportType('userDetailsReport');getUserDetailsReport('14d');" class="item" appPermission
                         *ngIf="userProfile?.rootOrgAdmin" [permission]='adminDashboard'

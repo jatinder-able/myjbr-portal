@@ -1,6 +1,6 @@
 import { IInteractEventEdata, IInteractEventObject, TelemetryInteractDirective } from '@sunbird/telemetry';
 import { IImpressionEventInput } from './../../../telemetry/interfaces/telemetry';
-import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation,AfterViewInit, OnDestroy } from '@angular/core';
 import { UsageService } from './../../services';
 import * as _ from 'lodash';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -12,13 +12,16 @@ import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { IEmployee } from 'ng2-org-chart';
 import { Subject } from 'rxjs';
+import { ContentCreationStaticsComponent } from '../content-creation-statics/content-creation-statics.component';
 @Component({
   selector: 'app-usage-reports',
   templateUrl: './usage-reports.component.html',
   styleUrls: ['./usage-reports.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class UsageReportsComponent implements OnInit, OnDestroy {
+export class UsageReportsComponent implements OnInit,AfterViewInit, OnDestroy {
+  @ViewChild(ContentCreationStaticsComponent)
+  contentCreationStaticsComponent: ContentCreationStaticsComponent;
   /**
  * Admin Dashboard access roles
  */
@@ -77,6 +80,7 @@ export class UsageReportsComponent implements OnInit, OnDestroy {
   ) {
     this.activatedRoute = activatedRoute;
   }
+  ngAfterViewInit() {}
   ngOnInit() {
     this.slideConfig = this.configService.appConfig.CoursePageSection.slideConfig;
     this.azureUrl = (<HTMLInputElement>document.getElementById('certificateUrl')).value + (<HTMLInputElement>document.getElementById('certificateContainerName')).value + '/course_certificate/';
