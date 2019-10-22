@@ -77,6 +77,7 @@ let envVariables = {
   EMAIL_STORE_AZURE_ACCOUNT_KEY: env.email_azure_account_key,
   EMAIL_STORE_CONTAINER_NAME: env.email_azure_container_name,
   ENABLE_CERTIFICATE_FEATURE: true,
+  ENABLE_DISCUSSION_FEATURE: false,
 }
 
 envVariables.PORTAL_CASSANDRA_URLS = (env.sunbird_cassandra_urls && env.sunbird_cassandra_urls !== '')
